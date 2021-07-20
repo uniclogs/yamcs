@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="oresat0" xmlns="http://www.omg.org/spec/XTCE/20180204" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+	<TelemetryMetaData>
+		<ParameterTypeSet>
+                        <StringParameterType name="callsign_t">
+                            <StringDataEncoding encoding="UTF-8">
+                                        <SizeInBits>
+                                                <Fixed>
+                                                        <FixedValue>48</FixedValue>
+                                                </Fixed>
+                                        </SizeInBits>
+                                </StringDataEncoding>
+                        </StringParameterType>
+                        <StringParameterType name="data_type_id_t">
+                                <StringDataEncoding encoding="UTF-8">
+                                        <SizeInBits>
+                                                <Fixed>
+                                                        <FixedValue>24</FixedValue>
+                                                </Fixed>
+                                        </SizeInBits>
+                                </StringDataEncoding>
+                        </StringParameterType>
+			<IntegerParameterType name="int8_t" signed="true">
+				<UnitSet />
+				<IntegerDataEncoding encoding="twosComplement" sizeInBits="8" />
+			</IntegerParameterType>
+			<IntegerParameterType name="int16_t" signed="true">
+				<UnitSet />
+				<IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16" />
+			</IntegerParameterType>
+			<IntegerParameterType name="int32_t" signed="true">
+				<UnitSet />
+				<IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32" />
+			</IntegerParameterType>
+			<IntegerParameterType name="uint8_t" signed="false">
+				<UnitSet />
+				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
+			</IntegerParameterType>
+			<IntegerParameterType name="uint16_t" signed="false">
+				<UnitSet />
+				<IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16" />
+			</IntegerParameterType>
+			<IntegerParameterType name="uint32_t" signed="false">
+				<UnitSet />
+				<IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32" />
+			</IntegerParameterType>
+			<BooleanParameterType name="bool_t">
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="8" />
+			</BooleanParameterType>
+		</ParameterTypeSet>
+		<ParameterSet>
+			<Parameter name="APRS_Dest_Callsign" parameterTypeRef="callsign_t" />
+			<Parameter name="APRS_Dest_SSID" parameterTypeRef="uint8_t" />
+			<Parameter name="APRS_Src_Callsign" parameterTypeRef="callsign_t" />
+                        <Parameter name="APRS_Src_SSID" parameterTypeRef="uint8_t" />
+                        <Parameter name="APRS_CTRL" parameterTypeRef="uint8_t" />
+                        <Parameter name="APRS_PID" parameterTypeRef="uint8_t" />
+			<Parameter name="APRS_Data_Type_Id" parameterTypeRef="data_type_id_t" />
+                        <Parameter name="APRS_Revision" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_M4_State" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_M4_Uptime" parameterTypeRef="uint32_t" />
+                        <Parameter name="C3_RTC_Time" parameterTypeRef="uint32_t" />
+                        <Parameter name="C3_M4_Temperature" parameterTypeRef="int8_t" />
+                        <Parameter name="C3_M4_Ref_Voltage" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_M4_Vbusp_Voltage" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_M4_Vbusp_Current" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_WDT_Num_Timeouts" parameterTypeRef="uint16_t" />
+                        <Parameter name="C3_Emmc_Capacity" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_L_RX_Bytes_Received" parameterTypeRef="uint32_t" />
+                        <Parameter name="C3_L_RX_Valid_Packets" parameterTypeRef="uint32_t" />
+                        <Parameter name="C3_L_RX_RSSI" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_L_TX_PLL_Lock" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_UHF_TX_Temperature" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_UHF_TX_FWD_Power" parameterTypeRef="uint16_t" />
+                        <Parameter name="C3_UHF_TX_REV_Power" parameterTypeRef="uint16_t" />
+                        <Parameter name="C3_UHF_RX_Bytes_Received" parameterTypeRef="uint32_t" />
+                        <Parameter name="C3_UHF_RX_Valid_Packets" parameterTypeRef="uint32_t" />
+                        <Parameter name="C3_UHF_RX_RSSI" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_UHF_RX_PLL_Lock" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_FW_Bank" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_CAN1" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_CAN2" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_OPD_Current" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_OPD_State" parameterTypeRef="uint8_t" />
+                        <Parameter name="Battery_Pack1_Vbatt" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack1_Vcell" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack1_Vcell_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack1_Vcell_Min" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack1_Vcell_1" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack1_Vcell_2" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack1_Vcell_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack1_Temperature" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack1_Temperature_Avg" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack1_Temperature_Max" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack1_Temperature_Min" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack1_Current" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack1_Current_Avg" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack1_Current_Max" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack1_Current_Min" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack1_State" parameterTypeRef="uint8_t" />
+                        <Parameter name="Battery_Pack1_Reported_State_of_Charge" parameterTypeRef="uint8_t" />
+                        <Parameter name="Battery_Pack1_Full_Capacity" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack1_Reported_Capacity" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Vbatt" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Vcell" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Vcell_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Vcell_Min" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Vcell_1" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Vcell_2" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Vcell_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Temperature" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack2_Temperature_Avg" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack2_Temperature_Max" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack2_Temperature_Min" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack2_Current" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack2_Current_Avg" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack2_Current_Max" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack2_Current_Min" parameterTypeRef="int16_t" />
+                        <Parameter name="Battery_Pack2_State" parameterTypeRef="uint8_t" />
+                        <Parameter name="Battery_Pack2_Reported_State_of_Charge" parameterTypeRef="uint8_t" />
+                        <Parameter name="Battery_Pack2_Full_Capacity" parameterTypeRef="uint16_t" />
+                        <Parameter name="Battery_Pack2_Reported_Capacity" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_X_Voltage_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_X_Current_Avg" parameterTypeRef="int16_t" />
+                        <Parameter name="Solar_Neg_X_Power_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_X_Voltage_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_X_Current_Max" parameterTypeRef="int16_t" />
+                        <Parameter name="Solar_Neg_X_Power_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_X_Energy" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_Y_Voltage_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_Y_Current_Avg" parameterTypeRef="int16_t" />
+                        <Parameter name="Solar_Neg_Y_Power_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_Y_Voltage_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_Y_Current_Max" parameterTypeRef="int16_t" />
+                        <Parameter name="Solar_Neg_Y_Power_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Neg_Y_Energy" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_X_Voltage_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_X_Current_Avg" parameterTypeRef="int16_t" />
+                        <Parameter name="Solar_Pos_X_Power_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_X_Voltage_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_X_Current_Max" parameterTypeRef="int16_t" />
+                        <Parameter name="Solar_Pos_X_Power_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_X_Energy" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_Y_Voltage_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_Y_Current_Avg" parameterTypeRef="int16_t" />
+                        <Parameter name="Solar_Pos_Y_Power_Avg" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_Y_Voltage_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_Y_Current_Max" parameterTypeRef="int16_t" />
+                        <Parameter name="Solar_Pos_Y_Power_Max" parameterTypeRef="uint16_t" />
+                        <Parameter name="Solar_Pos_Y_Energy" parameterTypeRef="uint16_t" />
+                        <Parameter name="Star_Tracker_Emmc_Capacity" parameterTypeRef="uint8_t" />
+                        <Parameter name="Star_Tracker_Readable_files" parameterTypeRef="uint8_t" />
+                        <Parameter name="Star_Tracker_Updater_Status" parameterTypeRef="uint8_t" />
+                        <Parameter name="Star_Tracker_Updates_Cached" parameterTypeRef="uint8_t" />
+                        <Parameter name="Star_Tracker_Right_Ascension" parameterTypeRef="int16_t" />
+                        <Parameter name="Star_Tracker_Declination" parameterTypeRef="int16_t" />
+                        <Parameter name="Star_Tracker_Roll" parameterTypeRef="int16_t" />
+                        <Parameter name="Star_Tracker_Last_Packet_Timestamp" parameterTypeRef="uint32_t" />
+                        <Parameter name="GPS_Emmc_Capacity" parameterTypeRef="uint8_t" />
+                        <Parameter name="GPS_Readable_files" parameterTypeRef="uint8_t" />
+                        <Parameter name="GPS_Updater_Status" parameterTypeRef="uint8_t" />
+                        <Parameter name="GPS_Updates_Cached" parameterTypeRef="uint8_t" />
+                        <Parameter name="GPS_Status" parameterTypeRef="uint8_t" />
+                        <Parameter name="GPS_Sat_Locked" parameterTypeRef="uint8_t" />
+                        <Parameter name="GPS_Position_X" parameterTypeRef="int32_t" />
+                        <Parameter name="GPS_Position_Y" parameterTypeRef="int32_t" />
+                        <Parameter name="GPS_Position_Z" parameterTypeRef="int32_t" />
+                        <Parameter name="GPS_Velocity_X" parameterTypeRef="int32_t" />
+                        <Parameter name="GPS_Velocity_Y" parameterTypeRef="int32_t" />
+                        <Parameter name="GPS_Velocity_Z" parameterTypeRef="int32_t" />
+                        <Parameter name="GPS_Last_Packet_Timestamp" parameterTypeRef="uint32_t" />
+                        <Parameter name="ADS_Gryo_Roll_Dot" parameterTypeRef="int16_t" />
+                        <Parameter name="ADS_Gryo_Pitch_Dot" parameterTypeRef="int16_t" />
+                        <Parameter name="ADS_Gryo_Yaw_Dot" parameterTypeRef="int16_t" />
+                        <Parameter name="ADS_Gryo_Imu_Temp" parameterTypeRef="int16_t" />
+                        <Parameter name="Dxwifi_Emmc_Capacity" parameterTypeRef="uint8_t" />
+                        <Parameter name="Dxwifi_Readable_files" parameterTypeRef="uint8_t" />
+                        <Parameter name="Dxwifi_Updater_Status" parameterTypeRef="uint8_t" />
+                        <Parameter name="Dxwifi_Updates_Cached" parameterTypeRef="uint8_t" />
+                        <Parameter name="Dxwifi_Transmitting" parameterTypeRef="bool_t" />
+                        <Parameter name="APRS_CRC32" parameterTypeRef="uint32_t" />
+		</ParameterSet>
+		<ContainerSet>
+			<SequenceContainer name="Spacecraft">
+				<EntryList>
+				        <ParameterRefEntry parameterRef="APRS_Dest_Callsign" />
+				        <ParameterRefEntry parameterRef="APRS_Dest_SSID" />
+				        <ParameterRefEntry parameterRef="APRS_Src_Callsign" />
+                                        <ParameterRefEntry parameterRef="APRS_Src_SSID" />
+                                        <ParameterRefEntry parameterRef="APRS_CTRL" />
+                                        <ParameterRefEntry parameterRef="APRS_PID" />
+				        <ParameterRefEntry parameterRef="APRS_Data_Type_Id" />
+                                        <ParameterRefEntry parameterRef="APRS_Revision" />
+                                        <ParameterRefEntry parameterRef="C3_M4_State" />
+                                        <ParameterRefEntry parameterRef="C3_M4_Uptime" />
+                                        <ParameterRefEntry parameterRef="C3_RTC_Time" />
+                                        <ParameterRefEntry parameterRef="C3_M4_Temperature" />
+                                        <ParameterRefEntry parameterRef="C3_M4_Ref_Voltage" />
+                                        <ParameterRefEntry parameterRef="C3_M4_Vbusp_Voltage" />
+                                        <ParameterRefEntry parameterRef="C3_M4_Vbusp_Current" />
+                                        <ParameterRefEntry parameterRef="C3_WDT_Num_Timeouts" />
+                                        <ParameterRefEntry parameterRef="C3_Emmc_Capacity" />
+                                        <ParameterRefEntry parameterRef="C3_L_RX_Bytes_Received" />
+                                        <ParameterRefEntry parameterRef="C3_L_RX_Valid_Packets" />
+                                        <ParameterRefEntry parameterRef="C3_L_RX_RSSI" />
+                                        <ParameterRefEntry parameterRef="C3_L_TX_PLL_Lock" />
+                                        <ParameterRefEntry parameterRef="C3_UHF_TX_Temperature" />
+                                        <ParameterRefEntry parameterRef="C3_UHF_TX_FWD_Power" />
+                                        <ParameterRefEntry parameterRef="C3_UHF_TX_REV_Power" />
+                                        <ParameterRefEntry parameterRef="C3_UHF_RX_Bytes_Received" />
+                                        <ParameterRefEntry parameterRef="C3_UHF_RX_Valid_Packets" />
+                                        <ParameterRefEntry parameterRef="C3_UHF_RX_RSSI" />
+                                        <ParameterRefEntry parameterRef="C3_UHF_RX_PLL_Lock" />
+                                        <ParameterRefEntry parameterRef="C3_FW_Bank" />
+                                        <ParameterRefEntry parameterRef="C3_CAN1" />
+                                        <ParameterRefEntry parameterRef="C3_CAN2" />
+                                        <ParameterRefEntry parameterRef="C3_OPD_State" />
+                                        <ParameterRefEntry parameterRef="C3_OPD_Current" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Vbatt" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Vcell" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Max" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Min" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Vcell_1" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Vcell_2" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Avg" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Temperature" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Avg" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Max" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Min" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Current" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Current_Avg" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Current_Max" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Current_Min" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_State" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Reported_State_of_Charge" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Full_Capacity" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Reported_Capacity" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Vbatt" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Vcell" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Max" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Min" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Vcell_1" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Vcell_2" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Avg" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Temperature" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Avg" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Max" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Min" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Current" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Current_Avg" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Current_Max" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Current_Min" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_State" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Reported_State_of_Charge" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Full_Capacity" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Reported_Capacity" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_X_Voltage_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_X_Current_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_X_Power_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_X_Voltage_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_X_Current_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_X_Power_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_X_Energy" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_Y_Voltage_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_Y_Current_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_Y_Power_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_Y_Voltage_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_Y_Current_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_Y_Power_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Neg_Y_Energy" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_X_Voltage_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_X_Current_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_X_Power_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_X_Voltage_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_X_Current_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_X_Power_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_X_Energy" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_Y_Voltage_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_Y_Current_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_Y_Power_Avg" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_Y_Voltage_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_Y_Current_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_Y_Power_Max" />
+                                        <ParameterRefEntry parameterRef="Solar_Pos_Y_Energy" />
+                                        <ParameterRefEntry parameterRef="Star_Tracker_Emmc_Capacity" />
+                                        <ParameterRefEntry parameterRef="Star_Tracker_Readable_files" />
+                                        <ParameterRefEntry parameterRef="Star_Tracker_Updater_Status" />
+                                        <ParameterRefEntry parameterRef="Star_Tracker_Updates_Cached" />
+                                        <ParameterRefEntry parameterRef="Star_Tracker_Right_Ascension" />
+                                        <ParameterRefEntry parameterRef="Star_Tracker_Declination" />
+                                        <ParameterRefEntry parameterRef="Star_Tracker_Roll" />
+                                        <ParameterRefEntry parameterRef="Star_Tracker_Last_Packet_Timestamp" />
+                                        <ParameterRefEntry parameterRef="GPS_Emmc_Capacity" />
+                                        <ParameterRefEntry parameterRef="GPS_Readable_files" />
+                                        <ParameterRefEntry parameterRef="GPS_Updater_Status" />
+                                        <ParameterRefEntry parameterRef="GPS_Updates_Cached" />
+                                        <ParameterRefEntry parameterRef="GPS_Status" />
+                                        <ParameterRefEntry parameterRef="GPS_Sat_Locked" />
+                                        <ParameterRefEntry parameterRef="GPS_Position_X" />
+                                        <ParameterRefEntry parameterRef="GPS_Position_Y" />
+                                        <ParameterRefEntry parameterRef="GPS_Position_Z" />
+                                        <ParameterRefEntry parameterRef="GPS_Velocity_X" />
+                                        <ParameterRefEntry parameterRef="GPS_Velocity_Y" />
+                                        <ParameterRefEntry parameterRef="GPS_Velocity_Z" />
+                                        <ParameterRefEntry parameterRef="GPS_Last_Packet_Timestamp" />
+                                        <ParameterRefEntry parameterRef="ADS_Gryo_Roll_Dot" />
+                                        <ParameterRefEntry parameterRef="ADS_Gryo_Pitch_Dot" />
+                                        <ParameterRefEntry parameterRef="ADS_Gryo_Yaw_Dot" />
+                                        <ParameterRefEntry parameterRef="ADS_Gryo_Imu_Temp" />
+                                        <ParameterRefEntry parameterRef="Dxwifi_Emmc_Capacity" />
+                                        <ParameterRefEntry parameterRef="Dxwifi_Readable_files" />
+                                        <ParameterRefEntry parameterRef="Dxwifi_Updater_Status" />
+                                        <ParameterRefEntry parameterRef="Dxwifi_Updates_Cached" />
+                                        <ParameterRefEntry parameterRef="Dxwifi_Transmitting" />
+					<ParameterRefEntry parameterRef="APRS_CRC32" />
+				</EntryList>
+			</SequenceContainer>
+		</ContainerSet>
+	</TelemetryMetaData>
+	<CommandMetaData>
+	</CommandMetaData>
+</SpaceSystem>
