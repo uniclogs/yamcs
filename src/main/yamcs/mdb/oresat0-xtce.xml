@@ -319,5 +319,32 @@
 		</ContainerSet>
 	</TelemetryMetaData>
 	<CommandMetaData>
+                <ArgumentTypeSet>
+		</ArgumentTypeSet>
+		<MetaCommandSet>
+			<MetaCommand name="EDL_Tx_Disable">
+				<CommandContainer name="EDL_Tx_Disable">
+					<EntryList>
+						<FixedValueEntry binaryValue="C4F53800000E0000E50000" sizeInBits="88" />
+                                        </EntryList>
+				</CommandContainer>
+				<DefaultSignificance consequenceLevel="vital" />
+			</MetaCommand>
+			<MetaCommand name="EDL_File_Upload">
+				<CommandContainer name="EDL_File_Upload">
+                                        <EntryList>
+                                                <FixedValueEntry binaryValue="C4F53002004A00E57465" sizeInBits="80" />
+                                                <FixedValueEntry binaryValue="7374322E747874000000" sizeInBits="80" />
+                                                <FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80" />
+                                                <FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80" />
+                                                <FixedValueEntry binaryValue="00000000180000000123" sizeInBits="80" />
+                                                <FixedValueEntry binaryValue="456789ABCDEF01234567" sizeInBits="80" />
+                                                <FixedValueEntry binaryValue="89ABCDEF0123456789AB" sizeInBits="80" />
+        ~
+                                        </EntryList>
+                                </CommandContainer>
+				<DefaultSignificance consequenceLevel="vital" />
+			</MetaCommand>
+		</MetaCommandSet>
 	</CommandMetaData>
 </SpaceSystem>
