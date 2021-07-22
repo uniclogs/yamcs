@@ -2,6 +2,7 @@ package org.oresat.uniclogs;
 
 import java.nio.ByteOrder;
 import java.util.Arrays;
+import java.util.zip.CRC32;
 
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
@@ -38,6 +39,8 @@ public class AprsPacketPreprocessor extends AbstractPacketPreprocessor {
     public TmPacket process(TmPacket tmPacket) {
         byte[] packet = tmPacket.getPacket();
         boolean corrupted = false;
+        long packetCheckword = 0;
+        long computedCheckword = 0;
 
         if (packet.length < 17) { // Expect at least the length of APRS header
             eventProducer.sendWarning("SHORT_PACKET",
@@ -46,6 +49,40 @@ public class AprsPacketPreprocessor extends AbstractPacketPreprocessor {
             return null;
         }
 
+        try {
+            int n = packet.length;
+
+            // computed crc32
+            byte[] packetData = Arrays.copyOfRange(packet, 17, n - 4);
+            CRC32 crc32 = new CRC32();
+            crc32.update(packetData);
+            computedCheckword = crc32.getValue();
+
+            // read crc32 from packet
+            if (byteOrder == ByteOrder.BIG_ENDIAN) {
+                packetCheckword = ((((long)packet[n - 1]) & 0xFF) << 24) +
+                    ((((long)packet[n - 2]) & 0xFF) << 16) +
+                    ((((long)packet[n - 3]) & 0xFF) << 8) +
+                    ((((long)packet[n - 4]) & 0xFF));
+            } else {
+                packetCheckword = ((((long)packet[n - 4]) & 0xFF) << 24) + 
+                    ((((long)packet[n - 3]) & 0xFF) << 16) +
+                    ((((long)packet[n - 2]) & 0xFF) << 8) +
+                    ((((long)packet[n - 1]) & 0xFF));
+            }
+
+            if (packetCheckword != computedCheckword) {
+                eventProducer.sendWarning("CORRUPTED_PACKET",
+                        "Corrupted packet received, computed checkword: " + computedCheckword
+                                + "; packet checkword: " + packetCheckword);
+                corrupted = true;
+            }
+        } catch (IllegalArgumentException e) {
+            eventProducer.sendWarning("CORRUPTED_PACKET", "Error when computing checkword: " + e.getMessage());
+            corrupted = true;
+        }
+
+        // get generated time
         long gentime;
         if (timestampOffset < 0) {
             gentime = TimeEncoding.getWallclockTime();
