@@ -340,7 +340,7 @@
                                                 <FixedValueEntry binaryValue="00000000180000000123" sizeInBits="80" />
                                                 <FixedValueEntry binaryValue="456789ABCDEF01234567" sizeInBits="80" />
                                                 <FixedValueEntry binaryValue="89ABCDEF0123456789AB" sizeInBits="80" />
-        ~
+                                                <FixedValueEntry binaryValue="CDEF" sizeInBits="16" />
                                         </EntryList>
                                 </CommandContainer>
 				<DefaultSignificance consequenceLevel="vital" />
