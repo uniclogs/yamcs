@@ -42,9 +42,9 @@ public class AprsPacketPreprocessor extends AbstractPacketPreprocessor {
         long packetCheckword = 0;
         long computedCheckword = 0;
 
-        if (packet.length < 17) { // Expect at least the length of APRS header
+        if (packet.length < 16) { // Expect at least the length of APRS header
             eventProducer.sendWarning("SHORT_PACKET",
-                    "Short packet received, length: " + packet.length + "; minimum required length is 17 bytes.");
+                    "Short packet received, length: " + packet.length + "; minimum required length is 16 bytes.");
             // If we return null, the packet is dropped.
             return null;
         }
@@ -53,7 +53,7 @@ public class AprsPacketPreprocessor extends AbstractPacketPreprocessor {
             int n = packet.length;
 
             // computed crc32
-            byte[] packetData = Arrays.copyOfRange(packet, 17, n - 4);
+            byte[] packetData = Arrays.copyOfRange(packet, 16, n - 4);
             CRC32 crc32 = new CRC32();
             crc32.update(packetData);
             computedCheckword = crc32.getValue();

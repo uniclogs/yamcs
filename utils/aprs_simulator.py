@@ -9,9 +9,20 @@ from time import sleep
 def send_tm(simulator):
     tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+    dest = "SPACE "
+    dest_ssid = 0
+    src = "KJ7SAT"
+    src_ssid = 0
+    control = 0
+    sid = 0
+
+    packet_header = dest.encode() + dest_ssid.to_bytes(1, 'little') + \
+        src.encode() + src_ssid.to_bytes(1, 'little') + \
+        control.to_bytes(1, 'little') + sid.to_bytes(1, 'little')
+    print(len(packet_header))
+
     simulator.tm_counter = 1
     while True:
-        packet_header = bytearray(os.urandom(17))
         packet_data = bytearray(os.urandom(238))
         calc_crc = binascii.crc32(packet_data)
         packet = packet_header + packet_data + calc_crc.to_bytes(4, 'little')
