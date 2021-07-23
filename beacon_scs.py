@@ -27,14 +27,13 @@ def main():
     ser = Serial(tty, 38400, timeout=15.0)
     tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-    # CSC extracts the header and send it as a seperate message decode
-    # This is to make fake header
     dest = "SPACE "
     dest_ssid = 0
     src = "KJ7SAT"
     src_ssid = 0
     control = 0
     sid = 0
+
     packet_header = dest.encode() + dest_ssid.to_bytes(1, 'little') + \
         src.encode() + src_ssid.to_bytes(1, 'little') + \
         control.to_bytes(1, 'little') + sid.to_bytes(1, 'little')
@@ -47,7 +46,9 @@ def main():
             break
 
         if len(line) < 242:
-            continue  # line is header
+            continue # line is header
+
+        print(len(line)-2)
 
         # merge header and payload together
         # strip the carriage return and newline.
