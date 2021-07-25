@@ -32,6 +32,54 @@
 					<Enumeration value="70" label="EDL" />
 				</EnumerationList>
 			</EnumeratedParameterType>
+			<EnumeratedParameterType name="olu_states">
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="8" />
+				<EnumerationList>
+                                        <Enumeration value="0" label="Standby" />
+					<Enumeration value="1" label="Update" />
+					<Enumeration value="2" label="Update_Failed" />
+					<Enumeration value="3" label="Status_File" />
+				</EnumerationList>
+			</EnumeratedParameterType>
+			<EnumeratedParameterType name="gps_status">
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="8" />
+				<EnumerationList>
+                                        <Enumeration value="0" label="Searching" />
+					<Enumeration value="1" label="Locked" />
+					<Enumeration value="2" label="Hardware_Error" />
+					<Enumeration value="3" label="Parser_Error" />
+				</EnumerationList>
+			</EnumeratedParameterType>
+			<EnumeratedParameterType name="bit_on_off">
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="1" />
+				<EnumerationList>
+					<Enumeration value="0" label="On" />
+					<Enumeration value="1" label="Off" />
+				</EnumerationList>
+			</EnumeratedParameterType>
+			<EnumeratedParameterType name="bit_disabled_enabled">
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="1" />
+				<EnumerationList>
+					<Enumeration value="0" label="Disabled" />
+					<Enumeration value="1" label="Enabled" />
+				</EnumerationList>
+			</EnumeratedParameterType>
+			<BooleanParameterType name="bool_1bit">
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="1" />
+			</BooleanParameterType>
+			<BooleanParameterType name="bool_4bit">
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="4" />
+			</BooleanParameterType>
+			<BooleanParameterType name="bool_8bit">
+				<UnitSet />
+				<IntegerDataEncoding sizeInBits="8" />
+			</BooleanParameterType>
 			<IntegerParameterType name="int8_t" signed="true">
 				<UnitSet />
 				<IntegerDataEncoding encoding="twosComplement" sizeInBits="8" />
@@ -145,6 +193,30 @@
 				</UnitSet>
 				<IntegerDataEncoding encoding="unsigned" sizeInBits="8" />
 			</IntegerParameterType>
+                        <FloatParameterType name="c3_voltage" sizeInBits="32">
+                                <UnitSet>
+                                        <Unit description="Volts">v</Unit>
+                                </UnitSet>
+                                <IntegerDataEncoding bitOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8">
+                                        <DefaultCalibrator>
+                                                <PolynomialCalibrator>
+                                                        <Term exponent="1" coefficient="0.02"/>
+                                                </PolynomialCalibrator>
+                                        </DefaultCalibrator>
+                                </IntegerDataEncoding>
+                        </FloatParameterType>
+                        <FloatParameterType name="c3_current" sizeInBits="32">
+                                <UnitSet>
+                                        <Unit description="milliAmps">mA</Unit>
+                                </UnitSet>
+                                <IntegerDataEncoding bitOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8">
+                                        <DefaultCalibrator>
+                                                <PolynomialCalibrator>
+                                                        <Term exponent="1" coefficient="0.02"/>
+                                                </PolynomialCalibrator>
+                                        </DefaultCalibrator>
+                                </IntegerDataEncoding>
+                        </FloatParameterType>
 		</ParameterTypeSet>
                 <ParameterSet>
 			<Parameter name="APRS_Dest_Callsign" parameterTypeRef="callsign_t" />
@@ -156,12 +228,12 @@
                         <Parameter name="APRS_Data_Type_Id" parameterTypeRef="data_type_id_t" shortDescription=" User-Defined APRS packet format" />
                         <Parameter name="APRS_Revision" parameterTypeRef="uint8_t" />
                         <Parameter name="C3_M4_State" parameterTypeRef="c3_states" />
-                        <Parameter name="C3_M4_Uptime" parameterTypeRef="uint32_t" />
+                        <Parameter name="C3_M4_Uptime" parameterTypeRef="second_uint32" />
                         <Parameter name="C3_RTC_Time" parameterTypeRef="second_uint32" />
                         <Parameter name="C3_M4_Temperature" parameterTypeRef="temp_int8" />
-                        <Parameter name="C3_M4_Ref_Voltage" parameterTypeRef="uint8_t" />
-                        <Parameter name="C3_M4_Vbusp_Voltage" parameterTypeRef="uint8_t" />
-                        <Parameter name="C3_M4_Vbusp_Current" parameterTypeRef="uint8_t" />
+                        <Parameter name="C3_M4_Ref_Voltage" parameterTypeRef="c3_voltage" />
+                        <Parameter name="C3_M4_Vbusp_Voltage" parameterTypeRef="c3_voltage" />
+                        <Parameter name="C3_M4_Vbusp_Current" parameterTypeRef="c3_current" />
                         <Parameter name="C3_WDT_Num_Timeouts" parameterTypeRef="uint16_t" />
                         <Parameter name="C3_Emmc_Capacity" parameterTypeRef="percent_uint8" />
                         <Parameter name="C3_L_RX_Bytes_Received" parameterTypeRef="uint32_t" />
@@ -179,7 +251,7 @@
                         <Parameter name="C3_CAN1" parameterTypeRef="uint8_t" />
                         <Parameter name="C3_CAN2" parameterTypeRef="uint8_t" />
                         <Parameter name="C3_OPD_Current" parameterTypeRef="uint8_t" />
-                        <Parameter name="C3_OPD_State" parameterTypeRef="uint8_t" shortDescription="OPDs that are currently on" />
+                        <Parameter name="C3_OPD_State" parameterTypeRef="uint8_t" />
                         <Parameter name="Battery_Pack1_Vbatt" parameterTypeRef="volt_uint16" />
                         <Parameter name="Battery_Pack1_Vcell" parameterTypeRef="volt_uint16" />
                         <Parameter name="Battery_Pack1_Vcell_Max" parameterTypeRef="volt_uint16" />
@@ -195,7 +267,11 @@
                         <Parameter name="Battery_Pack1_Current_Avg" parameterTypeRef="current_int16" />
                         <Parameter name="Battery_Pack1_Current_Max" parameterTypeRef="current_int16" />
                         <Parameter name="Battery_Pack1_Current_Min" parameterTypeRef="current_int16" />
-                        <Parameter name="Battery_Pack1_State" parameterTypeRef="uint8_t" />
+                        <Parameter name="Battery_Pack1_Heater" parameterTypeRef="bit_on_off" />
+                        <Parameter name="Battery_Pack1_Discharge" parameterTypeRef="bit_disabled_enabled" />
+                        <Parameter name="Battery_Pack1_Charge" parameterTypeRef="bit_disabled_enabled" />
+                        <Parameter name="Battery_Pack1_Discharging" parameterTypeRef="bool_1bit" />
+                        <Parameter name="Battery_Pack1_Charging" parameterTypeRef="bool_4bit" />
                         <Parameter name="Battery_Pack1_Reported_State_of_Charge" parameterTypeRef="percent_uint8" />
                         <Parameter name="Battery_Pack1_Full_Capacity" parameterTypeRef="capacity_uint16" />
                         <Parameter name="Battery_Pack1_Reported_Capacity" parameterTypeRef="capacity_uint16" />
@@ -214,7 +290,11 @@
                         <Parameter name="Battery_Pack2_Current_Avg" parameterTypeRef="current_int16" />
                         <Parameter name="Battery_Pack2_Current_Max" parameterTypeRef="current_int16" />
                         <Parameter name="Battery_Pack2_Current_Min" parameterTypeRef="current_int16" />
-                        <Parameter name="Battery_Pack2_State" parameterTypeRef="uint8_t" />
+                        <Parameter name="Battery_Pack2_Heater" parameterTypeRef="bit_on_off" />
+                        <Parameter name="Battery_Pack2_Discharge" parameterTypeRef="bit_disabled_enabled" />
+                        <Parameter name="Battery_Pack2_Charge" parameterTypeRef="bit_disabled_enabled" />
+                        <Parameter name="Battery_Pack2_Discharging" parameterTypeRef="bool_1bit" />
+                        <Parameter name="Battery_Pack2_Charging" parameterTypeRef="bool_4bit" />
                         <Parameter name="Battery_Pack2_Reported_State_of_Charge" parameterTypeRef="percent_uint8" />
                         <Parameter name="Battery_Pack2_Full_Capacity" parameterTypeRef="capacity_uint16" />
                         <Parameter name="Battery_Pack2_Reported_Capacity" parameterTypeRef="capacity_uint16" />
@@ -248,7 +328,7 @@
                         <Parameter name="Solar_Pos_Y_Energy" parameterTypeRef="joules_uint16" />
                         <Parameter name="Star_Tracker_Emmc_Capacity" parameterTypeRef="percent_uint8" />
                         <Parameter name="Star_Tracker_Readable_Files" parameterTypeRef="uint8_t" />
-                        <Parameter name="Star_Tracker_Updater_Status" parameterTypeRef="uint8_t" />
+                        <Parameter name="Star_Tracker_Updater_Status" parameterTypeRef="olu_states" />
                         <Parameter name="Star_Tracker_Updates_Cached" parameterTypeRef="uint8_t" />
                         <Parameter name="Star_Tracker_Right_Ascension" parameterTypeRef="int16_t" />
                         <Parameter name="Star_Tracker_Declination" parameterTypeRef="int16_t" />
@@ -256,9 +336,9 @@
                         <Parameter name="Star_Tracker_Last_Packet_Timestamp" parameterTypeRef="millisecond_uint32" />
                         <Parameter name="GPS_Emmc_Capacity" parameterTypeRef="percent_uint8" />
                         <Parameter name="GPS_Readable_Files" parameterTypeRef="uint8_t" />
-                        <Parameter name="GPS_Updater_Status" parameterTypeRef="uint8_t" />
+                        <Parameter name="GPS_Updater_Status" parameterTypeRef="olu_states" />
                         <Parameter name="GPS_Updates_Cached" parameterTypeRef="uint8_t" />
-                        <Parameter name="GPS_Status" parameterTypeRef="uint8_t" />
+                        <Parameter name="GPS_Status" parameterTypeRef="gps_status" />
                         <Parameter name="GPS_Sat_Locked" parameterTypeRef="uint8_t" />
                         <Parameter name="GPS_Position" parameterTypeRef="vec3_t" />
                         <Parameter name="GPS_Velocity" parameterTypeRef="vec3_t" />
@@ -269,7 +349,7 @@
                         <Parameter name="ADS_Gryo_Imu_Temp" parameterTypeRef="temp_int8" />
                         <Parameter name="Dxwifi_Emmc_Capacity" parameterTypeRef="percent_uint8" />
                         <Parameter name="Dxwifi_Readable_Files" parameterTypeRef="uint8_t" />
-                        <Parameter name="Dxwifi_Updater_Status" parameterTypeRef="uint8_t" />
+                        <Parameter name="Dxwifi_Updater_Status" parameterTypeRef="olu_states" />
                         <Parameter name="Dxwifi_Updates_Cached" parameterTypeRef="uint8_t" />
                         <Parameter name="Dxwifi_Transmitting" parameterTypeRef="bool_t" />
                         <Parameter name="APRS_CRC32" parameterTypeRef="uint32_t" />
@@ -325,7 +405,11 @@
                                         <ParameterRefEntry parameterRef="Battery_Pack1_Current_Avg" />
                                         <ParameterRefEntry parameterRef="Battery_Pack1_Current_Max" />
                                         <ParameterRefEntry parameterRef="Battery_Pack1_Current_Min" />
-                                        <ParameterRefEntry parameterRef="Battery_Pack1_State" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Heater" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Discharge" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Charge" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Discharging" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack1_Charging" />
                                         <ParameterRefEntry parameterRef="Battery_Pack1_Reported_State_of_Charge" />
                                         <ParameterRefEntry parameterRef="Battery_Pack1_Full_Capacity" />
                                         <ParameterRefEntry parameterRef="Battery_Pack1_Reported_Capacity" />
@@ -344,7 +428,11 @@
                                         <ParameterRefEntry parameterRef="Battery_Pack2_Current_Avg" />
                                         <ParameterRefEntry parameterRef="Battery_Pack2_Current_Max" />
                                         <ParameterRefEntry parameterRef="Battery_Pack2_Current_Min" />
-                                        <ParameterRefEntry parameterRef="Battery_Pack2_State" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Heater" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Discharge" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Charge" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Discharging" />
+                                        <ParameterRefEntry parameterRef="Battery_Pack2_Charging" />
                                         <ParameterRefEntry parameterRef="Battery_Pack2_Reported_State_of_Charge" />
                                         <ParameterRefEntry parameterRef="Battery_Pack2_Full_Capacity" />
                                         <ParameterRefEntry parameterRef="Battery_Pack2_Reported_Capacity" />
