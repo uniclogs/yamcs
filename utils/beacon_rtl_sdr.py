@@ -1,14 +1,20 @@
-#!/usr/bin/python3
-"""Print parsed C3 beacon from SCS"""
+#!/usr/bin/env python3
+"""Send C3 beacon to Yamcs with rtl-sdr
 
-import kiss
+Linux package dependencies:
+    rtl-sdr direwolf
+
+Python library dependencies:
+    kiss bitstring
+"""
+
 import time
 from subprocess import Popen
 import subprocess
 import sys
-import logging
-import bitstring
 import socket
+import kiss
+import bitstring
 
 # start the rtl_fm and direwolf commands
 rtl_fm_args = ["rtl_fm", "-Mfm", "-f436.5M", "-p48.1", "-s96000", "-g30", "-"]
@@ -18,11 +24,11 @@ direwolf_cmd = Popen(direwolf_args, stdin=rtl_fm_cmd.stdout, stdout=subprocess.D
 tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 
-def parse_packet(x):
+def send_packet(x):
     # get the TNC command. We only support 0x00 data from
     cmd = x[0]
     if cmd != 0:
-        logging.error("unknown command: " + str(cmd))
+        print("Unknown command: {}".format(str(cmd)))
         return
 
     # decode the 14 byte address fields with the callsigned and SSIDs. The
@@ -42,13 +48,14 @@ def read_kiss_forever():
     time.sleep(0.5)
     k = kiss.TCPKISS("localhost", 8001)
     k.start()  # start the TCP TNC connection
-    k.read(callback=parse_packet)  # set the TNC read callback
+    k.read(callback=send_packet)  # set the TNC read callback
 
 
-try:
-    read_kiss_forever()
-except KeyboardInterrupt:
-    print("killing rtl_fm and direwolf...")
-    rtl_fm_cmd.terminate()
-    direwolf_cmd.terminate()
-    sys.exit()
+if __name__ == '__main__':
+    try:
+        read_kiss_forever()
+    except KeyboardInterrupt:
+        print("killing rtl_fm and direwolf...")
+        rtl_fm_cmd.terminate()
+        direwolf_cmd.terminate()
+        sys.exit()

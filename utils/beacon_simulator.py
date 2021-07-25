@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+"""Generate C3 beacons and send to Yamcs"""
+
 import binascii
 import os
 import socket

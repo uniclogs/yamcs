@@ -1,9 +1,12 @@
-#!/usr/bin/python3
-"""Sned packet from SCS to Yamcs"""
+#!/usr/bin/env python3
+"""Send C3 beacon to Yamcs from SCS
+
+Python library dependencies:
+    serial
+"""
 
 import sys
 import socket
-from threading import Thread
 from serial import Serial, SerialException
 
 TTY = '/dev/serial/by-id/usb-SCS_SCS_Tracker___DSP_TNC_PT2HJ743-if00-port0'
@@ -56,22 +59,10 @@ def send_tm(ser: Serial):
         tm_socket.sendto(packet, ('127.0.0.1', 10015))
 
 
-def receive_tc(ser: Serial):
-    tc_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    tc_socket.bind(('127.0.0.1', 10025))
-    while True:
-        data, _ = tc_socket.recvfrom(4096)
-        ser.write(data)
-
-
 if __name__ == '__main__':
     ser = Serial(TTY, 38400, timeout=15.0)
 
-    tm_thread = Thread(target=send_tm, args=(ser,))
-    tm_thread.daemon = True
-
     try:
-        tm_thread.start()
-        receive_tc(ser)
+        send_tm(ser)
     except KeyboardInterrupt:
         sys.exit(0)
