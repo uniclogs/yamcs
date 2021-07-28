@@ -1,0 +1,874 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "panels": [],
+      "title": "OreSat0",
+      "type": "row"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "gridPos": {
+        "h": 8,
+        "w": 7,
+        "x": 0,
+        "y": 1
+      },
+      "id": 4,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": false,
+        "showLabels": false,
+        "showTime": false,
+        "sortOrder": "Descending",
+        "wrapLogMessage": false
+      },
+      "pluginVersion": "8.0.6",
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/APRS_Src_Callsign",
+          "queryType": "ParameterValue",
+          "refId": "A",
+          "valueKind": "ENGINEERING"
+        }
+      ],
+      "title": "Tx Callsign",
+      "transparent": true,
+      "type": "logs"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 300,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 7,
+        "y": 1
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.0.6",
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/C3_CAN1",
+          "queryType": "ParameterValueHistory",
+          "refId": "A"
+        },
+        {
+          "hide": false,
+          "maxPages": 1,
+          "parameter": "/oresat0/C3_CAN2",
+          "queryType": "ParameterValueHistory",
+          "refId": "B"
+        }
+      ],
+      "title": "CAN Bus Traffic",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "time"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "/oresat0/C3_CAN1": true,
+              "/oresat0/C3_CAN2": true,
+              "monitoringResult 1": true,
+              "monitoringResult 2": true,
+              "rangeCondition 1": true,
+              "rangeCondition 2": true,
+              "status 1": true,
+              "status 2": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "raw:///oresat0/C3_CAN1": "CAN1 Bytes Sent",
+              "raw:///oresat0/C3_CAN2": "CAN2 Bytes Sent",
+              "status 1": "",
+              "time": "Time"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 13,
+        "y": 1
+      },
+      "id": 21,
+      "options": {
+        "showHeader": true
+      },
+      "pluginVersion": "8.0.6",
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/C3_M4_Uptime",
+          "queryType": "ParameterValue",
+          "refId": "A",
+          "stats": [
+            "AVG"
+          ],
+          "valueKind": "ENGINEERING"
+        }
+      ],
+      "title": "Uptime",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "monitoringResult": true,
+              "rangeCondition": true,
+              "status": true,
+              "time": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "/oresat0/C3_M4_Uptime": "Uptime",
+              "time": "Time"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "table"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "lineWidth": 0
+          },
+          "mappings": [
+            {
+              "options": {
+                "BEACON": {
+                  "color": "blue",
+                  "index": 4
+                },
+                "DEPLOY": {
+                  "color": "green",
+                  "index": 2
+                },
+                "EDL": {
+                  "color": "orange",
+                  "index": 5
+                },
+                "PREDEPLOY": {
+                  "color": "red",
+                  "index": 1
+                },
+                "STANDBY": {
+                  "color": "yellow",
+                  "index": 3
+                },
+                "UNDEF": {
+                  "color": "red",
+                  "index": 0
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "string"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 11,
+        "x": 13,
+        "y": 4
+      },
+      "id": 23,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "right"
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/C3_M4_State",
+          "queryType": "ParameterValueHistory",
+          "refId": "A"
+        }
+      ],
+      "title": "C3 State",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "monitoringResult": true,
+              "rangeCondition": true,
+              "raw:///oresat0/C3_M4_State": true,
+              "status": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "/oresat0/C3_M4_State": "State",
+              "time": "Time"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "state-timeline"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 300,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 7,
+        "y": 5
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "8.0.6",
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/C3_L_RX_Valid_Packets",
+          "queryType": "ParameterValueHistory",
+          "refId": "A"
+        },
+        {
+          "hide": false,
+          "maxPages": 1,
+          "parameter": "/oresat0/C3_L_TX_PLL_Lock",
+          "queryType": "ParameterValueHistory",
+          "refId": "B"
+        }
+      ],
+      "title": "L-Band Traffic",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "time"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "/oresat0/C3_CAN1": true,
+              "/oresat0/C3_CAN2": true,
+              "/oresat0/C3_L_RX_Bytes_Received": true,
+              "/oresat0/C3_L_RX_Valid_Packets": true,
+              "/oresat0/C3_L_TX_PLL_Lock": true,
+              "monitoringResult 1": true,
+              "monitoringResult 2": true,
+              "rangeCondition 1": true,
+              "rangeCondition 2": true,
+              "status 1": true,
+              "status 2": true
+            },
+            "indexByName": {
+              "/oresat0/C3_L_RX_Valid_Packets": 10,
+              "/oresat0/C3_L_TX_PLL_Lock": 6,
+              "monitoringResult 1": 3,
+              "monitoringResult 2": 7,
+              "rangeCondition 1": 4,
+              "rangeCondition 2": 8,
+              "raw:///oresat0/C3_L_RX_Valid_Packets": 2,
+              "raw:///oresat0/C3_L_TX_PLL_Lock": 1,
+              "status 1": 5,
+              "status 2": 9,
+              "time": 0
+            },
+            "renameByName": {
+              "/oresat0/C3_L_RX_Bytes_Received": "",
+              "raw:///oresat0/C3_CAN1": "CAN1 Bytes Sent",
+              "raw:///oresat0/C3_CAN2": "CAN2 Bytes Sent",
+              "raw:///oresat0/C3_L_RX_Bytes_Received": "Rx",
+              "raw:///oresat0/C3_L_RX_Valid_Packets": "Rx",
+              "raw:///oresat0/C3_L_TX_PLL_Lock": "Tx",
+              "status 1": "",
+              "time": "Time"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "stat"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 6,
+      "panels": [],
+      "title": "Battery 1",
+      "type": "row"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 70,
+            "lineWidth": 0
+          },
+          "mappings": [
+            {
+              "options": {
+                "Disabled": {
+                  "color": "red",
+                  "index": 1,
+                  "text": "Not Charging"
+                },
+                "Enabled": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "Charging"
+                },
+                "false": {
+                  "color": "blue",
+                  "index": 3,
+                  "text": "Not Discharging"
+                },
+                "true": {
+                  "color": "orange",
+                  "index": 2,
+                  "text": "Discharging"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 0,
+        "y": 10
+      },
+      "hideTimeOverride": true,
+      "id": 8,
+      "interval": "5s",
+      "maxDataPoints": 1,
+      "options": {
+        "alignValue": "left",
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "mergeValues": true,
+        "rowHeight": 0.9,
+        "showValue": "auto",
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/Battery_Pack1_Charge",
+          "queryType": "ParameterValueHistory",
+          "refId": "A"
+        },
+        {
+          "hide": false,
+          "maxPages": 1,
+          "parameter": "/oresat0/Battery_Pack1_Discharging",
+          "queryType": "ParameterValueHistory",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": "10m",
+      "timeShift": "10m",
+      "title": "Battery Status",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "time"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "/oresat0/Battery_Pack1_Discharging": false,
+              "monitoringResult 1": true,
+              "monitoringResult 2": true,
+              "rangeCondition 1": true,
+              "rangeCondition 2": true,
+              "raw:///oresat0/Battery_Pack1_Charge": true,
+              "raw:///oresat0/Battery_Pack1_Discharging": true,
+              "status 1": true,
+              "status 2": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "/oresat0/Battery_Pack1_Charge": "Charging State",
+              "/oresat0/Battery_Pack1_Discharging": "Discharging State",
+              "raw:///oresat0/Battery_Pack1_Charge": "",
+              "time": "Time"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "state-timeline"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 40000,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 15000
+              },
+              {
+                "color": "#EAB839",
+                "value": 25000
+              },
+              {
+                "color": "green",
+                "value": 35000
+              }
+            ]
+          },
+          "unit": "mvolt"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 10
+      },
+      "id": 16,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.0.6",
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/Battery_Pack1_Vcell",
+          "queryType": "ParameterValue",
+          "refId": "A",
+          "valueKind": "RAW"
+        }
+      ],
+      "title": "Cell Voltage",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "monitoringResult": true,
+              "rangeCondition": true,
+              "raw:///oresat0/Battery_Pack1_Vcell": false,
+              "status": true,
+              "time": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "monitoringResult": "",
+              "rangeCondition": "",
+              "raw:///oresat0/Battery_Pack1_Vcell": "Voltage"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "gauge"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 3,
+          "mappings": [],
+          "max": 35000,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 10000
+              },
+              {
+                "color": "red",
+                "value": 25000
+              }
+            ]
+          },
+          "unit": "mamp"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 10
+      },
+      "id": 10,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.0.6",
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/Battery_Pack1_Current",
+          "queryType": "ParameterValueHistory",
+          "refId": "A"
+        }
+      ],
+      "title": "Current Flow",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "/oresat0/Battery_Pack1_Current": true,
+              "monitoringResult": false,
+              "rangeCondition": true,
+              "raw:///oresat0/Battery_Pack1_Current": false,
+              "status": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "/oresat0/Battery_Pack1_Current": "",
+              "raw:///oresat0/Battery_Pack1_Current": "Current",
+              "time": "Time"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "gauge"
+    },
+    {
+      "datasource": null,
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 0,
+          "mappings": [],
+          "max": 35000,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 25000
+              },
+              {
+                "color": "red",
+                "value": 30000
+              }
+            ]
+          },
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 10
+      },
+      "id": 14,
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": true,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "8.0.6",
+      "targets": [
+        {
+          "maxPages": 1,
+          "parameter": "/oresat0/Battery_Pack1_Temperature",
+          "queryType": "ParameterValue",
+          "refId": "A",
+          "stats": [
+            "AVG"
+          ],
+          "valueKind": "RAW"
+        }
+      ],
+      "title": "Temperature",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "monitoringResult": true,
+              "rangeCondition": true,
+              "status": true,
+              "time": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "/oresat0/Battery_Pack1_Temperature": "Temperature",
+              "raw:///oresat0/Battery_Pack1_Temperature": "Temperature"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "gauge"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Telemetry",
+  "uid": "Zq9rfUZnk",
+  "version": 31
+}
