@@ -12,12 +12,28 @@
       }
     ]
   },
-  "description": "",
+  "description": "The FlatSat bench's live telemetry.",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [
+        "telemetry",
+        "flatsat"
+      ],
+      "targetBlank": true,
+      "title": "Telemetry",
+      "tooltip": "",
+      "type": "dashboards",
+      "url": ""
+    }
+  ],
   "panels": [
     {
       "collapsed": false,
@@ -47,7 +63,7 @@
         "dedupStrategy": "none",
         "enableLogDetails": false,
         "showLabels": false,
-        "showTime": false,
+        "showTime": true,
         "sortOrder": "Descending",
         "wrapLogMessage": false
       },
@@ -179,13 +195,10 @@
               {
                 "color": "green",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
-          }
+          },
+          "unit": "ms"
         },
         "overrides": []
       },
@@ -248,28 +261,28 @@
           "mappings": [
             {
               "options": {
-                "BEACON": {
-                  "color": "blue",
+                "Beacon": {
+                  "color": "dark-yellow",
                   "index": 4
                 },
-                "DEPLOY": {
-                  "color": "green",
+                "Deploy": {
+                  "color": "dark-green",
                   "index": 2
                 },
                 "EDL": {
-                  "color": "orange",
+                  "color": "dark-orange",
                   "index": 5
                 },
-                "PREDEPLOY": {
-                  "color": "red",
+                "Predeploy": {
+                  "color": "dark-blue",
                   "index": 1
                 },
-                "STANDBY": {
-                  "color": "yellow",
+                "Standby": {
+                  "color": "dark-purple",
                   "index": 3
                 },
-                "UNDEF": {
-                  "color": "red",
+                "Undefined": {
+                  "color": "dark-red",
                   "index": 0
                 }
               },
@@ -602,7 +615,7 @@
             "mode": "thresholds"
           },
           "mappings": [],
-          "max": 40000,
+          "max": 4000,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -612,16 +625,20 @@
                 "value": null
               },
               {
-                "color": "orange",
-                "value": 15000
+                "color": "yellow",
+                "value": 1500
               },
               {
-                "color": "#EAB839",
-                "value": 25000
+                "color": "dark-yellow",
+                "value": 2500
               },
               {
                 "color": "green",
-                "value": 35000
+                "value": 3500
+              },
+              {
+                "color": "dark-green",
+                "value": 4000
               }
             ]
           },
@@ -692,22 +709,26 @@
           },
           "decimals": 3,
           "mappings": [],
-          "max": 35000,
-          "min": 0,
+          "max": 10,
+          "min": -85,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-red",
                 "value": null
               },
               {
                 "color": "#EAB839",
-                "value": 10000
+                "value": -60
               },
               {
-                "color": "red",
-                "value": 25000
+                "color": "semi-dark-green",
+                "value": 1
+              },
+              {
+                "color": "dark-green",
+                "value": 10
               }
             ]
           },
@@ -777,22 +798,34 @@
           },
           "decimals": 0,
           "mappings": [],
-          "max": 35000,
+          "max": 100,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-blue",
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 25000
+                "color": "dark-green",
+                "value": 20
               },
               {
-                "color": "red",
-                "value": 30000
+                "color": "green",
+                "value": 30
+              },
+              {
+                "color": "#EAB839",
+                "value": 40
+              },
+              {
+                "color": "dark-orange",
+                "value": 50
+              },
+              {
+                "color": "dark-red",
+                "value": 60
               }
             ]
           },
@@ -858,7 +891,10 @@
   "refresh": "5s",
   "schemaVersion": 30,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "flatsat",
+    "telemetry"
+  ],
   "templating": {
     "list": []
   },
@@ -870,5 +906,5 @@
   "timezone": "browser",
   "title": "Telemetry",
   "uid": "Zq9rfUZnk",
-  "version": 31
+  "version": 46
 }
