@@ -10,6 +10,7 @@
 - Install dependencies `maven npm`
 - Run `$ mvn yamcs:run`
 - Open `http://localhost:8090` in a web browser.
+- Default `user:passwd` is `admin:admin`
 
 ## Resources
 
