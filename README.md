@@ -5,7 +5,13 @@
 
 [Yamcs] based mission control software for UniClOGS
 
-## How to use
+## How to run
+
+**Note:** On systems with older versions of Java, like Java v8, the
+`<release>11</release>` line in `pom.xml` will cause a release error. Change
+that line to `<!-- <release>11</release> -->`) to fix that error. This can't be
+merged in as that change will cause problems with newer versions of java that
+`uniclogs-yamcs` is more targeted for.
 
 - Install dependencies `maven npm`
 - Run `$ mvn yamcs:run`
