@@ -10,6 +10,7 @@ import socket
 from serial import Serial, SerialException
 
 TTY = '/dev/serial/by-id/usb-SCS_SCS_Tracker___DSP_TNC_PT2HJ743-if00-port0'
+BEACON_LEN = 242
 
 
 def _readline(ser: Serial):
@@ -42,19 +43,28 @@ def send_tm(ser: Serial):
         src.encode() + src_ssid.to_bytes(1, 'little') + \
         control.to_bytes(1, 'little') + sid.to_bytes(1, 'little')
 
-    while 1:
-        try:
-            line = _readline(ser)
-        except SerialException as exc:
-            print('Device error: {}\n'.format(exc))
-            break
+    while True:
+        message = b''
+        while len(message) < BEACON_LEN:
+            try:
+                line = _readline(ser)
+            except SerialException as exc:
+                print('Device error: {}\n'.format(exc))
+                break
 
-        if len(line) < 242:
+            # deal with message that have \r\n in the middle of it
+            if line.startswith('{{z'.encode()):
+                # found a new aprs header start new message
+                message = line
+            else:
+                message += line
+
+        if len(message) < BEACON_LEN:
             continue  # line is header
 
         # merge header and payload together
-        # strip the carriage return and newline.
-        packet = packet_header + line[:len(line)-2]
+        # remove the \r\n
+        packet = packet_header + message[:len(message)-2]
 
         tm_socket.sendto(packet, ('127.0.0.1', 10015))
 
