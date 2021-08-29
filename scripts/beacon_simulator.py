@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Generate C3 beacons and send to Yamcs"""
+"""Generate C3 beacons and send to Yamcs
+
+Python library dependencies:
+    bitstring
+"""
 
 import binascii
 import os
@@ -7,6 +11,8 @@ import socket
 import sys
 from threading import Thread
 from time import sleep
+
+import bitstring
 
 
 def send_tm(simulator):
@@ -17,12 +23,13 @@ def send_tm(simulator):
     src = "KJ7SAT"
     src_ssid = 0
     control = 0
-    sid = 0
+    pid = 0
 
     packet_header = dest.encode() + dest_ssid.to_bytes(1, 'little') + \
         src.encode() + src_ssid.to_bytes(1, 'little') + \
-        control.to_bytes(1, 'little') + sid.to_bytes(1, 'little')
-    print(len(packet_header))
+        control.to_bytes(1, 'little') + pid.to_bytes(1, 'little')
+
+    packet_header = (bitstring.BitArray(packet_header) << 1).bytes
 
     simulator.tm_counter = 1
     while True:

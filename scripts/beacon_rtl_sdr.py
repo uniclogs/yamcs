@@ -5,7 +5,7 @@ Linux package dependencies:
     rtl-sdr direwolf
 
 Python library dependencies:
-    kiss bitstring
+    kiss
 """
 
 import time
@@ -14,7 +14,6 @@ import subprocess
 import sys
 import socket
 import kiss
-import bitstring
 
 # start the rtl_fm and direwolf commands
 rtl_fm_args = ["rtl_fm", "-Mfm", "-f436.5M", "-p48.1", "-s96000", "-g30", "-"]
@@ -31,16 +30,8 @@ def send_packet(x):
         print("Unknown command: {}".format(str(cmd)))
         return
 
-    # decode the 14 byte address fields with the callsigned and SSIDs. The
-    # field is encoded shifted 1 but to the left, so shift it it to the right>
-    addr = x[1:15]
-    addr = (bitstring.BitArray(addr) >> 1).bytes
-
-    # readd the control and PID bytes
-    addr = addr + x[15:16] + x[16:17]
-
     # send fixed message
-    tm_socket.sendto(addr + x[17:], ('127.0.0.1', 10015))
+    tm_socket.sendto(x, ('127.0.0.1', 10015))
 
 
 def read_kiss_forever():

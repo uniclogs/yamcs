@@ -2,12 +2,14 @@
 """Send C3 beacon to Yamcs from SCS
 
 Python library dependencies:
-    serial
+    bitstring serial
 """
 
 import sys
 import socket
+
 from serial import Serial, SerialException
+import bitstring
 
 TTY = '/dev/serial/by-id/usb-SCS_SCS_Tracker___DSP_TNC_PT2HJ743-if00-port0'
 BEACON_LEN = 242
@@ -42,6 +44,8 @@ def send_tm(ser: Serial):
     packet_header = dest.encode() + dest_ssid.to_bytes(1, 'little') + \
         src.encode() + src_ssid.to_bytes(1, 'little') + \
         control.to_bytes(1, 'little') + sid.to_bytes(1, 'little')
+
+    packet_header = (bitstring.BitArray(packet_header) << 1).bytes
 
     while True:
         message = b''
