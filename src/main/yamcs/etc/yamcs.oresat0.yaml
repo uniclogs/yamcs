@@ -26,7 +26,10 @@ dataLinks:
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_realtime
     port: 10015
-    packetPreprocessorClassName: org.oresat.uniclogs.AprsPacketPreprocessor
+    packetPreprocessorClassName: org.oresat.uniclogs.Ax25PacketPreprocessor
+    packetPreprocessorArgs:
+      destCallsign: "SPACE"
+      srcCallsign: "KJ7SAT"
 
   - name: uniclogs-out
     class: org.yamcs.tctm.UdpTcDataLink
