@@ -26,12 +26,15 @@ parser.add_argument("-p", "--print", dest="print", action="store_true",
 args = parser.parse_args()
 
 
-def send_packet(packet):
+def send_packet(message):
     # get the TNC command. We only support 0x00 data from
-    cmd = packet[0]
+    cmd = message[0]
     if cmd != 0:
         print("Unknown command: {}".format(str(cmd)))
         return
+
+    # remove added TNC command
+    packet = message[1:]
 
     if args.print:
         print(packet)
