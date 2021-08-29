@@ -7,12 +7,18 @@ Python library dependencies:
 
 import sys
 import socket
+from argparse import ArgumentParser
 
 from serial import Serial, SerialException
 import bitstring
 
 TTY = '/dev/serial/by-id/usb-SCS_SCS_Tracker___DSP_TNC_PT2HJ743-if00-port0'
 BEACON_LEN = 242
+
+parser = ArgumentParser(description="OLM file transfer")
+parser.add_argument("-p", "--print", dest="print", action="store_true",
+                    help="print messages to stdout")
+args = parser.parse_args()
 
 
 def _readline(ser: Serial):
@@ -69,6 +75,9 @@ def send_tm(ser: Serial):
         # merge header and payload together
         # remove the \r\n
         packet = packet_header + message[:len(message)-2]
+
+        if args.print:
+            print(packet)
 
         tm_socket.sendto(packet, ('127.0.0.1', 10015))
 
