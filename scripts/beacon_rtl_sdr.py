@@ -5,57 +5,54 @@ Linux package dependencies:
     rtl-sdr direwolf
 
 Python library dependencies:
-    kiss bitstring
+    kiss
 """
 
-import time
-from subprocess import Popen
-import subprocess
 import sys
-import socket
+from time import sleep
+from subprocess import Popen, DEVNULL, PIPE
+from socket import socket, AF_INET, SOCK_DGRAM
+from argparse import ArgumentParser
+
 import kiss
-import bitstring
 
 # start the rtl_fm and direwolf commands
 rtl_fm_args = ["rtl_fm", "-Mfm", "-f436.5M", "-p48.1", "-s96000", "-g30", "-"]
 direwolf_args = ["direwolf", "-t0", "-r96000", "-D1", "-B9600", "-"]
-rtl_fm_cmd = Popen(rtl_fm_args, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL)
-direwolf_cmd = Popen(direwolf_args, stdin=rtl_fm_cmd.stdout, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+parser = ArgumentParser(description="OLM file transfer")
+parser.add_argument("-p", "--print", dest="print", action="store_true",
+                    help="print messages to stdout")
+args = parser.parse_args()
 
 
-def send_packet(x):
+def send_packet(message):
     # get the TNC command. We only support 0x00 data from
-    cmd = x[0]
+    cmd = message[0]
     if cmd != 0:
         print("Unknown command: {}".format(str(cmd)))
         return
 
-    # decode the 14 byte address fields with the callsigned and SSIDs. The
-    # field is encoded shifted 1 but to the left, so shift it it to the right>
-    addr = x[1:15]
-    addr = (bitstring.BitArray(addr) >> 1).bytes
+    # remove added TNC command
+    packet = message[1:]
 
-    # readd the control and PID bytes
-    addr = addr + x[15:16] + x[16:17]
+    if args.print:
+        print(packet)
 
-    # send fixed message
-    tm_socket.sendto(addr + x[17:], ('127.0.0.1', 10015))
+    tm_socket.sendto(packet, ('127.0.0.1', 10015))
 
 
-def read_kiss_forever():
-    # wait just a sec for the rtl_fm and direwolf to start
-    time.sleep(0.5)
-    k = kiss.TCPKISS("localhost", 8001)
-    k.start()  # start the TCP TNC connection
+rtl_fm_cmd = Popen(rtl_fm_args, stdout=PIPE, stderr=DEVNULL)
+direwolf_cmd = Popen(direwolf_args, stdin=rtl_fm_cmd.stdout, stdout=DEVNULL, stderr=DEVNULL)
+tm_socket = socket(AF_INET, SOCK_DGRAM)
+sleep(0.5)  # wait just a sec for the rtl_fm and direwolf to start
+k = kiss.TCPKISS("localhost", 8001)
+k.start()  # start the TCP TNC connection
+
+try:
     k.read(callback=send_packet)  # set the TNC read callback
-
-
-if __name__ == '__main__':
-    try:
-        read_kiss_forever()
-    except KeyboardInterrupt:
-        print("killing rtl_fm and direwolf...")
-        rtl_fm_cmd.terminate()
-        direwolf_cmd.terminate()
-        sys.exit()
+except KeyboardInterrupt:
+    print("killing rtl_fm and direwolf...")
+    rtl_fm_cmd.terminate()
+    direwolf_cmd.terminate()
+    sys.exit()

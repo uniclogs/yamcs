@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Generate C3 beacons and send to Yamcs"""
+"""Generate C3 beacons and send to Yamcs
+
+Python library dependencies:
+    bitstring
+"""
 
 import binascii
 import os
@@ -7,6 +11,14 @@ import socket
 import sys
 from threading import Thread
 from time import sleep
+from argparse import ArgumentParser
+
+import bitstring
+
+parser = ArgumentParser(description="OLM file transfer")
+parser.add_argument("-p", "--print", dest="print", action="store_true",
+                    help="print messages to stdout")
+args = parser.parse_args()
 
 
 def send_tm(simulator):
@@ -17,18 +29,23 @@ def send_tm(simulator):
     src = "KJ7SAT"
     src_ssid = 0
     control = 0
-    sid = 0
+    pid = 0
 
     packet_header = dest.encode() + dest_ssid.to_bytes(1, 'little') + \
         src.encode() + src_ssid.to_bytes(1, 'little') + \
-        control.to_bytes(1, 'little') + sid.to_bytes(1, 'little')
-    print(len(packet_header))
+        control.to_bytes(1, 'little') + pid.to_bytes(1, 'little')
+
+    packet_header = (bitstring.BitArray(packet_header) << 1).bytes
 
     simulator.tm_counter = 1
     while True:
         packet_data = bytearray(os.urandom(238))
         calc_crc = binascii.crc32(packet_data)
         packet = packet_header + packet_data + calc_crc.to_bytes(4, 'little')
+
+        if args.print:
+            print("")
+            print(packet)
 
         tm_socket.sendto(packet, ('127.0.0.1', 10015))
         simulator.tm_counter += 1
