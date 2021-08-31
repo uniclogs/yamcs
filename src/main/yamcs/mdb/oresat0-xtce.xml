@@ -549,6 +549,10 @@
                         <UnitSet/>
                         <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
                     </IntegerArgumentType>
+                    <BooleanArgumentType name="bool_Type" shortDescription="New value for bool item">
+                        <UnitSet/>
+                        <IntegerDataEncoding sizeInBits="8"/>
+                    </BooleanArgumentType>
                     <IntegerArgumentType name="int8_Type" shortDescription="New value for int8 item">
                         <UnitSet/>
                         <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
@@ -620,6 +624,24 @@
 			    <CommandContainer name="opd_reinit">
                                 <EntryList>
                                     <FixedValueEntry binaryValue="C4F53800000D00E51000" sizeInBits="80" />
+                                </EntryList>
+                            </CommandContainer>
+			    <DefaultSignificance consequenceLevel="vital" />
+                        </MetaCommand>
+			<MetaCommand name="sdo_write_bool" shortDescription="write a bool to a card's object dicionary">
+                            <ArgumentList>
+                                <Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
+                                <Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
+                                <Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
+                                <Argument name="value" argumentTypeRef="bool_Type"/>
+                            </ArgumentList>
+			    <CommandContainer name="sdo_write_bool">
+                                <EntryList>
+                                    <FixedValueEntry binaryValue="C4F53800001600E51534" sizeInBits="80" />
+                                    <ArgumentRefEntry argumentRef="OD_Index"/>
+                                    <ArgumentRefEntry argumentRef="OD_Subindex"/>
+                                    <FixedValueEntry binaryValue="01000000" sizeInBits="32" />
+                                    <ArgumentRefEntry argumentRef="value"/>
                                 </EntryList>
                             </CommandContainer>
 			    <DefaultSignificance consequenceLevel="vital" />
