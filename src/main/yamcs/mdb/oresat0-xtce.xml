@@ -567,15 +567,15 @@
                     </IntegerArgumentType>
                     <IntegerArgumentType name="uint8_Type" shortDescription="New value for uint8 item">
                         <UnitSet/>
-                        <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+                        <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
                     </IntegerArgumentType>
                     <IntegerArgumentType name="uint16_Type" shortDescription="New value for uint16 item">
                         <UnitSet/>
-                        <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+                        <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
                     </IntegerArgumentType>
                     <IntegerArgumentType name="uint32_Type" shortDescription="New value for uint32 item">
                         <UnitSet/>
-                        <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+                        <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
                     </IntegerArgumentType>
 		</ArgumentTypeSet>
 		<MetaCommandSet>
