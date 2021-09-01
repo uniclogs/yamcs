@@ -13,7 +13,7 @@ from serial import Serial, SerialException
 import bitstring
 
 TTY = '/dev/serial/by-id/usb-SCS_SCS_Tracker___DSP_TNC_PT2HJ743-if00-port0'
-BEACON_LEN = 242
+BEACON_LEN = 253
 
 parser = ArgumentParser(description="OLM file transfer")
 parser.add_argument("-p", "--print", dest="print", action="store_true",

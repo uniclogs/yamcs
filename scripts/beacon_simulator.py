@@ -39,7 +39,7 @@ def send_tm(simulator):
 
     simulator.tm_counter = 1
     while True:
-        packet_data = bytearray(os.urandom(238))
+        packet_data = bytearray(os.urandom(249))
         calc_crc = binascii.crc32(packet_data)
         packet = packet_header + packet_data + calc_crc.to_bytes(4, 'little')
 

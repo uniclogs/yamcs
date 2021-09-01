@@ -352,6 +352,14 @@
                         <Parameter name="Dxwifi_Updater_Status" parameterTypeRef="olu_states" />
                         <Parameter name="Dxwifi_Updates_Cached" parameterTypeRef="uint8_t" />
                         <Parameter name="Dxwifi_Transmitting" parameterTypeRef="bool_t" />
+                        <Parameter name="CFC_Emmc_Capacity" parameterTypeRef="percent_uint8" />
+                        <Parameter name="CFC_Readable_Files" parameterTypeRef="uint8_t" />
+                        <Parameter name="CFC_Updater_Status" parameterTypeRef="olu_states" />
+                        <Parameter name="CFC_Updates_Cached" parameterTypeRef="uint8_t" />
+                        <Parameter name="CFC_TEC_Enabled" parameterTypeRef="bool_t" />
+                        <Parameter name="CFC_TEC_Saturated" parameterTypeRef="bool_t" />
+                        <Parameter name="CFC_TEC_Temperature" parameterTypeRef="temp_int8" />
+                        <Parameter name="CFC_TEC_Captures" parameterTypeRef="uint32_t" />
                         <Parameter name="APRS_CRC32" parameterTypeRef="uint32_t" />
 		</ParameterSet>
 		<ContainerSet>
@@ -490,6 +498,14 @@
                                         <ParameterRefEntry parameterRef="Dxwifi_Updater_Status" />
                                         <ParameterRefEntry parameterRef="Dxwifi_Updates_Cached" />
                                         <ParameterRefEntry parameterRef="Dxwifi_Transmitting" />
+                                        <ParameterRefEntry parameterRef="CFC_Emmc_Capacity" />
+                                        <ParameterRefEntry parameterRef="CFC_Readable_Files" />
+                                        <ParameterRefEntry parameterRef="CFC_Updater_Status" />
+                                        <ParameterRefEntry parameterRef="CFC_Updates_Cached" />
+                                        <ParameterRefEntry parameterRef="CFC_TEC_Enabled" />
+                                        <ParameterRefEntry parameterRef="CFC_TEC_Saturated" />
+                                        <ParameterRefEntry parameterRef="CFC_TEC_Temperature" />
+                                        <ParameterRefEntry parameterRef="CFC_TEC_Captures" />
 					<ParameterRefEntry parameterRef="APRS_CRC32" />
 				</EntryList>
 			</SequenceContainer>
