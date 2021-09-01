@@ -359,7 +359,7 @@
                         <Parameter name="CFC_TEC_Enabled" parameterTypeRef="bool_t" />
                         <Parameter name="CFC_TEC_Saturated" parameterTypeRef="bool_t" />
                         <Parameter name="CFC_TEC_Temperature" parameterTypeRef="temp_int8" />
-                        <Parameter name="CFC_TEC_Captures" parameterTypeRef="uint32_t" />
+                        <Parameter name="CFC_Captures" parameterTypeRef="uint32_t" />
                         <Parameter name="APRS_CRC32" parameterTypeRef="uint32_t" />
 		</ParameterSet>
 		<ContainerSet>
@@ -505,7 +505,7 @@
                                         <ParameterRefEntry parameterRef="CFC_TEC_Enabled" />
                                         <ParameterRefEntry parameterRef="CFC_TEC_Saturated" />
                                         <ParameterRefEntry parameterRef="CFC_TEC_Temperature" />
-                                        <ParameterRefEntry parameterRef="CFC_TEC_Captures" />
+                                        <ParameterRefEntry parameterRef="CFC_Captures" />
 					<ParameterRefEntry parameterRef="APRS_CRC32" />
 				</EntryList>
 			</SequenceContainer>
@@ -533,12 +533,13 @@
                         <UnitSet/>
                         <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
                             <EnumerationList>
-                            <Enumeration value="24" label="Battery"/>
-                            <Enumeration value="25" label="GPS"/>
-                            <Enumeration value="26" label="ACS"/>
-                            <Enumeration value="27" label="DxWiFi"/>
-                            <Enumeration value="28" label="Star Tracker"/>
-                            <Enumeration value="29" label="CFC"/>
+                            <Enumeration value="24" label="Battery (0x18)"/>
+                            <Enumeration value="25" label="GPS (0x19)"/>
+                            <Enumeration value="26" label="ACS (0x1A)"/>
+                            <Enumeration value="27" label="DxWiFi (0x1B)"/>
+                            <Enumeration value="28" label="Star Tracker (0x1C)"/>
+                            <Enumeration value="29" label="CFC Octavo (0x1D)"/>
+                            <Enumeration value="30" label="CFC Sensor (0x1E)"/>
                         </EnumerationList>
                     </EnumeratedArgumentType>
                     <EnumeratedArgumentType name="CANOPEN_NODE_ID">
