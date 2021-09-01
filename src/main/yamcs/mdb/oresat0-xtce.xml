@@ -601,7 +601,7 @@
                             </ArgumentList>
                             <CommandContainer name="tx_disable">
 				<EntryList>
-                                    <FixedValueEntry binaryValue="C4F53800000E00E500" sizeInBits="80" />
+                                    <FixedValueEntry binaryValue="C4F53800000E00E500" sizeInBits="72" />
                                     <ArgumentRefEntry argumentRef="command"/>
                                 </EntryList>
 			    </CommandContainer>
