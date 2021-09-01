@@ -36,7 +36,7 @@ dataLinks:
     stream: tc_realtime
     host: localhost
     port: 10025
-    commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+    commandPostprocessorClassName: org.yamcs.tctm.GenericCommandPostprocessor
 
 mdb:
   # Configuration of the active loaders
