@@ -553,7 +553,8 @@
                             <Enumeration value="24" label="Solar Panel 3"/>
                             <Enumeration value="44" label="Star Tracker"/>
                             <Enumeration value="52" label="GPS"/>
-                            <Enumeration value="76" label="ACS"/>
+                            <Enumeration value="56" label="ACS"/>
+                            <Enumeration value="76" label="DxWiFi"/>
                             <Enumeration value="80" label="CFC"/>
                             <Enumeration value="124" label="Unassigned Node"/>
                         </EnumerationList>
