@@ -655,7 +655,8 @@
                             </ArgumentList>
 			    <CommandContainer name="sdo_write_bool">
                                 <EntryList>
-                                    <FixedValueEntry binaryValue="C4F53800001600E51534" sizeInBits="80" />
+                                    <FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72" />
+                                    <ArgumentRefEntry argumentRef="Node_Id"/>
                                     <ArgumentRefEntry argumentRef="OD_Index"/>
                                     <ArgumentRefEntry argumentRef="OD_Subindex"/>
                                     <FixedValueEntry binaryValue="01000000" sizeInBits="32" />
@@ -673,7 +674,8 @@
                             </ArgumentList>
 			    <CommandContainer name="sdo_write_int8">
                                 <EntryList>
-                                    <FixedValueEntry binaryValue="C4F53800001600E51534" sizeInBits="80" />
+                                    <FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72" />
+                                    <ArgumentRefEntry argumentRef="Node_Id"/>
                                     <ArgumentRefEntry argumentRef="OD_Index"/>
                                     <ArgumentRefEntry argumentRef="OD_Subindex"/>
                                     <FixedValueEntry binaryValue="01000000" sizeInBits="32" />
@@ -691,7 +693,8 @@
                             </ArgumentList>
 			    <CommandContainer name="sdo_write_int16">
                                 <EntryList>
-                                    <FixedValueEntry binaryValue="C4F53800001600E51534" sizeInBits="80" />
+                                    <FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72" />
+                                    <ArgumentRefEntry argumentRef="Node_Id"/>
                                     <ArgumentRefEntry argumentRef="OD_Index"/>
                                     <ArgumentRefEntry argumentRef="OD_Subindex"/>
                                     <FixedValueEntry binaryValue="02000000" sizeInBits="32" />
@@ -709,7 +712,8 @@
                             </ArgumentList>
 			    <CommandContainer name="sdo_write_int32">
                                 <EntryList>
-                                    <FixedValueEntry binaryValue="C4F53800001600E51534" sizeInBits="80" />
+                                    <FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72" />
+                                    <ArgumentRefEntry argumentRef="Node_Id"/>
                                     <ArgumentRefEntry argumentRef="OD_Index"/>
                                     <ArgumentRefEntry argumentRef="OD_Subindex"/>
                                     <FixedValueEntry binaryValue="04000000" sizeInBits="32" />
@@ -727,7 +731,8 @@
                             </ArgumentList>
 			    <CommandContainer name="sdo_write_uint8">
                                 <EntryList>
-                                    <FixedValueEntry binaryValue="C4F53800001600E51534" sizeInBits="80" />
+                                    <FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72" />
+                                    <ArgumentRefEntry argumentRef="Node_Id"/>
                                     <ArgumentRefEntry argumentRef="OD_Index"/>
                                     <ArgumentRefEntry argumentRef="OD_Subindex"/>
                                     <FixedValueEntry binaryValue="01000000" sizeInBits="32" />
@@ -745,7 +750,8 @@
                             </ArgumentList>
 			    <CommandContainer name="sdo_write_uint16">
                                 <EntryList>
-                                    <FixedValueEntry binaryValue="C4F53800001600E51534" sizeInBits="80" />
+                                    <FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72" />
+                                    <ArgumentRefEntry argumentRef="Node_Id"/>
                                     <ArgumentRefEntry argumentRef="OD_Index"/>
                                     <ArgumentRefEntry argumentRef="OD_Subindex"/>
                                     <FixedValueEntry binaryValue="02000000" sizeInBits="32" />
@@ -763,7 +769,8 @@
                             </ArgumentList>
 			    <CommandContainer name="sdo_write_uint32">
                                 <EntryList>
-                                    <FixedValueEntry binaryValue="C4F53800001600E51534" sizeInBits="80" />
+                                    <FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72" />
+                                    <ArgumentRefEntry argumentRef="Node_Id"/>
                                     <ArgumentRefEntry argumentRef="OD_Index"/>
                                     <ArgumentRefEntry argumentRef="OD_Subindex"/>
                                     <FixedValueEntry binaryValue="04000000" sizeInBits="32" />
