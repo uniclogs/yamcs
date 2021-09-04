@@ -1,0 +1,14 @@
+<commandStack>
+  <command qualifiedName="/oresat0/opd_power">
+    <commandArgument argumentName="OPD_Id" argumentValue="GPS (0x19)"/>
+    <commandArgument argumentName="command" argumentValue="On"/>
+  </command>
+  <command qualifiedName="/oresat0/opd_power">
+    <commandArgument argumentName="OPD_Id" argumentValue="Star Tracker (0x1C)"/>
+    <commandArgument argumentName="command" argumentValue="On"/>
+  </command>
+  <command qualifiedName="/oresat0/opd_power">
+    <commandArgument argumentName="OPD_Id" argumentValue="DxWiFi (0x1B)"/>
+    <commandArgument argumentName="command" argumentValue="On"/>
+  </command>
+</commandStack>

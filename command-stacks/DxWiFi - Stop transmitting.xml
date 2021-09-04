@@ -1,0 +1,14 @@
+<commandStack>
+  <command qualifiedName="/oresat0/sdo_write_uint8">
+    <commandArgument argumentName="Node_Id" argumentValue="DxWiFi"/>
+    <commandArgument argumentName="OD_Index" argumentValue="0x3005"/>
+    <commandArgument argumentName="OD_Subindex" argumentValue="4"/>
+    <commandArgument argumentName="value" argumentValue="1"/>
+  </command>
+  <command qualifiedName="/oresat0/sdo_write_uint8">
+    <commandArgument argumentName="Node_Id" argumentValue="DxWiFi"/>
+    <commandArgument argumentName="OD_Index" argumentValue="0x3005"/>
+    <commandArgument argumentName="OD_Subindex" argumentValue="6"/>
+    <commandArgument argumentName="value" argumentValue="1"/>
+  </command>
+</commandStack>

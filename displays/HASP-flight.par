@@ -1,0 +1,25 @@
+{
+  "scroll": false,
+  "bufferSize": 25,
+  "parameters": [
+    "/oresat0/APRS_CRC32",
+    "/oresat0/C3_M4_Uptime",
+    "/oresat0/C3_RTC_Time",
+    "/oresat0/C3_UHF_RX_Bytes_Received",
+    "/oresat0/C3_UHF_RX_Valid_Packets",
+    "/oresat0/C3_WDT_Num_Timeouts",
+    "/oresat0/CFC_Captures",
+    "/oresat0/CFC_Emmc_Capacity",
+    "/oresat0/CFC_TEC_Enabled",
+    "/oresat0/CFC_TEC_Saturated",
+    "/oresat0/CFC_TEC_Temperature",
+    "/oresat0/Dxwifi_Emmc_Capacity",
+    "/oresat0/Dxwifi_Transmitting",
+    "/oresat0/GPS_Emmc_Capacity",
+    "/oresat0/GPS_Last_Packet_Timestamp",
+    "/oresat0/GPS_Position",
+    "/oresat0/GPS_Status",
+    "/oresat0/GPS_Velocity",
+    "/oresat0/Star_Tracker_Emmc_Capacity"
+  ]
+}

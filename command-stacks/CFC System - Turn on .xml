@@ -1,0 +1,10 @@
+<commandStack>
+  <command qualifiedName="/oresat0/opd_power">
+    <commandArgument argumentName="OPD_Id" argumentValue="CFC Octavo (0x1D)"/>
+    <commandArgument argumentName="command" argumentValue="On"/>
+  </command>
+  <command qualifiedName="/oresat0/opd_power">
+    <commandArgument argumentName="OPD_Id" argumentValue="CFC Sensor (0x1E)"/>
+    <commandArgument argumentName="command" argumentValue="On"/>
+  </command>
+</commandStack>
