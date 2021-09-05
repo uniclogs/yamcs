@@ -2,7 +2,6 @@
 <SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="oresat0" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
     <TelemetryMetaData>
         <ParameterTypeSet>
-            <!-- battery state bits: 0: heater on/off 1: discharge disabled 2: charge disabled 3: discharge status 4: charge status -->
             <StringParameterType name="callsign_t">
                 <StringDataEncoding encoding="UTF-8">
                     <SizeInBits>
@@ -180,13 +179,18 @@
                 </UnitSet>
                 <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
             </IntegerParameterType>
-            <AggregateParameterType name="vec3_t">
-                <MemberList>
-                    <Member name="x" typeRef="uint32_t"/>
-                    <Member name="y" typeRef="uint32_t"/>
-                    <Member name="z" typeRef="uint32_t"/>
-                </MemberList>
-            </AggregateParameterType>
+            <IntegerParameterType name="position_uint32" signed="false">
+                <UnitSet>
+                    <Unit description="meters">m</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="velocity_uint32" signed="false">
+                <UnitSet>
+                    <Unit description="meters">m / s</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+            </IntegerParameterType>
             <IntegerParameterType name="percent_uint8" signed="false">
                 <UnitSet>
                     <Unit description="Percent">%</Unit>
@@ -197,7 +201,7 @@
                 <UnitSet>
                     <Unit description="Volts">v</Unit>
                 </UnitSet>
-                <IntegerDataEncoding bitOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8">
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="8">
                     <DefaultCalibrator>
                         <PolynomialCalibrator>
                             <Term exponent="1" coefficient="0.02"/>
@@ -209,7 +213,7 @@
                 <UnitSet>
                     <Unit description="milliAmps">mA</Unit>
                 </UnitSet>
-                <IntegerDataEncoding bitOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8">
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="8">
                     <DefaultCalibrator>
                         <PolynomialCalibrator>
                             <Term exponent="1" coefficient="0.02"/>
@@ -340,8 +344,12 @@
             <Parameter name="GPS_Updates_Cached" parameterTypeRef="uint8_t"/>
             <Parameter name="GPS_Status" parameterTypeRef="gps_status"/>
             <Parameter name="GPS_Sat_Locked" parameterTypeRef="uint8_t"/>
-            <Parameter name="GPS_Position" parameterTypeRef="vec3_t"/>
-            <Parameter name="GPS_Velocity" parameterTypeRef="vec3_t"/>
+            <Parameter name="GPS_Position_X" parameterTypeRef="position_uint32"/>
+            <Parameter name="GPS_Position_Y" parameterTypeRef="position_uint32"/>
+            <Parameter name="GPS_Position_Z" parameterTypeRef="position_uint32"/>
+            <Parameter name="GPS_Velocity_X" parameterTypeRef="velocity_uint32"/>
+            <Parameter name="GPS_Velocity_Y" parameterTypeRef="velocity_uint32"/>
+            <Parameter name="GPS_Velocity_Z" parameterTypeRef="velocity_uint32"/>
             <Parameter name="GPS_Last_Packet_Timestamp" parameterTypeRef="millisecond_uint32"/>
             <Parameter name="ADS_Gryo_Roll_Dot" parameterTypeRef="dot_deg_int16"/>
             <Parameter name="ADS_Gryo_Pitch_Dot" parameterTypeRef="dot_deg_int16"/>
@@ -486,8 +494,12 @@
                     <ParameterRefEntry parameterRef="GPS_Updates_Cached"/>
                     <ParameterRefEntry parameterRef="GPS_Status"/>
                     <ParameterRefEntry parameterRef="GPS_Sat_Locked"/>
-                    <ParameterRefEntry parameterRef="GPS_Position"/>
-                    <ParameterRefEntry parameterRef="GPS_Velocity"/>
+                    <ParameterRefEntry parameterRef="GPS_Position_X"/>
+                    <ParameterRefEntry parameterRef="GPS_Position_Y"/>
+                    <ParameterRefEntry parameterRef="GPS_Position_Z"/>
+                    <ParameterRefEntry parameterRef="GPS_Velocity_X"/>
+                    <ParameterRefEntry parameterRef="GPS_Velocity_Y"/>
+                    <ParameterRefEntry parameterRef="GPS_Velocity_Z"/>
                     <ParameterRefEntry parameterRef="GPS_Last_Packet_Timestamp"/>
                     <ParameterRefEntry parameterRef="ADS_Gryo_Roll_Dot"/>
                     <ParameterRefEntry parameterRef="ADS_Gryo_Pitch_Dot"/>
