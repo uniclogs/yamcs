@@ -1,802 +1,802 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xtce:SpaceSystem name="OreSat0" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/space/xtce SpaceSystemV1.2-27Feb2014-mods.xsd">
-    <xtce:LongDescription>This is a OreSat0 satellite telemetry and telecommand database.</xtce:LongDescription>
-    <xtce:Header validationStatus="Working" classification="NotClassified" version="1.0" date="2021-11-09">
-        <xtce:AuthorSet>
-            <xtce:Author>Portland State Aerospace Society (PSAS)</xtce:Author>
-        </xtce:AuthorSet>
-    </xtce:Header>
-    <xtce:TelemetryMetaData>
-        <xtce:ParameterTypeSet>
-            <xtce:StringParameterType name="callsign_t">
-                <xtce:StringDataEncoding encoding="UTF-8">
-                    <xtce:SizeInBits>
-                        <xtce:Fixed>
-                            <xtce:FixedValue>48</xtce:FixedValue>
-                        </xtce:Fixed>
-                    </xtce:SizeInBits>
-                </xtce:StringDataEncoding>
-            </xtce:StringParameterType>
-            <xtce:StringParameterType name="data_type_id_t">
-                <xtce:StringDataEncoding encoding="UTF-8">
-                    <xtce:SizeInBits>
-                        <xtce:Fixed>
-                            <xtce:FixedValue>24</xtce:FixedValue>
-                        </xtce:Fixed>
-                    </xtce:SizeInBits>
-                </xtce:StringDataEncoding>
-            </xtce:StringParameterType>
-            <xtce:EnumeratedParameterType name="c3_states">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="66" label="Predeploy"/>
-                    <xtce:Enumeration value="67" label="Deploy"/>
-                    <xtce:Enumeration value="68" label="Standby"/>
-                    <xtce:Enumeration value="69" label="Beacon"/>
-                    <xtce:Enumeration value="70" label="EDL"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedParameterType>
-            <xtce:EnumeratedParameterType name="olu_states">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="0" label="Standby"/>
-                    <xtce:Enumeration value="1" label="Update"/>
-                    <xtce:Enumeration value="2" label="Update_Failed"/>
-                    <xtce:Enumeration value="3" label="Status_File"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedParameterType>
-            <xtce:EnumeratedParameterType name="gps_status">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="0" label="Searching"/>
-                    <xtce:Enumeration value="1" label="Locked"/>
-                    <xtce:Enumeration value="2" label="Hardware_Error"/>
-                    <xtce:Enumeration value="3" label="Parser_Error"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedParameterType>
-            <xtce:EnumeratedParameterType name="bit_on_off">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="1"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="0" label="On"/>
-                    <xtce:Enumeration value="1" label="Off"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedParameterType>
-            <xtce:EnumeratedParameterType name="bit_disabled_enabled">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="1"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="0" label="Disabled"/>
-                    <xtce:Enumeration value="1" label="Enabled"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedParameterType>
-            <xtce:BooleanParameterType name="bool_1bit">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="1"/>
-            </xtce:BooleanParameterType>
-            <xtce:BooleanParameterType name="bool_4bit">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="4"/>
-            </xtce:BooleanParameterType>
-            <xtce:BooleanParameterType name="bool_8bit">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8"/>
-            </xtce:BooleanParameterType>
-            <xtce:IntegerParameterType name="int8_t" signed="true">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding encoding="twosComplement" sizeInBits="8"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="int16_t" signed="true">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="int32_t" signed="true">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="uint8_t" signed="false">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="uint16_t" signed="false">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="uint32_t" signed="false">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
-            </xtce:IntegerParameterType>
-            <xtce:BooleanParameterType name="bool_t">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8"/>
-            </xtce:BooleanParameterType>
-            <xtce:IntegerParameterType name="volt_uint16" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="millivoltage">mV</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="watts_uint16" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="milliwatts">mW</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="joules_uint16" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="joules">J</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="capacity_uint16" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="milliamp hours">mAh</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="decibel_uint8" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="decibel">dBm</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="decibel_uint16" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="decibel">dBm</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="second_uint32" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="seconds">s</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="millisecond_uint32" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="milliseconds">ms</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="current_int16" signed="true">
-                <xtce:UnitSet>
-                    <xtce:Unit description="milliamps">mA</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="temp_int8" signed="true">
-                <xtce:UnitSet>
-                    <xtce:Unit description="celsius">C</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="8"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="temp_int16" signed="true">
-                <xtce:UnitSet>
-                    <xtce:Unit description="celsius">C</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="dot_deg_int16" signed="true">
-                <xtce:UnitSet>
-                    <xtce:Unit description="degrees per second">deg / s</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="position_uint32" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="meters">m</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="velocity_uint32" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="meters">m / s</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="percent_uint8" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="Percent">%</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
-            </xtce:IntegerParameterType>
-            <xtce:FloatParameterType name="c3_voltage" sizeInBits="32">
-                <xtce:UnitSet>
-                    <xtce:Unit description="Volts">v</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8">
-                    <xtce:DefaultCalibrator>
-                        <xtce:PolynomialCalibrator>
-                            <xtce:Term exponent="1" coefficient="0.02"/>
-                        </xtce:PolynomialCalibrator>
-                    </xtce:DefaultCalibrator>
-                </xtce:IntegerDataEncoding>
-            </xtce:FloatParameterType>
-            <xtce:FloatParameterType name="c3_current" sizeInBits="32">
-                <xtce:UnitSet>
-                    <xtce:Unit description="milliAmps">mA</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8">
-                    <xtce:DefaultCalibrator>
-                        <xtce:PolynomialCalibrator>
-                            <xtce:Term exponent="1" coefficient="0.02"/>
-                        </xtce:PolynomialCalibrator>
-                    </xtce:DefaultCalibrator>
-                </xtce:IntegerDataEncoding>
-            </xtce:FloatParameterType>
-        </xtce:ParameterTypeSet>
-        <xtce:ParameterSet>
-            <xtce:Parameter name="APRS_Dest_Callsign" parameterTypeRef="callsign_t"/>
-            <xtce:Parameter name="APRS_Dest_SSID" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="APRS_Src_Callsign" parameterTypeRef="callsign_t"/>
-            <xtce:Parameter name="APRS_Src_SSID" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="APRS_CTRL" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="APRS_PID" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="APRS_Data_Type_Id" parameterTypeRef="data_type_id_t" shortDescription=" User-Defined APRS packet format"/>
-            <xtce:Parameter name="APRS_Revision" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="C3_M4_State" parameterTypeRef="c3_states"/>
-            <xtce:Parameter name="C3_M4_Uptime" parameterTypeRef="second_uint32"/>
-            <xtce:Parameter name="C3_RTC_Time" parameterTypeRef="second_uint32"/>
-            <xtce:Parameter name="C3_M4_Temperature" parameterTypeRef="temp_int8"/>
-            <xtce:Parameter name="C3_M4_Ref_Voltage" parameterTypeRef="c3_voltage"/>
-            <xtce:Parameter name="C3_M4_Vbusp_Voltage" parameterTypeRef="c3_voltage"/>
-            <xtce:Parameter name="C3_M4_Vbusp_Current" parameterTypeRef="c3_current"/>
-            <xtce:Parameter name="C3_WDT_Num_Timeouts" parameterTypeRef="uint16_t"/>
-            <xtce:Parameter name="C3_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
-            <xtce:Parameter name="C3_L_RX_Bytes_Received" parameterTypeRef="uint32_t"/>
-            <xtce:Parameter name="C3_L_RX_Valid_Packets" parameterTypeRef="uint32_t"/>
-            <xtce:Parameter name="C3_L_RX_RSSI" parameterTypeRef="decibel_uint8"/>
-            <xtce:Parameter name="C3_L_TX_PLL_Lock" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="C3_UHF_TX_Temperature" parameterTypeRef="temp_int8"/>
-            <xtce:Parameter name="C3_UHF_TX_FWD_Power" parameterTypeRef="decibel_uint16"/>
-            <xtce:Parameter name="C3_UHF_TX_REV_Power" parameterTypeRef="decibel_uint16"/>
-            <xtce:Parameter name="C3_UHF_RX_Bytes_Received" parameterTypeRef="uint32_t"/>
-            <xtce:Parameter name="C3_UHF_RX_Valid_Packets" parameterTypeRef="uint32_t"/>
-            <xtce:Parameter name="C3_UHF_RX_RSSI" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="C3_UHF_RX_PLL_Lock" parameterTypeRef="decibel_uint8"/>
-            <xtce:Parameter name="C3_FW_Bank" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="C3_CAN1" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="C3_CAN2" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="C3_OPD_Current" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="C3_OPD_State" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="Battery_Pack1_Vbatt" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack1_Vcell" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack1_Vcell_Max" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack1_Vcell_Min" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack1_Vcell_1" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack1_Vcell_2" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack1_Vcell_Avg" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack1_Temperature" parameterTypeRef="temp_int16"/>
-            <xtce:Parameter name="Battery_Pack1_Temperature_Avg" parameterTypeRef="temp_int16"/>
-            <xtce:Parameter name="Battery_Pack1_Temperature_Max" parameterTypeRef="temp_int16"/>
-            <xtce:Parameter name="Battery_Pack1_Temperature_Min" parameterTypeRef="temp_int16"/>
-            <xtce:Parameter name="Battery_Pack1_Current" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Battery_Pack1_Current_Avg" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Battery_Pack1_Current_Max" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Battery_Pack1_Current_Min" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Battery_Pack1_Heater" parameterTypeRef="bit_on_off"/>
-            <xtce:Parameter name="Battery_Pack1_Discharge" parameterTypeRef="bit_disabled_enabled"/>
-            <xtce:Parameter name="Battery_Pack1_Charge" parameterTypeRef="bit_disabled_enabled"/>
-            <xtce:Parameter name="Battery_Pack1_Discharging" parameterTypeRef="bool_1bit"/>
-            <xtce:Parameter name="Battery_Pack1_Charging" parameterTypeRef="bool_4bit"/>
-            <xtce:Parameter name="Battery_Pack1_Reported_State_of_Charge" parameterTypeRef="percent_uint8"/>
-            <xtce:Parameter name="Battery_Pack1_Full_Capacity" parameterTypeRef="capacity_uint16"/>
-            <xtce:Parameter name="Battery_Pack1_Reported_Capacity" parameterTypeRef="capacity_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Vbatt" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Vcell" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Vcell_Max" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Vcell_Min" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Vcell_1" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Vcell_2" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Vcell_Avg" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Temperature" parameterTypeRef="temp_int16"/>
-            <xtce:Parameter name="Battery_Pack2_Temperature_Avg" parameterTypeRef="temp_int16"/>
-            <xtce:Parameter name="Battery_Pack2_Temperature_Max" parameterTypeRef="temp_int16"/>
-            <xtce:Parameter name="Battery_Pack2_Temperature_Min" parameterTypeRef="temp_int16"/>
-            <xtce:Parameter name="Battery_Pack2_Current" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Battery_Pack2_Current_Avg" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Battery_Pack2_Current_Max" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Battery_Pack2_Current_Min" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Battery_Pack2_Heater" parameterTypeRef="bit_on_off"/>
-            <xtce:Parameter name="Battery_Pack2_Discharge" parameterTypeRef="bit_disabled_enabled"/>
-            <xtce:Parameter name="Battery_Pack2_Charge" parameterTypeRef="bit_disabled_enabled"/>
-            <xtce:Parameter name="Battery_Pack2_Discharging" parameterTypeRef="bool_1bit"/>
-            <xtce:Parameter name="Battery_Pack2_Charging" parameterTypeRef="bool_4bit"/>
-            <xtce:Parameter name="Battery_Pack2_Reported_State_of_Charge" parameterTypeRef="percent_uint8"/>
-            <xtce:Parameter name="Battery_Pack2_Full_Capacity" parameterTypeRef="capacity_uint16"/>
-            <xtce:Parameter name="Battery_Pack2_Reported_Capacity" parameterTypeRef="capacity_uint16"/>
-            <xtce:Parameter name="Solar_Neg_X_Voltage_Avg" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Solar_Neg_X_Current_Avg" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Solar_Neg_X_Power_Avg" parameterTypeRef="watts_uint16"/>
-            <xtce:Parameter name="Solar_Neg_X_Voltage_Max" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Solar_Neg_X_Current_Max" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Solar_Neg_X_Power_Max" parameterTypeRef="watts_uint16"/>
-            <xtce:Parameter name="Solar_Neg_X_Energy" parameterTypeRef="joules_uint16"/>
-            <xtce:Parameter name="Solar_Neg_Y_Voltage_Avg" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Solar_Neg_Y_Current_Avg" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Solar_Neg_Y_Power_Avg" parameterTypeRef="watts_uint16"/>
-            <xtce:Parameter name="Solar_Neg_Y_Voltage_Max" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Solar_Neg_Y_Current_Max" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Solar_Neg_Y_Power_Max" parameterTypeRef="watts_uint16"/>
-            <xtce:Parameter name="Solar_Neg_Y_Energy" parameterTypeRef="joules_uint16"/>
-            <xtce:Parameter name="Solar_Pos_X_Voltage_Avg" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Solar_Pos_X_Current_Avg" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Solar_Pos_X_Power_Avg" parameterTypeRef="watts_uint16"/>
-            <xtce:Parameter name="Solar_Pos_X_Voltage_Max" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Solar_Pos_X_Current_Max" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Solar_Pos_X_Power_Max" parameterTypeRef="watts_uint16"/>
-            <xtce:Parameter name="Solar_Pos_X_Energy" parameterTypeRef="joules_uint16"/>
-            <xtce:Parameter name="Solar_Pos_Y_Voltage_Avg" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Solar_Pos_Y_Current_Avg" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Solar_Pos_Y_Power_Avg" parameterTypeRef="watts_uint16"/>
-            <xtce:Parameter name="Solar_Pos_Y_Voltage_Max" parameterTypeRef="volt_uint16"/>
-            <xtce:Parameter name="Solar_Pos_Y_Current_Max" parameterTypeRef="current_int16"/>
-            <xtce:Parameter name="Solar_Pos_Y_Power_Max" parameterTypeRef="watts_uint16"/>
-            <xtce:Parameter name="Solar_Pos_Y_Energy" parameterTypeRef="joules_uint16"/>
-            <xtce:Parameter name="Star_Tracker_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
-            <xtce:Parameter name="Star_Tracker_Readable_Files" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="Star_Tracker_Updater_Status" parameterTypeRef="olu_states"/>
-            <xtce:Parameter name="Star_Tracker_Updates_Cached" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="Star_Tracker_Right_Ascension" parameterTypeRef="int16_t"/>
-            <xtce:Parameter name="Star_Tracker_Declination" parameterTypeRef="int16_t"/>
-            <xtce:Parameter name="Star_Tracker_Roll" parameterTypeRef="int16_t"/>
-            <xtce:Parameter name="Star_Tracker_Last_Packet_Timestamp" parameterTypeRef="millisecond_uint32"/>
-            <xtce:Parameter name="GPS_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
-            <xtce:Parameter name="GPS_Readable_Files" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="GPS_Updater_Status" parameterTypeRef="olu_states"/>
-            <xtce:Parameter name="GPS_Updates_Cached" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="GPS_Status" parameterTypeRef="gps_status"/>
-            <xtce:Parameter name="GPS_Sat_Locked" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="GPS_Position_X" parameterTypeRef="position_uint32"/>
-            <xtce:Parameter name="GPS_Position_Y" parameterTypeRef="position_uint32"/>
-            <xtce:Parameter name="GPS_Position_Z" parameterTypeRef="position_uint32"/>
-            <xtce:Parameter name="GPS_Velocity_X" parameterTypeRef="velocity_uint32"/>
-            <xtce:Parameter name="GPS_Velocity_Y" parameterTypeRef="velocity_uint32"/>
-            <xtce:Parameter name="GPS_Velocity_Z" parameterTypeRef="velocity_uint32"/>
-            <xtce:Parameter name="GPS_Last_Packet_Timestamp" parameterTypeRef="millisecond_uint32"/>
-            <xtce:Parameter name="ADS_Gryo_Roll_Dot" parameterTypeRef="dot_deg_int16"/>
-            <xtce:Parameter name="ADS_Gryo_Pitch_Dot" parameterTypeRef="dot_deg_int16"/>
-            <xtce:Parameter name="ADS_Gryo_Yaw_Dot" parameterTypeRef="dot_deg_int16"/>
-            <xtce:Parameter name="ADS_Gryo_Imu_Temp" parameterTypeRef="temp_int8"/>
-            <xtce:Parameter name="Dxwifi_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
-            <xtce:Parameter name="Dxwifi_Readable_Files" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="Dxwifi_Updater_Status" parameterTypeRef="olu_states"/>
-            <xtce:Parameter name="Dxwifi_Updates_Cached" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="Dxwifi_Transmitting" parameterTypeRef="bool_t"/>
-            <xtce:Parameter name="CFC_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
-            <xtce:Parameter name="CFC_Readable_Files" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="CFC_Updater_Status" parameterTypeRef="olu_states"/>
-            <xtce:Parameter name="CFC_Updates_Cached" parameterTypeRef="uint8_t"/>
-            <xtce:Parameter name="CFC_TEC_Enabled" parameterTypeRef="bool_t"/>
-            <xtce:Parameter name="CFC_TEC_Saturated" parameterTypeRef="bool_t"/>
-            <xtce:Parameter name="CFC_TEC_Temperature" parameterTypeRef="temp_int8"/>
-            <xtce:Parameter name="CFC_Captures" parameterTypeRef="uint32_t"/>
-            <xtce:Parameter name="APRS_CRC32" parameterTypeRef="uint32_t"/>
-        </xtce:ParameterSet>
-        <xtce:ContainerSet>
-            <xtce:SequenceContainer name="Spacecraft">
-                <xtce:EntryList>
-                    <xtce:ParameterRefEntry parameterRef="APRS_Dest_Callsign"/>
-                    <xtce:ParameterRefEntry parameterRef="APRS_Dest_SSID"/>
-                    <xtce:ParameterRefEntry parameterRef="APRS_Src_Callsign"/>
-                    <xtce:ParameterRefEntry parameterRef="APRS_Src_SSID"/>
-                    <xtce:ParameterRefEntry parameterRef="APRS_CTRL"/>
-                    <xtce:ParameterRefEntry parameterRef="APRS_PID"/>
-                    <xtce:ParameterRefEntry parameterRef="APRS_Data_Type_Id"/>
-                    <xtce:ParameterRefEntry parameterRef="APRS_Revision"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_M4_State"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_M4_Uptime"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_RTC_Time"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_M4_Temperature"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_M4_Ref_Voltage"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_M4_Vbusp_Voltage"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_M4_Vbusp_Current"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_WDT_Num_Timeouts"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_Emmc_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_L_RX_Bytes_Received"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_L_RX_Valid_Packets"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_L_RX_RSSI"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_L_TX_PLL_Lock"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_UHF_TX_Temperature"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_UHF_TX_FWD_Power"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_UHF_TX_REV_Power"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_UHF_RX_Bytes_Received"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_UHF_RX_Valid_Packets"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_UHF_RX_RSSI"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_UHF_RX_PLL_Lock"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_FW_Bank"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_CAN1"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_CAN2"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_OPD_State"/>
-                    <xtce:ParameterRefEntry parameterRef="C3_OPD_Current"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vbatt"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Min"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_1"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_2"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Temperature"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Min"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Current"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Current_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Current_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Current_Min"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Heater"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Discharge"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Charge"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Discharging"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Charging"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Reported_State_of_Charge"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Full_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Reported_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vbatt"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Min"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_1"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_2"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Temperature"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Min"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Current"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Current_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Current_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Current_Min"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Heater"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Discharge"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Charge"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Discharging"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Charging"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Reported_State_of_Charge"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Full_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Reported_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Voltage_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Current_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Power_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Voltage_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Current_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Power_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Energy"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Voltage_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Current_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Power_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Voltage_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Current_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Power_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Energy"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Voltage_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Current_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Power_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Voltage_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Current_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Power_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Energy"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Voltage_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Current_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Power_Avg"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Voltage_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Current_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Power_Max"/>
-                    <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Energy"/>
-                    <xtce:ParameterRefEntry parameterRef="Star_Tracker_Emmc_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="Star_Tracker_Readable_Files"/>
-                    <xtce:ParameterRefEntry parameterRef="Star_Tracker_Updater_Status"/>
-                    <xtce:ParameterRefEntry parameterRef="Star_Tracker_Updates_Cached"/>
-                    <xtce:ParameterRefEntry parameterRef="Star_Tracker_Right_Ascension"/>
-                    <xtce:ParameterRefEntry parameterRef="Star_Tracker_Declination"/>
-                    <xtce:ParameterRefEntry parameterRef="Star_Tracker_Roll"/>
-                    <xtce:ParameterRefEntry parameterRef="Star_Tracker_Last_Packet_Timestamp"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Emmc_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Readable_Files"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Updater_Status"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Updates_Cached"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Status"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Sat_Locked"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Position_X"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Position_Y"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Position_Z"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Velocity_X"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Velocity_Y"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Velocity_Z"/>
-                    <xtce:ParameterRefEntry parameterRef="GPS_Last_Packet_Timestamp"/>
-                    <xtce:ParameterRefEntry parameterRef="ADS_Gryo_Roll_Dot"/>
-                    <xtce:ParameterRefEntry parameterRef="ADS_Gryo_Pitch_Dot"/>
-                    <xtce:ParameterRefEntry parameterRef="ADS_Gryo_Yaw_Dot"/>
-                    <xtce:ParameterRefEntry parameterRef="ADS_Gryo_Imu_Temp"/>
-                    <xtce:ParameterRefEntry parameterRef="Dxwifi_Emmc_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="Dxwifi_Readable_Files"/>
-                    <xtce:ParameterRefEntry parameterRef="Dxwifi_Updater_Status"/>
-                    <xtce:ParameterRefEntry parameterRef="Dxwifi_Updates_Cached"/>
-                    <xtce:ParameterRefEntry parameterRef="Dxwifi_Transmitting"/>
-                    <xtce:ParameterRefEntry parameterRef="CFC_Emmc_Capacity"/>
-                    <xtce:ParameterRefEntry parameterRef="CFC_Readable_Files"/>
-                    <xtce:ParameterRefEntry parameterRef="CFC_Updater_Status"/>
-                    <xtce:ParameterRefEntry parameterRef="CFC_Updates_Cached"/>
-                    <xtce:ParameterRefEntry parameterRef="CFC_TEC_Enabled"/>
-                    <xtce:ParameterRefEntry parameterRef="CFC_TEC_Saturated"/>
-                    <xtce:ParameterRefEntry parameterRef="CFC_TEC_Temperature"/>
-                    <xtce:ParameterRefEntry parameterRef="CFC_Captures"/>
-                    <xtce:ParameterRefEntry parameterRef="APRS_CRC32"/>
-                </xtce:EntryList>
-            </xtce:SequenceContainer>
-        </xtce:ContainerSet>
-    </xtce:TelemetryMetaData>
-    <xtce:CommandMetaData>
-        <xtce:ArgumentTypeSet>
-            <xtce:EnumeratedArgumentType name="bool_enable_disable">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="0" label="Disable"/>
-                    <xtce:Enumeration value="1" label="Enable"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedArgumentType>
-            <xtce:EnumeratedArgumentType name="bool_on_off">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="0" label="Off"/>
-                    <xtce:Enumeration value="1" label="On"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedArgumentType>
-            <xtce:EnumeratedArgumentType name="OPD_ID">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="24" label="Battery (0x18)"/>
-                    <xtce:Enumeration value="25" label="GPS (0x19)"/>
-                    <xtce:Enumeration value="26" label="ACS (0x1A)"/>
-                    <xtce:Enumeration value="27" label="DxWiFi (0x1B)"/>
-                    <xtce:Enumeration value="28" label="Star Tracker (0x1C)"/>
-                    <xtce:Enumeration value="29" label="CFC Octavo (0x1D)"/>
-                    <xtce:Enumeration value="30" label="CFC Sensor (0x1E)"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedArgumentType>
-            <xtce:EnumeratedArgumentType name="CANOPEN_NODE_ID">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="4" label="Battery"/>
-                    <xtce:Enumeration value="12" label="Solar Panel 0"/>
-                    <xtce:Enumeration value="16" label="Solar Panel 1"/>
-                    <xtce:Enumeration value="20" label="Solar Panel 2"/>
-                    <xtce:Enumeration value="24" label="Solar Panel 3"/>
-                    <xtce:Enumeration value="44" label="Star Tracker"/>
-                    <xtce:Enumeration value="52" label="GPS"/>
-                    <xtce:Enumeration value="56" label="ACS"/>
-                    <xtce:Enumeration value="76" label="DxWiFi"/>
-                    <xtce:Enumeration value="80" label="CFC"/>
-                    <xtce:Enumeration value="124" label="Unassigned Node"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedArgumentType>
-            <xtce:IntegerArgumentType name="OD_INDEX" shortDescription="CANopen OD Index">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
-            </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="OD_SUBINDEX" shortDescription="CANopen OD Subindex">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
-            </xtce:IntegerArgumentType>
-            <xtce:BooleanArgumentType name="bool_Type" shortDescription="New value for bool item">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8"/>
-            </xtce:BooleanArgumentType>
-            <xtce:IntegerArgumentType name="int8_Type" shortDescription="New value for int8 item">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
-            </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="int16_Type" shortDescription="New value for int16 item">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
-            </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="int32_Type" shortDescription="New value for int32 item">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
-            </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="uint8_Type" shortDescription="New value for uint8 item">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
-            </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="uint16_Type" shortDescription="New value for uint16 item">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
-            </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="uint32_Type" shortDescription="New value for uint32 item">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
-            </xtce:IntegerArgumentType>
-        </xtce:ArgumentTypeSet>
-        <xtce:MetaCommandSet>
-            <xtce:MetaCommand name="tx_control" shortDescription="enable/disable tx">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="command" argumentTypeRef="bool_enable_disable"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="tx_disable">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800000E00E500" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="command"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="forbidden"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="test_file_upload" shortDescription="upload a test file">
-                <xtce:CommandContainer name="test_file_upload">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53002004A00E57465" sizeInBits="80"/>
-                        <xtce:FixedValueEntry binaryValue="7374322E747874000000" sizeInBits="80"/>
-                        <xtce:FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80"/>
-                        <xtce:FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80"/>
-                        <xtce:FixedValueEntry binaryValue="00000000180000000123" sizeInBits="80"/>
-                        <xtce:FixedValueEntry binaryValue="456789ABCDEF01234567" sizeInBits="80"/>
-                        <xtce:FixedValueEntry binaryValue="89ABCDEF0123456789AB" sizeInBits="80"/>
-                        <xtce:FixedValueEntry binaryValue="CDEF" sizeInBits="16"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="opd_power" shortDescription="power on/off cards with OPD">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="OPD_Id" argumentTypeRef="OPD_ID"/>
-                    <xtce:Argument name="command" argumentTypeRef="bool_on_off"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="opd_power">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800000F00E511" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="OPD_Id"/>
-                        <xtce:ArgumentRefEntry argumentRef="command"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="opd_reinit" shortDescription="reinitialize the OPD">
-                <xtce:CommandContainer name="opd_reinit">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800000D00E51000" sizeInBits="80"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="sdo_write_bool" shortDescription="write a bool to a card's object dicionary">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
-                    <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
-                    <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
-                    <xtce:Argument name="value" argumentTypeRef="bool_Type"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="sdo_write_bool">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
-                        <xtce:FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
-                        <xtce:ArgumentRefEntry argumentRef="value"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="sdo_write_int8" shortDescription="write a int8 to a card's object dicionary">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
-                    <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
-                    <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
-                    <xtce:Argument name="value" argumentTypeRef="int8_Type"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="sdo_write_int8">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
-                        <xtce:FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
-                        <xtce:ArgumentRefEntry argumentRef="value"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="sdo_write_int16" shortDescription="write a int16 to a card's object dicionary">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
-                    <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
-                    <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
-                    <xtce:Argument name="value" argumentTypeRef="int16_Type"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="sdo_write_int16">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
-                        <xtce:FixedValueEntry binaryValue="02000000" sizeInBits="32"/>
-                        <xtce:ArgumentRefEntry argumentRef="value"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="sdo_write_int32" shortDescription="write a int32 to a card's object dicionary">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
-                    <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
-                    <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
-                    <xtce:Argument name="value" argumentTypeRef="int32_Type"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="sdo_write_int32">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
-                        <xtce:FixedValueEntry binaryValue="04000000" sizeInBits="32"/>
-                        <xtce:ArgumentRefEntry argumentRef="value"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="sdo_write_uint8" shortDescription="write a uint8 to a card's object dicionary">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
-                    <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
-                    <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
-                    <xtce:Argument name="value" argumentTypeRef="uint8_Type"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="sdo_write_uint8">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
-                        <xtce:FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
-                        <xtce:ArgumentRefEntry argumentRef="value"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="sdo_write_uint16" shortDescription="write a uint16 to a card's object dicionary">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
-                    <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
-                    <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
-                    <xtce:Argument name="value" argumentTypeRef="uint16_Type"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="sdo_write_uint16">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
-                        <xtce:FixedValueEntry binaryValue="02000000" sizeInBits="32"/>
-                        <xtce:ArgumentRefEntry argumentRef="value"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-            <xtce:MetaCommand name="sdo_write_uint32" shortDescription="write a uint32 to a card's object dicionary">
-                <xtce:ArgumentList>
-                    <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
-                    <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
-                    <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
-                    <xtce:Argument name="value" argumentTypeRef="uint32_Type"/>
-                </xtce:ArgumentList>
-                <xtce:CommandContainer name="sdo_write_uint32">
-                    <xtce:EntryList>
-                        <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
-                        <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
-                        <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
-                        <xtce:FixedValueEntry binaryValue="04000000" sizeInBits="32"/>
-                        <xtce:ArgumentRefEntry argumentRef="value"/>
-                    </xtce:EntryList>
-                </xtce:CommandContainer>
-                <xtce:DefaultSignificance consequenceLevel="vital"/>
-            </xtce:MetaCommand>
-        </xtce:MetaCommandSet>
-    </xtce:CommandMetaData>
+  <xtce:LongDescription>This is a OreSat0 satellite telemetry and telecommand database.</xtce:LongDescription>
+  <xtce:Header validationStatus="Working" classification="NotClassified" version="1.0" date="2021-11-09">
+    <xtce:AuthorSet>
+      <xtce:Author>Portland State Aerospace Society (PSAS)</xtce:Author>
+    </xtce:AuthorSet>
+  </xtce:Header>
+  <xtce:TelemetryMetaData>
+    <xtce:ParameterTypeSet>
+      <xtce:StringParameterType name="callsign_t">
+        <xtce:StringDataEncoding encoding="UTF-8">
+          <xtce:SizeInBits>
+            <xtce:Fixed>
+              <xtce:FixedValue>48</xtce:FixedValue>
+            </xtce:Fixed>
+          </xtce:SizeInBits>
+        </xtce:StringDataEncoding>
+      </xtce:StringParameterType>
+      <xtce:StringParameterType name="data_type_id_t">
+        <xtce:StringDataEncoding encoding="UTF-8">
+          <xtce:SizeInBits>
+            <xtce:Fixed>
+              <xtce:FixedValue>24</xtce:FixedValue>
+            </xtce:Fixed>
+          </xtce:SizeInBits>
+        </xtce:StringDataEncoding>
+      </xtce:StringParameterType>
+      <xtce:EnumeratedParameterType name="c3_states">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="66" label="Predeploy"/>
+          <xtce:Enumeration value="67" label="Deploy"/>
+          <xtce:Enumeration value="68" label="Standby"/>
+          <xtce:Enumeration value="69" label="Beacon"/>
+          <xtce:Enumeration value="70" label="EDL"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedParameterType>
+      <xtce:EnumeratedParameterType name="olu_states">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="0" label="Standby"/>
+          <xtce:Enumeration value="1" label="Update"/>
+          <xtce:Enumeration value="2" label="Update_Failed"/>
+          <xtce:Enumeration value="3" label="Status_File"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedParameterType>
+      <xtce:EnumeratedParameterType name="gps_status">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="0" label="Searching"/>
+          <xtce:Enumeration value="1" label="Locked"/>
+          <xtce:Enumeration value="2" label="Hardware_Error"/>
+          <xtce:Enumeration value="3" label="Parser_Error"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedParameterType>
+      <xtce:EnumeratedParameterType name="bit_on_off">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="1"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="0" label="On"/>
+          <xtce:Enumeration value="1" label="Off"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedParameterType>
+      <xtce:EnumeratedParameterType name="bit_disabled_enabled">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="1"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="0" label="Disabled"/>
+          <xtce:Enumeration value="1" label="Enabled"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedParameterType>
+      <xtce:BooleanParameterType name="bool_1bit">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="1"/>
+      </xtce:BooleanParameterType>
+      <xtce:BooleanParameterType name="bool_4bit">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="4"/>
+      </xtce:BooleanParameterType>
+      <xtce:BooleanParameterType name="bool_8bit">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8"/>
+      </xtce:BooleanParameterType>
+      <xtce:IntegerParameterType name="int8_t" signed="true">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding encoding="twosComplement" sizeInBits="8"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="int16_t" signed="true">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="int32_t" signed="true">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="uint8_t" signed="false">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="uint16_t" signed="false">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="uint32_t" signed="false">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+      </xtce:IntegerParameterType>
+      <xtce:BooleanParameterType name="bool_t">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8"/>
+      </xtce:BooleanParameterType>
+      <xtce:IntegerParameterType name="volt_uint16" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="millivoltage">mV</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="watts_uint16" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="milliwatts">mW</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="joules_uint16" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="joules">J</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="capacity_uint16" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="milliamp hours">mAh</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="decibel_uint8" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="decibel">dBm</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="decibel_uint16" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="decibel">dBm</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="second_uint32" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="seconds">s</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="millisecond_uint32" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="milliseconds">ms</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="current_int16" signed="true">
+        <xtce:UnitSet>
+          <xtce:Unit description="milliamps">mA</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="temp_int8" signed="true">
+        <xtce:UnitSet>
+          <xtce:Unit description="celsius">C</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="8"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="temp_int16" signed="true">
+        <xtce:UnitSet>
+          <xtce:Unit description="celsius">C</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="dot_deg_int16" signed="true">
+        <xtce:UnitSet>
+          <xtce:Unit description="degrees per second">deg / s</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="position_uint32" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="meters">m</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="velocity_uint32" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="meters">m / s</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+      </xtce:IntegerParameterType>
+      <xtce:IntegerParameterType name="percent_uint8" signed="false">
+        <xtce:UnitSet>
+          <xtce:Unit description="Percent">%</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+      </xtce:IntegerParameterType>
+      <xtce:FloatParameterType name="c3_voltage" sizeInBits="32">
+        <xtce:UnitSet>
+          <xtce:Unit description="Volts">v</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8">
+          <xtce:DefaultCalibrator>
+            <xtce:PolynomialCalibrator>
+              <xtce:Term exponent="1" coefficient="0.02"/>
+            </xtce:PolynomialCalibrator>
+          </xtce:DefaultCalibrator>
+        </xtce:IntegerDataEncoding>
+      </xtce:FloatParameterType>
+      <xtce:FloatParameterType name="c3_current" sizeInBits="32">
+        <xtce:UnitSet>
+          <xtce:Unit description="milliAmps">mA</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8">
+          <xtce:DefaultCalibrator>
+            <xtce:PolynomialCalibrator>
+              <xtce:Term exponent="1" coefficient="0.02"/>
+            </xtce:PolynomialCalibrator>
+          </xtce:DefaultCalibrator>
+        </xtce:IntegerDataEncoding>
+      </xtce:FloatParameterType>
+    </xtce:ParameterTypeSet>
+    <xtce:ParameterSet>
+      <xtce:Parameter name="APRS_Dest_Callsign" parameterTypeRef="callsign_t"/>
+      <xtce:Parameter name="APRS_Dest_SSID" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="APRS_Src_Callsign" parameterTypeRef="callsign_t"/>
+      <xtce:Parameter name="APRS_Src_SSID" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="APRS_CTRL" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="APRS_PID" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="APRS_Data_Type_Id" parameterTypeRef="data_type_id_t" shortDescription=" User-Defined APRS packet format"/>
+      <xtce:Parameter name="APRS_Revision" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="C3_M4_State" parameterTypeRef="c3_states"/>
+      <xtce:Parameter name="C3_M4_Uptime" parameterTypeRef="second_uint32"/>
+      <xtce:Parameter name="C3_RTC_Time" parameterTypeRef="second_uint32"/>
+      <xtce:Parameter name="C3_M4_Temperature" parameterTypeRef="temp_int8"/>
+      <xtce:Parameter name="C3_M4_Ref_Voltage" parameterTypeRef="c3_voltage"/>
+      <xtce:Parameter name="C3_M4_Vbusp_Voltage" parameterTypeRef="c3_voltage"/>
+      <xtce:Parameter name="C3_M4_Vbusp_Current" parameterTypeRef="c3_current"/>
+      <xtce:Parameter name="C3_WDT_Num_Timeouts" parameterTypeRef="uint16_t"/>
+      <xtce:Parameter name="C3_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
+      <xtce:Parameter name="C3_L_RX_Bytes_Received" parameterTypeRef="uint32_t"/>
+      <xtce:Parameter name="C3_L_RX_Valid_Packets" parameterTypeRef="uint32_t"/>
+      <xtce:Parameter name="C3_L_RX_RSSI" parameterTypeRef="decibel_uint8"/>
+      <xtce:Parameter name="C3_L_TX_PLL_Lock" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="C3_UHF_TX_Temperature" parameterTypeRef="temp_int8"/>
+      <xtce:Parameter name="C3_UHF_TX_FWD_Power" parameterTypeRef="decibel_uint16"/>
+      <xtce:Parameter name="C3_UHF_TX_REV_Power" parameterTypeRef="decibel_uint16"/>
+      <xtce:Parameter name="C3_UHF_RX_Bytes_Received" parameterTypeRef="uint32_t"/>
+      <xtce:Parameter name="C3_UHF_RX_Valid_Packets" parameterTypeRef="uint32_t"/>
+      <xtce:Parameter name="C3_UHF_RX_RSSI" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="C3_UHF_RX_PLL_Lock" parameterTypeRef="decibel_uint8"/>
+      <xtce:Parameter name="C3_FW_Bank" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="C3_CAN1" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="C3_CAN2" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="C3_OPD_Current" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="C3_OPD_State" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="Battery_Pack1_Vbatt" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack1_Vcell" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack1_Vcell_Max" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack1_Vcell_Min" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack1_Vcell_1" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack1_Vcell_2" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack1_Vcell_Avg" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack1_Temperature" parameterTypeRef="temp_int16"/>
+      <xtce:Parameter name="Battery_Pack1_Temperature_Avg" parameterTypeRef="temp_int16"/>
+      <xtce:Parameter name="Battery_Pack1_Temperature_Max" parameterTypeRef="temp_int16"/>
+      <xtce:Parameter name="Battery_Pack1_Temperature_Min" parameterTypeRef="temp_int16"/>
+      <xtce:Parameter name="Battery_Pack1_Current" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Battery_Pack1_Current_Avg" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Battery_Pack1_Current_Max" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Battery_Pack1_Current_Min" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Battery_Pack1_Heater" parameterTypeRef="bit_on_off"/>
+      <xtce:Parameter name="Battery_Pack1_Discharge" parameterTypeRef="bit_disabled_enabled"/>
+      <xtce:Parameter name="Battery_Pack1_Charge" parameterTypeRef="bit_disabled_enabled"/>
+      <xtce:Parameter name="Battery_Pack1_Discharging" parameterTypeRef="bool_1bit"/>
+      <xtce:Parameter name="Battery_Pack1_Charging" parameterTypeRef="bool_4bit"/>
+      <xtce:Parameter name="Battery_Pack1_Reported_State_of_Charge" parameterTypeRef="percent_uint8"/>
+      <xtce:Parameter name="Battery_Pack1_Full_Capacity" parameterTypeRef="capacity_uint16"/>
+      <xtce:Parameter name="Battery_Pack1_Reported_Capacity" parameterTypeRef="capacity_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Vbatt" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Vcell" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Vcell_Max" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Vcell_Min" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Vcell_1" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Vcell_2" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Vcell_Avg" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Temperature" parameterTypeRef="temp_int16"/>
+      <xtce:Parameter name="Battery_Pack2_Temperature_Avg" parameterTypeRef="temp_int16"/>
+      <xtce:Parameter name="Battery_Pack2_Temperature_Max" parameterTypeRef="temp_int16"/>
+      <xtce:Parameter name="Battery_Pack2_Temperature_Min" parameterTypeRef="temp_int16"/>
+      <xtce:Parameter name="Battery_Pack2_Current" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Battery_Pack2_Current_Avg" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Battery_Pack2_Current_Max" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Battery_Pack2_Current_Min" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Battery_Pack2_Heater" parameterTypeRef="bit_on_off"/>
+      <xtce:Parameter name="Battery_Pack2_Discharge" parameterTypeRef="bit_disabled_enabled"/>
+      <xtce:Parameter name="Battery_Pack2_Charge" parameterTypeRef="bit_disabled_enabled"/>
+      <xtce:Parameter name="Battery_Pack2_Discharging" parameterTypeRef="bool_1bit"/>
+      <xtce:Parameter name="Battery_Pack2_Charging" parameterTypeRef="bool_4bit"/>
+      <xtce:Parameter name="Battery_Pack2_Reported_State_of_Charge" parameterTypeRef="percent_uint8"/>
+      <xtce:Parameter name="Battery_Pack2_Full_Capacity" parameterTypeRef="capacity_uint16"/>
+      <xtce:Parameter name="Battery_Pack2_Reported_Capacity" parameterTypeRef="capacity_uint16"/>
+      <xtce:Parameter name="Solar_Neg_X_Voltage_Avg" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Solar_Neg_X_Current_Avg" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Solar_Neg_X_Power_Avg" parameterTypeRef="watts_uint16"/>
+      <xtce:Parameter name="Solar_Neg_X_Voltage_Max" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Solar_Neg_X_Current_Max" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Solar_Neg_X_Power_Max" parameterTypeRef="watts_uint16"/>
+      <xtce:Parameter name="Solar_Neg_X_Energy" parameterTypeRef="joules_uint16"/>
+      <xtce:Parameter name="Solar_Neg_Y_Voltage_Avg" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Solar_Neg_Y_Current_Avg" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Solar_Neg_Y_Power_Avg" parameterTypeRef="watts_uint16"/>
+      <xtce:Parameter name="Solar_Neg_Y_Voltage_Max" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Solar_Neg_Y_Current_Max" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Solar_Neg_Y_Power_Max" parameterTypeRef="watts_uint16"/>
+      <xtce:Parameter name="Solar_Neg_Y_Energy" parameterTypeRef="joules_uint16"/>
+      <xtce:Parameter name="Solar_Pos_X_Voltage_Avg" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Solar_Pos_X_Current_Avg" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Solar_Pos_X_Power_Avg" parameterTypeRef="watts_uint16"/>
+      <xtce:Parameter name="Solar_Pos_X_Voltage_Max" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Solar_Pos_X_Current_Max" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Solar_Pos_X_Power_Max" parameterTypeRef="watts_uint16"/>
+      <xtce:Parameter name="Solar_Pos_X_Energy" parameterTypeRef="joules_uint16"/>
+      <xtce:Parameter name="Solar_Pos_Y_Voltage_Avg" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Solar_Pos_Y_Current_Avg" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Solar_Pos_Y_Power_Avg" parameterTypeRef="watts_uint16"/>
+      <xtce:Parameter name="Solar_Pos_Y_Voltage_Max" parameterTypeRef="volt_uint16"/>
+      <xtce:Parameter name="Solar_Pos_Y_Current_Max" parameterTypeRef="current_int16"/>
+      <xtce:Parameter name="Solar_Pos_Y_Power_Max" parameterTypeRef="watts_uint16"/>
+      <xtce:Parameter name="Solar_Pos_Y_Energy" parameterTypeRef="joules_uint16"/>
+      <xtce:Parameter name="Star_Tracker_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
+      <xtce:Parameter name="Star_Tracker_Readable_Files" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="Star_Tracker_Updater_Status" parameterTypeRef="olu_states"/>
+      <xtce:Parameter name="Star_Tracker_Updates_Cached" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="Star_Tracker_Right_Ascension" parameterTypeRef="int16_t"/>
+      <xtce:Parameter name="Star_Tracker_Declination" parameterTypeRef="int16_t"/>
+      <xtce:Parameter name="Star_Tracker_Roll" parameterTypeRef="int16_t"/>
+      <xtce:Parameter name="Star_Tracker_Last_Packet_Timestamp" parameterTypeRef="millisecond_uint32"/>
+      <xtce:Parameter name="GPS_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
+      <xtce:Parameter name="GPS_Readable_Files" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="GPS_Updater_Status" parameterTypeRef="olu_states"/>
+      <xtce:Parameter name="GPS_Updates_Cached" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="GPS_Status" parameterTypeRef="gps_status"/>
+      <xtce:Parameter name="GPS_Sat_Locked" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="GPS_Position_X" parameterTypeRef="position_uint32"/>
+      <xtce:Parameter name="GPS_Position_Y" parameterTypeRef="position_uint32"/>
+      <xtce:Parameter name="GPS_Position_Z" parameterTypeRef="position_uint32"/>
+      <xtce:Parameter name="GPS_Velocity_X" parameterTypeRef="velocity_uint32"/>
+      <xtce:Parameter name="GPS_Velocity_Y" parameterTypeRef="velocity_uint32"/>
+      <xtce:Parameter name="GPS_Velocity_Z" parameterTypeRef="velocity_uint32"/>
+      <xtce:Parameter name="GPS_Last_Packet_Timestamp" parameterTypeRef="millisecond_uint32"/>
+      <xtce:Parameter name="ADS_Gryo_Roll_Dot" parameterTypeRef="dot_deg_int16"/>
+      <xtce:Parameter name="ADS_Gryo_Pitch_Dot" parameterTypeRef="dot_deg_int16"/>
+      <xtce:Parameter name="ADS_Gryo_Yaw_Dot" parameterTypeRef="dot_deg_int16"/>
+      <xtce:Parameter name="ADS_Gryo_Imu_Temp" parameterTypeRef="temp_int8"/>
+      <xtce:Parameter name="Dxwifi_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
+      <xtce:Parameter name="Dxwifi_Readable_Files" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="Dxwifi_Updater_Status" parameterTypeRef="olu_states"/>
+      <xtce:Parameter name="Dxwifi_Updates_Cached" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="Dxwifi_Transmitting" parameterTypeRef="bool_t"/>
+      <xtce:Parameter name="CFC_Emmc_Capacity" parameterTypeRef="percent_uint8"/>
+      <xtce:Parameter name="CFC_Readable_Files" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="CFC_Updater_Status" parameterTypeRef="olu_states"/>
+      <xtce:Parameter name="CFC_Updates_Cached" parameterTypeRef="uint8_t"/>
+      <xtce:Parameter name="CFC_TEC_Enabled" parameterTypeRef="bool_t"/>
+      <xtce:Parameter name="CFC_TEC_Saturated" parameterTypeRef="bool_t"/>
+      <xtce:Parameter name="CFC_TEC_Temperature" parameterTypeRef="temp_int8"/>
+      <xtce:Parameter name="CFC_Captures" parameterTypeRef="uint32_t"/>
+      <xtce:Parameter name="APRS_CRC32" parameterTypeRef="uint32_t"/>
+    </xtce:ParameterSet>
+    <xtce:ContainerSet>
+      <xtce:SequenceContainer name="Spacecraft">
+        <xtce:EntryList>
+          <xtce:ParameterRefEntry parameterRef="APRS_Dest_Callsign"/>
+          <xtce:ParameterRefEntry parameterRef="APRS_Dest_SSID"/>
+          <xtce:ParameterRefEntry parameterRef="APRS_Src_Callsign"/>
+          <xtce:ParameterRefEntry parameterRef="APRS_Src_SSID"/>
+          <xtce:ParameterRefEntry parameterRef="APRS_CTRL"/>
+          <xtce:ParameterRefEntry parameterRef="APRS_PID"/>
+          <xtce:ParameterRefEntry parameterRef="APRS_Data_Type_Id"/>
+          <xtce:ParameterRefEntry parameterRef="APRS_Revision"/>
+          <xtce:ParameterRefEntry parameterRef="C3_M4_State"/>
+          <xtce:ParameterRefEntry parameterRef="C3_M4_Uptime"/>
+          <xtce:ParameterRefEntry parameterRef="C3_RTC_Time"/>
+          <xtce:ParameterRefEntry parameterRef="C3_M4_Temperature"/>
+          <xtce:ParameterRefEntry parameterRef="C3_M4_Ref_Voltage"/>
+          <xtce:ParameterRefEntry parameterRef="C3_M4_Vbusp_Voltage"/>
+          <xtce:ParameterRefEntry parameterRef="C3_M4_Vbusp_Current"/>
+          <xtce:ParameterRefEntry parameterRef="C3_WDT_Num_Timeouts"/>
+          <xtce:ParameterRefEntry parameterRef="C3_Emmc_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="C3_L_RX_Bytes_Received"/>
+          <xtce:ParameterRefEntry parameterRef="C3_L_RX_Valid_Packets"/>
+          <xtce:ParameterRefEntry parameterRef="C3_L_RX_RSSI"/>
+          <xtce:ParameterRefEntry parameterRef="C3_L_TX_PLL_Lock"/>
+          <xtce:ParameterRefEntry parameterRef="C3_UHF_TX_Temperature"/>
+          <xtce:ParameterRefEntry parameterRef="C3_UHF_TX_FWD_Power"/>
+          <xtce:ParameterRefEntry parameterRef="C3_UHF_TX_REV_Power"/>
+          <xtce:ParameterRefEntry parameterRef="C3_UHF_RX_Bytes_Received"/>
+          <xtce:ParameterRefEntry parameterRef="C3_UHF_RX_Valid_Packets"/>
+          <xtce:ParameterRefEntry parameterRef="C3_UHF_RX_RSSI"/>
+          <xtce:ParameterRefEntry parameterRef="C3_UHF_RX_PLL_Lock"/>
+          <xtce:ParameterRefEntry parameterRef="C3_FW_Bank"/>
+          <xtce:ParameterRefEntry parameterRef="C3_CAN1"/>
+          <xtce:ParameterRefEntry parameterRef="C3_CAN2"/>
+          <xtce:ParameterRefEntry parameterRef="C3_OPD_State"/>
+          <xtce:ParameterRefEntry parameterRef="C3_OPD_Current"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vbatt"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Min"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_1"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_2"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Vcell_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Temperature"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Temperature_Min"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Current"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Current_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Current_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Current_Min"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Heater"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Discharge"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Charge"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Discharging"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Charging"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Reported_State_of_Charge"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Full_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack1_Reported_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vbatt"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Min"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_1"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_2"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Vcell_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Temperature"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Temperature_Min"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Current"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Current_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Current_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Current_Min"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Heater"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Discharge"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Charge"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Discharging"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Charging"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Reported_State_of_Charge"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Full_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="Battery_Pack2_Reported_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Voltage_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Current_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Power_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Voltage_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Current_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Power_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_X_Energy"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Voltage_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Current_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Power_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Voltage_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Current_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Power_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Neg_Y_Energy"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Voltage_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Current_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Power_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Voltage_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Current_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Power_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_X_Energy"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Voltage_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Current_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Power_Avg"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Voltage_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Current_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Power_Max"/>
+          <xtce:ParameterRefEntry parameterRef="Solar_Pos_Y_Energy"/>
+          <xtce:ParameterRefEntry parameterRef="Star_Tracker_Emmc_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="Star_Tracker_Readable_Files"/>
+          <xtce:ParameterRefEntry parameterRef="Star_Tracker_Updater_Status"/>
+          <xtce:ParameterRefEntry parameterRef="Star_Tracker_Updates_Cached"/>
+          <xtce:ParameterRefEntry parameterRef="Star_Tracker_Right_Ascension"/>
+          <xtce:ParameterRefEntry parameterRef="Star_Tracker_Declination"/>
+          <xtce:ParameterRefEntry parameterRef="Star_Tracker_Roll"/>
+          <xtce:ParameterRefEntry parameterRef="Star_Tracker_Last_Packet_Timestamp"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Emmc_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Readable_Files"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Updater_Status"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Updates_Cached"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Status"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Sat_Locked"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Position_X"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Position_Y"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Position_Z"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Velocity_X"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Velocity_Y"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Velocity_Z"/>
+          <xtce:ParameterRefEntry parameterRef="GPS_Last_Packet_Timestamp"/>
+          <xtce:ParameterRefEntry parameterRef="ADS_Gryo_Roll_Dot"/>
+          <xtce:ParameterRefEntry parameterRef="ADS_Gryo_Pitch_Dot"/>
+          <xtce:ParameterRefEntry parameterRef="ADS_Gryo_Yaw_Dot"/>
+          <xtce:ParameterRefEntry parameterRef="ADS_Gryo_Imu_Temp"/>
+          <xtce:ParameterRefEntry parameterRef="Dxwifi_Emmc_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="Dxwifi_Readable_Files"/>
+          <xtce:ParameterRefEntry parameterRef="Dxwifi_Updater_Status"/>
+          <xtce:ParameterRefEntry parameterRef="Dxwifi_Updates_Cached"/>
+          <xtce:ParameterRefEntry parameterRef="Dxwifi_Transmitting"/>
+          <xtce:ParameterRefEntry parameterRef="CFC_Emmc_Capacity"/>
+          <xtce:ParameterRefEntry parameterRef="CFC_Readable_Files"/>
+          <xtce:ParameterRefEntry parameterRef="CFC_Updater_Status"/>
+          <xtce:ParameterRefEntry parameterRef="CFC_Updates_Cached"/>
+          <xtce:ParameterRefEntry parameterRef="CFC_TEC_Enabled"/>
+          <xtce:ParameterRefEntry parameterRef="CFC_TEC_Saturated"/>
+          <xtce:ParameterRefEntry parameterRef="CFC_TEC_Temperature"/>
+          <xtce:ParameterRefEntry parameterRef="CFC_Captures"/>
+          <xtce:ParameterRefEntry parameterRef="APRS_CRC32"/>
+        </xtce:EntryList>
+      </xtce:SequenceContainer>
+    </xtce:ContainerSet>
+  </xtce:TelemetryMetaData>
+  <xtce:CommandMetaData>
+    <xtce:ArgumentTypeSet>
+      <xtce:EnumeratedArgumentType name="bool_enable_disable">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="0" label="Disable"/>
+          <xtce:Enumeration value="1" label="Enable"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedArgumentType>
+      <xtce:EnumeratedArgumentType name="bool_on_off">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="0" label="Off"/>
+          <xtce:Enumeration value="1" label="On"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedArgumentType>
+      <xtce:EnumeratedArgumentType name="OPD_ID">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="24" label="Battery (0x18)"/>
+          <xtce:Enumeration value="25" label="GPS (0x19)"/>
+          <xtce:Enumeration value="26" label="ACS (0x1A)"/>
+          <xtce:Enumeration value="27" label="DxWiFi (0x1B)"/>
+          <xtce:Enumeration value="28" label="Star Tracker (0x1C)"/>
+          <xtce:Enumeration value="29" label="CFC Octavo (0x1D)"/>
+          <xtce:Enumeration value="30" label="CFC Sensor (0x1E)"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedArgumentType>
+      <xtce:EnumeratedArgumentType name="CANOPEN_NODE_ID">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+        <xtce:EnumerationList>
+          <xtce:Enumeration value="4" label="Battery"/>
+          <xtce:Enumeration value="12" label="Solar Panel 0"/>
+          <xtce:Enumeration value="16" label="Solar Panel 1"/>
+          <xtce:Enumeration value="20" label="Solar Panel 2"/>
+          <xtce:Enumeration value="24" label="Solar Panel 3"/>
+          <xtce:Enumeration value="44" label="Star Tracker"/>
+          <xtce:Enumeration value="52" label="GPS"/>
+          <xtce:Enumeration value="56" label="ACS"/>
+          <xtce:Enumeration value="76" label="DxWiFi"/>
+          <xtce:Enumeration value="80" label="CFC"/>
+          <xtce:Enumeration value="124" label="Unassigned Node"/>
+        </xtce:EnumerationList>
+      </xtce:EnumeratedArgumentType>
+      <xtce:IntegerArgumentType name="OD_INDEX" shortDescription="CANopen OD Index">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+      </xtce:IntegerArgumentType>
+      <xtce:IntegerArgumentType name="OD_SUBINDEX" shortDescription="CANopen OD Subindex">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+      </xtce:IntegerArgumentType>
+      <xtce:BooleanArgumentType name="bool_Type" shortDescription="New value for bool item">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8"/>
+      </xtce:BooleanArgumentType>
+      <xtce:IntegerArgumentType name="int8_Type" shortDescription="New value for int8 item">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+      </xtce:IntegerArgumentType>
+      <xtce:IntegerArgumentType name="int16_Type" shortDescription="New value for int16 item">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+      </xtce:IntegerArgumentType>
+      <xtce:IntegerArgumentType name="int32_Type" shortDescription="New value for int32 item">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+      </xtce:IntegerArgumentType>
+      <xtce:IntegerArgumentType name="uint8_Type" shortDescription="New value for uint8 item">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+      </xtce:IntegerArgumentType>
+      <xtce:IntegerArgumentType name="uint16_Type" shortDescription="New value for uint16 item">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+      </xtce:IntegerArgumentType>
+      <xtce:IntegerArgumentType name="uint32_Type" shortDescription="New value for uint32 item">
+        <xtce:UnitSet/>
+        <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+      </xtce:IntegerArgumentType>
+    </xtce:ArgumentTypeSet>
+    <xtce:MetaCommandSet>
+      <xtce:MetaCommand name="tx_control" shortDescription="enable/disable tx">
+        <xtce:ArgumentList>
+          <xtce:Argument name="command" argumentTypeRef="bool_enable_disable"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="tx_disable">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800000E00E500" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="command"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="forbidden"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="test_file_upload" shortDescription="upload a test file">
+        <xtce:CommandContainer name="test_file_upload">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53002004A00E57465" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="7374322E747874000000" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="00000000180000000123" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="456789ABCDEF01234567" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="89ABCDEF0123456789AB" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="CDEF" sizeInBits="16"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="opd_power" shortDescription="power on/off cards with OPD">
+        <xtce:ArgumentList>
+          <xtce:Argument name="OPD_Id" argumentTypeRef="OPD_ID"/>
+          <xtce:Argument name="command" argumentTypeRef="bool_on_off"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="opd_power">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800000F00E511" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="OPD_Id"/>
+            <xtce:ArgumentRefEntry argumentRef="command"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="opd_reinit" shortDescription="reinitialize the OPD">
+        <xtce:CommandContainer name="opd_reinit">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800000D00E51000" sizeInBits="80"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="sdo_write_bool" shortDescription="write a bool to a card's object dicionary">
+        <xtce:ArgumentList>
+          <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
+          <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
+          <xtce:Argument name="value" argumentTypeRef="bool_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="sdo_write_bool">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
+            <xtce:FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
+            <xtce:ArgumentRefEntry argumentRef="value"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="sdo_write_int8" shortDescription="write a int8 to a card's object dicionary">
+        <xtce:ArgumentList>
+          <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
+          <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
+          <xtce:Argument name="value" argumentTypeRef="int8_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="sdo_write_int8">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
+            <xtce:FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
+            <xtce:ArgumentRefEntry argumentRef="value"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="sdo_write_int16" shortDescription="write a int16 to a card's object dicionary">
+        <xtce:ArgumentList>
+          <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
+          <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
+          <xtce:Argument name="value" argumentTypeRef="int16_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="sdo_write_int16">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
+            <xtce:FixedValueEntry binaryValue="02000000" sizeInBits="32"/>
+            <xtce:ArgumentRefEntry argumentRef="value"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="sdo_write_int32" shortDescription="write a int32 to a card's object dicionary">
+        <xtce:ArgumentList>
+          <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
+          <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
+          <xtce:Argument name="value" argumentTypeRef="int32_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="sdo_write_int32">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
+            <xtce:FixedValueEntry binaryValue="04000000" sizeInBits="32"/>
+            <xtce:ArgumentRefEntry argumentRef="value"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="sdo_write_uint8" shortDescription="write a uint8 to a card's object dicionary">
+        <xtce:ArgumentList>
+          <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
+          <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
+          <xtce:Argument name="value" argumentTypeRef="uint8_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="sdo_write_uint8">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
+            <xtce:FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
+            <xtce:ArgumentRefEntry argumentRef="value"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="sdo_write_uint16" shortDescription="write a uint16 to a card's object dicionary">
+        <xtce:ArgumentList>
+          <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
+          <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
+          <xtce:Argument name="value" argumentTypeRef="uint16_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="sdo_write_uint16">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
+            <xtce:FixedValueEntry binaryValue="02000000" sizeInBits="32"/>
+            <xtce:ArgumentRefEntry argumentRef="value"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="sdo_write_uint32" shortDescription="write a uint32 to a card's object dicionary">
+        <xtce:ArgumentList>
+          <xtce:Argument name="Node_Id" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="OD_Index" argumentTypeRef="OD_INDEX"/>
+          <xtce:Argument name="OD_Subindex" argumentTypeRef="OD_SUBINDEX"/>
+          <xtce:Argument name="value" argumentTypeRef="uint32_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="sdo_write_uint32">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
+            <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
+            <xtce:FixedValueEntry binaryValue="04000000" sizeInBits="32"/>
+            <xtce:ArgumentRefEntry argumentRef="value"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+    </xtce:MetaCommandSet>
+  </xtce:CommandMetaData>
 </xtce:SpaceSystem>
