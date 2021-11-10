@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <SpaceSystem xmlns="http://www.omg.org/spec/XTCE/20180204" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="oresat0" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+    <LongDescription>This is a OreSat0 satellite telemetry and telecommand database.</LongDescription>
+    <Header validationStatus="Working" classification="NotClassified" version="1.0" date="2021-11-09">
+        <AuthorSet>
+            <Author>Portland State Aerospace Society (PSAS)</Author>
+        </AuthorSet>
+    </Header>
     <TelemetryMetaData>
         <ParameterTypeSet>
             <StringParameterType name="callsign_t">
