@@ -8,6 +8,14 @@
   </xtce:Header>
   <xtce:TelemetryMetaData>
     <xtce:ParameterTypeSet>
+      <xtce:AbsoluteTimeParameterType name="timestamp_t" shortDescription="SCET Timestamp">
+        <xtce:Encoding>
+          <xtce:IntegerDataEncoding sizeInBits="32"/>
+        </xtce:Encoding>
+        <xtce:ReferenceTime>
+          <xtce:Epoch>1970-01-01T00:00:00.000</xtce:Epoch>
+        </xtce:ReferenceTime>
+      </xtce:AbsoluteTimeParameterType>
       <xtce:StringParameterType name="callsign_t">
         <xtce:StringDataEncoding encoding="UTF-8">
           <xtce:SizeInBits>
@@ -239,7 +247,7 @@
       <xtce:Parameter name="APRS_Revision" parameterTypeRef="uint8_t"/>
       <xtce:Parameter name="C3_M4_State" parameterTypeRef="c3_states"/>
       <xtce:Parameter name="C3_M4_Uptime" parameterTypeRef="second_uint32"/>
-      <xtce:Parameter name="C3_RTC_Time" parameterTypeRef="second_uint32"/>
+      <xtce:Parameter name="C3_RTC_Time" parameterTypeRef="timestamp_t"/>
       <xtce:Parameter name="C3_M4_Temperature" parameterTypeRef="temp_int8"/>
       <xtce:Parameter name="C3_M4_Ref_Voltage" parameterTypeRef="c3_voltage"/>
       <xtce:Parameter name="C3_M4_Vbusp_Voltage" parameterTypeRef="c3_voltage"/>
