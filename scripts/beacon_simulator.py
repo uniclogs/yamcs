@@ -10,7 +10,7 @@ import os
 import socket
 import sys
 from threading import Thread
-from time import sleep
+from time import sleep, time
 from argparse import ArgumentParser
 
 import bitstring
@@ -39,7 +39,9 @@ def send_tm(simulator):
 
     simulator.tm_counter = 1
     while True:
-        packet_data = bytearray(os.urandom(249))
+        time_int_byte = int(time()).to_bytes(4, byteorder='big')
+        packet_data = bytearray(os.urandom(9)) + time_int_byte + \
+            bytearray(os.urandom(236))
         calc_crc = binascii.crc32(packet_data)
         packet = packet_header + packet_data + calc_crc.to_bytes(4, 'little')
 
