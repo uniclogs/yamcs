@@ -30,6 +30,8 @@ dataLinks:
     packetPreprocessorArgs:
       destCallsign: "SPACE"
       srcCallsign: "KJ7SAT"
+      timestampOffset: 25
+
 
   - name: uniclogs-out
     class: org.yamcs.tctm.UdpTcDataLink
