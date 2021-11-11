@@ -629,26 +629,11 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="tx_disable">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800000E00E500" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="00" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="command"/>
           </xtce:EntryList>
         </xtce:CommandContainer>
         <xtce:DefaultSignificance consequenceLevel="forbidden"/>
-      </xtce:MetaCommand>
-      <xtce:MetaCommand name="test_file_upload" shortDescription="upload a test file">
-        <xtce:CommandContainer name="test_file_upload">
-          <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53002004A00E57465" sizeInBits="80"/>
-            <xtce:FixedValueEntry binaryValue="7374322E747874000000" sizeInBits="80"/>
-            <xtce:FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80"/>
-            <xtce:FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80"/>
-            <xtce:FixedValueEntry binaryValue="00000000180000000123" sizeInBits="80"/>
-            <xtce:FixedValueEntry binaryValue="456789ABCDEF01234567" sizeInBits="80"/>
-            <xtce:FixedValueEntry binaryValue="89ABCDEF0123456789AB" sizeInBits="80"/>
-            <xtce:FixedValueEntry binaryValue="CDEF" sizeInBits="16"/>
-          </xtce:EntryList>
-        </xtce:CommandContainer>
-        <xtce:DefaultSignificance consequenceLevel="vital"/>
       </xtce:MetaCommand>
       <xtce:MetaCommand name="opd_power" shortDescription="power on/off cards with OPD">
         <xtce:ArgumentList>
@@ -657,7 +642,7 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="opd_power">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800000F00E511" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="11" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="OPD_Id"/>
             <xtce:ArgumentRefEntry argumentRef="command"/>
           </xtce:EntryList>
@@ -667,7 +652,8 @@
       <xtce:MetaCommand name="opd_reinit" shortDescription="reinitialize the OPD">
         <xtce:CommandContainer name="opd_reinit">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800000D00E51000" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="10" sizeInBits="8"/>
+            <xtce:FixedValueEntry binaryValue="00" sizeInBits="8"/>
           </xtce:EntryList>
         </xtce:CommandContainer>
         <xtce:DefaultSignificance consequenceLevel="vital"/>
@@ -681,7 +667,7 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="sdo_write_bool">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="15" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
@@ -700,7 +686,7 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="sdo_write_int8">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="15" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
@@ -719,7 +705,7 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="sdo_write_int16">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="15" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
@@ -738,7 +724,7 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="sdo_write_int32">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="15" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
@@ -757,7 +743,7 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="sdo_write_uint8">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="15" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
@@ -776,7 +762,7 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="sdo_write_uint16">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="15" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
@@ -795,12 +781,27 @@
         </xtce:ArgumentList>
         <xtce:CommandContainer name="sdo_write_uint32">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="C4F53800001600E515" sizeInBits="72"/>
+            <xtce:FixedValueEntry binaryValue="15" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="Node_Id"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Index"/>
             <xtce:ArgumentRefEntry argumentRef="OD_Subindex"/>
             <xtce:FixedValueEntry binaryValue="04000000" sizeInBits="32"/>
             <xtce:ArgumentRefEntry argumentRef="value"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="test_file_upload" shortDescription="upload a test file">
+        <xtce:CommandContainer name="test_file_upload">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="C4F53002004A00E57465" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="7374322E747874000000" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="00000000000000000000" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="00000000180000000123" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="456789ABCDEF01234567" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="89ABCDEF0123456789AB" sizeInBits="80"/>
+            <xtce:FixedValueEntry binaryValue="CDEF" sizeInBits="16"/>
           </xtce:EntryList>
         </xtce:CommandContainer>
         <xtce:DefaultSignificance consequenceLevel="vital"/>
