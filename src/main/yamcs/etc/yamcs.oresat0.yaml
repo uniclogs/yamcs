@@ -22,7 +22,7 @@ services:
         warmupTime: 60
 
 dataLinks:
-  - name: uniclogs-in
+  - name: beacon-realtime
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_realtime
     port: 10015
@@ -32,8 +32,17 @@ dataLinks:
       srcCallsign: "KJ7SAT"
       timestampOffset: 25
 
+  - name: beacon-dump
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_dump
+    port: 10020
+    packetPreprocessorClassName: org.oresat.uniclogs.Ax25PacketPreprocessor
+    packetPreprocessorArgs:
+      destCallsign: "SPACE"
+      srcCallsign: "KJ7SAT"
+      timestampOffset: 25
 
-  - name: uniclogs-out
+  - name: edl-realtime
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
     host: localhost
