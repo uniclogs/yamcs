@@ -555,6 +555,17 @@
           <xtce:Enumeration value="1" label="On"/>
         </xtce:EnumerationList>
       </xtce:EnumeratedArgumentType>
+      <xtce:StringArgumentType name="c3_filepath_t">
+	     <xtce:UnitSet/>
+	      <xtce:StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
+		      <xtce:SizeInBits>
+			      <xtce:Fixed>
+				      <xtce:FixedValue>400</xtce:FixedValue>
+			      </xtce:Fixed>
+			      <xtce:TerminationChar>00</xtce:TerminationChar>
+	  	    </xtce:SizeInBits>
+	      </xtce:StringDataEncoding>
+      </xtce:StringArgumentType>
       <xtce:EnumeratedArgumentType name="OPD_ID">
         <xtce:UnitSet/>
         <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
@@ -564,8 +575,6 @@
           <xtce:Enumeration value="26" label="ACS (0x1A)"/>
           <xtce:Enumeration value="27" label="DxWiFi (0x1B)"/>
           <xtce:Enumeration value="28" label="Star Tracker (0x1C)"/>
-          <xtce:Enumeration value="29" label="CFC Octavo (0x1D)"/>
-          <xtce:Enumeration value="30" label="CFC Sensor (0x1E)"/>
         </xtce:EnumerationList>
       </xtce:EnumeratedArgumentType>
       <xtce:EnumeratedArgumentType name="CANOPEN_NODE_ID">
@@ -581,8 +590,6 @@
           <xtce:Enumeration value="52" label="GPS"/>
           <xtce:Enumeration value="56" label="ACS"/>
           <xtce:Enumeration value="76" label="DxWiFi"/>
-          <xtce:Enumeration value="80" label="CFC"/>
-          <xtce:Enumeration value="124" label="Unassigned Node"/>
         </xtce:EnumerationList>
       </xtce:EnumeratedArgumentType>
       <xtce:IntegerArgumentType name="OD_INDEX" shortDescription="CANopen OD Index">
@@ -627,13 +634,185 @@
         <xtce:ArgumentList>
           <xtce:Argument name="command" argumentTypeRef="bool_enable_disable"/>
         </xtce:ArgumentList>
-        <xtce:CommandContainer name="tx_disable">
+        <xtce:CommandContainer name="tx_control">
           <xtce:EntryList>
             <xtce:FixedValueEntry binaryValue="00" sizeInBits="8"/>
             <xtce:ArgumentRefEntry argumentRef="command"/>
           </xtce:EntryList>
         </xtce:CommandContainer>
         <xtce:DefaultSignificance consequenceLevel="forbidden"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="fw_flash" shortDescription="flash with fw image">
+        <xtce:ArgumentList>
+          <xtce:Argument name="crc32" argumentTypeRef="int32_Type"/>
+          <xtce:Argument name="filepath" argumentTypeRef="c3_filepath_t"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="fw_flash">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="01" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="crc32"/>
+            <xtce:ArgumentRefEntry argumentRef="filepath"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="forbidden"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="fw_bank" shortDescription="swap fw bank">
+        <xtce:ArgumentList>
+          <xtce:Argument name="bank" argumentTypeRef="uint32_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="fw_bank">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="02" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="bank"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="forbidden"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="fw_verify" shortDescription="verify fw on a bank">
+        <xtce:ArgumentList>
+          <xtce:Argument name="bank" argumentTypeRef="uint32_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="fw_verity">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="03" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="bank"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="forbidden"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_softreset" shortDescription="soft reset the C3">
+        <xtce:CommandContainer name="c3_softreset">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="04" sizeInBits="8"/>
+            <xtce:FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
+            <xtce:FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="forbidden"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_hardreset" shortDescription="hard reset the C3">
+        <xtce:CommandContainer name="c3_hardreset">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="05" sizeInBits="8"/>
+            <xtce:FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
+            <xtce:FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="forbidden"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_factoryreset" shortDescription="factory reset the C3">
+        <xtce:CommandContainer name="c3_factoryreset">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="06" sizeInBits="8"/>
+            <xtce:FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
+            <xtce:FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="forbidden"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_i2c_reset" shortDescription="reset i2c bus on the C3">
+        <xtce:CommandContainer name="c3_i2c_reset">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="07" sizeInBits="8"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_fs_format" shortDescription="format the filesystem">
+        <xtce:CommandContainer name="c3_fs_format">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="08" sizeInBits="8"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_fs_unmount" shortDescription="unmount the filesystem">
+        <xtce:CommandContainer name="c3_fs_unmount">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="09" sizeInBits="8"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_fs_remove" shortDescription="remove file from C3">
+        <xtce:ArgumentList>
+          <xtce:Argument name="filepath" argumentTypeRef="c3_filepath_t"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="c3_fs_remove">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="0A" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="filepath"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_fs_crc" shortDescription="check CRC on a file on C3">
+        <xtce:ArgumentList>
+          <xtce:Argument name="filepath" argumentTypeRef="c3_filepath_t"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="c3_fs_crc">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="0B" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="filepath"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_node_enable" shortDescription="enable/disable CAN node">
+        <xtce:ArgumentList>
+          <xtce:Argument name="nodeid" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="enable" argumentTypeRef="bool_enable_disable"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="c3_node_enable">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="0C" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="nodeid"/>
+            <xtce:ArgumentRefEntry argumentRef="enable"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_node_status" shortDescription="get CAN node's status">
+        <xtce:ArgumentList>
+          <xtce:Argument name="nodeid" argumentTypeRef="CANOPEN_NODE_ID"/>
+          <xtce:Argument name="enable" argumentTypeRef="bool_enable_disable"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="c3_node_status">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="0D" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="nodeid"/>
+            <xtce:ArgumentRefEntry argumentRef="enable"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_opd_sysenable">
+        <xtce:CommandContainer name="c3_opd_sysenable">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="0E" sizeInBits="8"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_opd_sysdisable">
+        <xtce:CommandContainer name="c3_opd_sysdisable">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="0F" sizeInBits="8"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="c3_opd_scan">
+        <xtce:ArgumentList>
+          <xtce:Argument name="reset" argumentTypeRef="bool_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="c3_opd_scan">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="10" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="reset"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
       </xtce:MetaCommand>
       <xtce:MetaCommand name="opd_power" shortDescription="power on/off cards with OPD">
         <xtce:ArgumentList>
@@ -649,11 +828,38 @@
         </xtce:CommandContainer>
         <xtce:DefaultSignificance consequenceLevel="vital"/>
       </xtce:MetaCommand>
-      <xtce:MetaCommand name="opd_reinit" shortDescription="reinitialize the OPD">
-        <xtce:CommandContainer name="opd_reinit">
+      <xtce:MetaCommand name="opd_reset" shortDescription="reset cards with OPD">
+        <xtce:ArgumentList>
+          <xtce:Argument name="OPD_Id" argumentTypeRef="OPD_ID"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="opd_reset">
           <xtce:EntryList>
-            <xtce:FixedValueEntry binaryValue="10" sizeInBits="8"/>
-            <xtce:FixedValueEntry binaryValue="00" sizeInBits="8"/>
+            <xtce:FixedValueEntry binaryValue="12" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="OPD_Id"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="opd_status" shortDescription="get a card's OPD status">
+        <xtce:ArgumentList>
+          <xtce:Argument name="OPD_Id" argumentTypeRef="OPD_ID"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="opd_status">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="13" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="OPD_Id"/>
+          </xtce:EntryList>
+        </xtce:CommandContainer>
+        <xtce:DefaultSignificance consequenceLevel="vital"/>
+      </xtce:MetaCommand>
+      <xtce:MetaCommand name="rtc_time" shortDescription="set the C3's RTC">
+        <xtce:ArgumentList>
+          <xtce:Argument name="coarse_time" argumentTypeRef="uint32_Type"/>
+        </xtce:ArgumentList>
+        <xtce:CommandContainer name="rtc_time">
+          <xtce:EntryList>
+            <xtce:FixedValueEntry binaryValue="14" sizeInBits="8"/>
+            <xtce:ArgumentRefEntry argumentRef="coarse_time"/>
           </xtce:EntryList>
         </xtce:CommandContainer>
         <xtce:DefaultSignificance consequenceLevel="vital"/>
