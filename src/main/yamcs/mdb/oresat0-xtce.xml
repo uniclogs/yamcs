@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xtce:SpaceSystem name="OreSat0" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
-    <xtce:LongDescription>This is a OreSat0 satellite telemetry and telecommand database.</xtce:LongDescription>
-    <xtce:Header validationStatus="Working" classification="NotClassified" version="1.0" date="2021-11-09">
+    <xtce:Header validationStatus="Working" classification="NotClassified" version="1.0" date="2021-11-13">
         <xtce:AuthorSet>
             <xtce:Author>Portland State Aerospace Society (PSAS)</xtce:Author>
         </xtce:AuthorSet>
     </xtce:Header>
     <xtce:TelemetryMetaData>
         <xtce:ParameterTypeSet>
-            <xtce:AbsoluteTimeParameterType name="CoarseTimeType" shortDescription="SCET Timestamp">
+            <xtce:AbsoluteTimeParameterType name="CoarseTimeType" shortDescription="Unix Coarse Timestamp">
                 <xtce:Encoding>
                     <xtce:IntegerDataEncoding sizeInBits="32"/>
                 </xtce:Encoding>
@@ -592,39 +591,39 @@
                     <xtce:Enumeration value="76" label="DxWiFi"/>
                 </xtce:EnumerationList>
             </xtce:EnumeratedArgumentType>
-            <xtce:IntegerArgumentType name="ODIndexType" shortDescription="CANopen OD Index">
+            <xtce:IntegerArgumentType name="ODIndexType" shortDescription="CANopen object dictionary index">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
             </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="ODSubIndexType" shortDescription="CANopen OD SubIndex">
+            <xtce:IntegerArgumentType name="ODSubIndexType" shortDescription="CANopen object dictionary subindex">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
             </xtce:IntegerArgumentType>
-            <xtce:BooleanArgumentType name="BoolType" shortDescription="New value for bool item">
+            <xtce:BooleanArgumentType name="BoolType" shortDescription="new value for bool item">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8"/>
             </xtce:BooleanArgumentType>
-            <xtce:IntegerArgumentType name="int8Type" shortDescription="New value for int8 item">
+            <xtce:IntegerArgumentType name="int8Type" shortDescription="new value for int8 item">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
             </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="Int16Type" shortDescription="New value for int16 item">
+            <xtce:IntegerArgumentType name="Int16Type" shortDescription="new value for int16 item">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
             </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="Int32Type" shortDescription="New value for int32 item">
+            <xtce:IntegerArgumentType name="Int32Type" shortDescription="new value for int32 item">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
             </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="Uint8Type" shortDescription="New value for uint8 item">
+            <xtce:IntegerArgumentType name="Uint8Type" shortDescription="new value for uint8 item">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
             </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="Uint16Type" shortDescription="New value for uint16 item">
+            <xtce:IntegerArgumentType name="Uint16Type" shortDescription="new value for uint16 item">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
             </xtce:IntegerArgumentType>
-            <xtce:IntegerArgumentType name="Uint32Type" shortDescription="New value for uint32 item">
+            <xtce:IntegerArgumentType name="Uint32Type" shortDescription="new value for uint32 item">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
             </xtce:IntegerArgumentType>
@@ -634,7 +633,6 @@
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
             </xtce:IntegerArgumentType>
-
         </xtce:ArgumentTypeSet>
         <xtce:MetaCommandSet>
             <xtce:MetaCommand name="TxControl" shortDescription="enable/disable tx">
@@ -663,7 +661,7 @@
                 </xtce:CommandContainer>
                 <xtce:DefaultSignificance consequenceLevel="forbidden"/>
             </xtce:MetaCommand>
-            <xtce:MetaCommand name="C3FwBank" shortDescription="swap firmware Bank">
+            <xtce:MetaCommand name="C3FwBank" shortDescription="swap firmware bank">
                 <xtce:ArgumentList>
                     <xtce:Argument name="Bank" argumentTypeRef="Uint32Type"/>
                 </xtce:ArgumentList>
@@ -675,7 +673,7 @@
                 </xtce:CommandContainer>
                 <xtce:DefaultSignificance consequenceLevel="forbidden"/>
             </xtce:MetaCommand>
-            <xtce:MetaCommand name="C3FwVerify" shortDescription="verify firmware on a Bank">
+            <xtce:MetaCommand name="C3FwVerify" shortDescription="verify firmware on a bank">
                 <xtce:ArgumentList>
                     <xtce:Argument name="Bank" argumentTypeRef="Uint32Type"/>
                 </xtce:ArgumentList>
@@ -717,7 +715,7 @@
                 </xtce:CommandContainer>
                 <xtce:DefaultSignificance consequenceLevel="forbidden"/>
             </xtce:MetaCommand>
-            <xtce:MetaCommand name="C3I2CReset" shortDescription="Reset i2c bus on the C3">
+            <xtce:MetaCommand name="C3I2CReset" shortDescription="reset i2c bus on the C3">
                 <xtce:CommandContainer name="C3I2CReset">
                     <xtce:EntryList>
                         <xtce:FixedValueEntry binaryValue="07" sizeInBits="8"/>
@@ -765,7 +763,7 @@
                 </xtce:CommandContainer>
                 <xtce:DefaultSignificance consequenceLevel="vital"/>
             </xtce:MetaCommand>
-            <xtce:MetaCommand name="NodeEnable" shortDescription="Enable/disable CAN node">
+            <xtce:MetaCommand name="NodeEnable" shortDescription="enable/disable CAN node">
                 <xtce:ArgumentList>
                     <xtce:Argument name="NodeId" argumentTypeRef="NodeIdType"/>
                     <xtce:Argument name="Enable" argumentTypeRef="BoolEnableDisableType"/>
@@ -835,7 +833,7 @@
                 </xtce:CommandContainer>
                 <xtce:DefaultSignificance consequenceLevel="vital"/>
             </xtce:MetaCommand>
-            <xtce:MetaCommand name="OPDReset" shortDescription="Reset cards with OPD">
+            <xtce:MetaCommand name="OPDReset" shortDescription="reset cards with OPD">
                 <xtce:ArgumentList>
                     <xtce:Argument name="OPDAddr" argumentTypeRef="OPDAddrType"/>
                 </xtce:ArgumentList>
