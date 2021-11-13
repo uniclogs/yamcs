@@ -189,19 +189,19 @@
       </xtce:IntegerParameterType>
       <xtce:IntegerParameterType name="DotDegInt16Type" signed="true">
         <xtce:UnitSet>
-          <xtce:Unit description="degrees per second">deg / s</xtce:Unit>
+          <xtce:Unit description="degrees per second">deg/s</xtce:Unit>
         </xtce:UnitSet>
         <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
       </xtce:IntegerParameterType>
       <xtce:IntegerParameterType name="PositionUint32Type" signed="false">
         <xtce:UnitSet>
-          <xtce:Unit description="meters">m</xtce:Unit>
+          <xtce:Unit description="meters">cm</xtce:Unit>
         </xtce:UnitSet>
         <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
       </xtce:IntegerParameterType>
       <xtce:IntegerParameterType name="VelocityUint32Type" signed="false">
         <xtce:UnitSet>
-          <xtce:Unit description="meters">m / s</xtce:Unit>
+          <xtce:Unit description="meters">cm/s</xtce:Unit>
         </xtce:UnitSet>
         <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
       </xtce:IntegerParameterType>
@@ -628,6 +628,13 @@
         <xtce:UnitSet/>
         <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
       </xtce:IntegerArgumentType>
+      <xtce:IntegerArgumentType name="CoarseTimeType" shortDescription="coarse time">
+        <xtce:UnitSet>
+          <xtce:Unit description="seconds">s</xtce:Unit>
+        </xtce:UnitSet>
+        <xtce:IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+      </xtce:IntegerArgumentType>
+
     </xtce:ArgumentTypeSet>
     <xtce:MetaCommandSet>
       <xtce:MetaCommand name="TxControl" shortDescription="enable/disable tx">
@@ -854,7 +861,7 @@
       </xtce:MetaCommand>
       <xtce:MetaCommand name="RTCTime" shortDescription="set the C3's RTC">
         <xtce:ArgumentList>
-          <xtce:Argument name="CoarseTime" argumentTypeRef="Uint32Type"/>
+          <xtce:Argument name="CoarseTime" argumentTypeRef="CoarseTimeType"/>
         </xtce:ArgumentList>
         <xtce:CommandContainer name="RTCTime">
           <xtce:EntryList>
