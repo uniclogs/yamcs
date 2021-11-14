@@ -111,7 +111,7 @@ def sdo_cmd(conn, inp: str) -> None:
         node_help()
         return
 
-    node_id = str2intenum(inps[1])
+    node_id = str2intenum(inps[1], NodeId)
     index = str2int(inps[2])
     subindex = str2int(inps[3])
     obj_type = inps[4]
@@ -122,21 +122,21 @@ def sdo_cmd(conn, inp: str) -> None:
         raise ValueError('not a valid node command')
 
     # check for valid index and subindex
-    if index < 0 or index > 0x800:
+    if index < 0 or index > 0x8000:
         raise ValueError('invalid index, must be >= 0 and <= 0x8000')
     if subindex < 0 or subindex > 0x127:
         raise ValueError('invalid subindex, must be >= 0 and <= 0x127')
 
     # parse value
     if obj_type == 'b':
-        value = inps[4].lower() in ['t', 'true']
+        value = inps[5].lower() in ['t', 'true']
     elif obj_type in ['i8', 'i16', 'i32', 'u8', 'u16', 'u32']:
         value = str2int(inps[5])
-    if not value:
+    if value is None:
         raise ValueError('not a valid value')
 
     args = {
-        'NodeId': node_id,
+        'NodeId': node_id.name,
         'ODIndex': index,
         'ODSubIndex': subindex,
         'Value': value

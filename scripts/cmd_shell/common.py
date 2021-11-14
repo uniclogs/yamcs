@@ -19,7 +19,7 @@ def str2int(inp: str) -> int:
         except ValueError:
             pass
 
-    if not ret:
+    if ret is None:
         raise ValueError('not a valid int str')
 
     return ret
