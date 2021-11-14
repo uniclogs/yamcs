@@ -8,3 +8,6 @@
 
 # Test data
 *.ccsds
+
+# Python
+__pycache__
