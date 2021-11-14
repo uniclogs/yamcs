@@ -194,13 +194,13 @@
             </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="PositionUint32Type" signed="false">
                 <xtce:UnitSet>
-                    <xtce:Unit description="meters">cm</xtce:Unit>
+                    <xtce:Unit description="centimeters">cm</xtce:Unit>
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
             </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="VelocityUint32Type" signed="false">
                 <xtce:UnitSet>
-                    <xtce:Unit description="meters">cm/s</xtce:Unit>
+                    <xtce:Unit description="centimeters">cm/s</xtce:Unit>
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
             </xtce:IntegerParameterType>
@@ -580,6 +580,7 @@
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
                 <xtce:EnumerationList>
+                    <xtce:Enumeration value="1" label="C3"/>
                     <xtce:Enumeration value="4" label="Battery"/>
                     <xtce:Enumeration value="12" label="SolarPanel0"/>
                     <xtce:Enumeration value="16" label="SolarPanel1"/>
@@ -635,11 +636,11 @@
             </xtce:IntegerArgumentType>
         </xtce:ArgumentTypeSet>
         <xtce:MetaCommandSet>
-            <xtce:MetaCommand name="TxControl" shortDescription="enable/disable tx">
+            <xtce:MetaCommand name="C3TxControl" shortDescription="enable/disable tx">
                 <xtce:ArgumentList>
                     <xtce:Argument name="Command" argumentTypeRef="BoolEnableDisableType"/>
                 </xtce:ArgumentList>
-                <xtce:CommandContainer name="TxControl">
+                <xtce:CommandContainer name="C3TxControl">
                     <xtce:EntryList>
                         <xtce:FixedValueEntry binaryValue="00" sizeInBits="8"/>
                         <xtce:ArgumentRefEntry argumentRef="Command"/>
@@ -780,13 +781,11 @@
             <xtce:MetaCommand name="NodeStatus" shortDescription="get CAN node's status">
                 <xtce:ArgumentList>
                     <xtce:Argument name="NodeId" argumentTypeRef="NodeIdType"/>
-                    <xtce:Argument name="Enable" argumentTypeRef="BoolEnableDisableType"/>
                 </xtce:ArgumentList>
                 <xtce:CommandContainer name="NodeStatus">
                     <xtce:EntryList>
                         <xtce:FixedValueEntry binaryValue="0D" sizeInBits="8"/>
                         <xtce:ArgumentRefEntry argumentRef="NodeId"/>
-                        <xtce:ArgumentRefEntry argumentRef="Enable"/>
                     </xtce:EntryList>
                 </xtce:CommandContainer>
                 <xtce:DefaultSignificance consequenceLevel="vital"/>
@@ -857,11 +856,11 @@
                 </xtce:CommandContainer>
                 <xtce:DefaultSignificance consequenceLevel="vital"/>
             </xtce:MetaCommand>
-            <xtce:MetaCommand name="RTCTime" shortDescription="set the C3's RTC">
+            <xtce:MetaCommand name="C3RTCTime" shortDescription="set the C3's RTC">
                 <xtce:ArgumentList>
                     <xtce:Argument name="CoarseTime" argumentTypeRef="CoarseTimeType"/>
                 </xtce:ArgumentList>
-                <xtce:CommandContainer name="RTCTime">
+                <xtce:CommandContainer name="C3RTCTime">
                     <xtce:EntryList>
                         <xtce:FixedValueEntry binaryValue="14" sizeInBits="8"/>
                         <xtce:ArgumentRefEntry argumentRef="CoarseTime"/>
