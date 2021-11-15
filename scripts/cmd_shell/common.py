@@ -13,7 +13,7 @@ def str2int(inp: str) -> int:
     except ValueError:
         pass
 
-    if not ret:
+    if ret is None:
         try:
             ret = int(inp)
         except ValueError:

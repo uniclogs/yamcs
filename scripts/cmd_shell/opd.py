@@ -9,11 +9,11 @@ from common import str2intenum
 class OPDAddr(IntEnum):
     '''All valid CANopen opd IDs. Names are in the format Yamcs expects'''
 
-    Battery = 0x1B
-    StarTracker = 0x1C
-    GPS = 0x1D
-    ACS = 0x1E
-    DxWiFi = 0x1F
+    Battery = 0x18
+    StarTracker = 0x19
+    GPS = 0x1A
+    ACS = 0x1B
+    DxWiFi = 0x1C
 
 
 def opd_help():
