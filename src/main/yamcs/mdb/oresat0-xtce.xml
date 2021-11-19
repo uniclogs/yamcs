@@ -146,13 +146,13 @@
             </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="DecibelUint8Type" signed="false">
                 <xtce:UnitSet>
-                    <xtce:Unit description="decibel">dBm</xtce:Unit>
+                    <xtce:Unit description="decibels">dBm</xtce:Unit>
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
             </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="DecibelUint16Type" signed="false">
                 <xtce:UnitSet>
-                    <xtce:Unit description="decibel">dBm</xtce:Unit>
+                    <xtce:Unit description="decibels">dBm</xtce:Unit>
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
             </xtce:IntegerParameterType>
@@ -206,13 +206,13 @@
             </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="PercentUint8Type" signed="false">
                 <xtce:UnitSet>
-                    <xtce:Unit description="Percent">%</xtce:Unit>
+                    <xtce:Unit description="percent">%</xtce:Unit>
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
             </xtce:IntegerParameterType>
             <xtce:FloatParameterType name="C3VolatageType" sizeInBits="32">
                 <xtce:UnitSet>
-                    <xtce:Unit description="Volts">v</xtce:Unit>
+                    <xtce:Unit description="volts">v</xtce:Unit>
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8">
                     <xtce:DefaultCalibrator>
@@ -224,7 +224,7 @@
             </xtce:FloatParameterType>
             <xtce:FloatParameterType name="C3CurrentType" sizeInBits="32">
                 <xtce:UnitSet>
-                    <xtce:Unit description="milliAmps">mA</xtce:Unit>
+                    <xtce:Unit description="milliamps">mA</xtce:Unit>
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="8">
                     <xtce:DefaultCalibrator>
@@ -384,7 +384,7 @@
             <xtce:Parameter name="APRSCRC32" parameterTypeRef="Uint32Type"/>
         </xtce:ParameterSet>
         <xtce:ContainerSet>
-            <xtce:SequenceContainer name="Spacecraft">
+            <xtce:SequenceContainer name="Beacon">
                 <xtce:EntryList>
                     <xtce:ParameterRefEntry parameterRef="APRSDestCallsign"/>
                     <xtce:ParameterRefEntry parameterRef="APRSDestSSID"/>
@@ -604,7 +604,7 @@
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8"/>
             </xtce:BooleanArgumentType>
-            <xtce:IntegerArgumentType name="int8Type" shortDescription="new value for int8 item">
+            <xtce:IntegerArgumentType name="Int8Type" shortDescription="new value for int8 item">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
             </xtce:IntegerArgumentType>
@@ -892,7 +892,7 @@
                     <xtce:Argument name="NodeId" argumentTypeRef="NodeIdType"/>
                     <xtce:Argument name="ODIndex" argumentTypeRef="ODIndexType"/>
                     <xtce:Argument name="ODSubIndex" argumentTypeRef="ODSubIndexType"/>
-                    <xtce:Argument name="Value" argumentTypeRef="int8Type"/>
+                    <xtce:Argument name="Value" argumentTypeRef="Int8Type"/>
                 </xtce:ArgumentList>
                 <xtce:CommandContainer name="SDOWriteInt8">
                     <xtce:EntryList>
