@@ -15,15 +15,6 @@
                     <xtce:Epoch>1970-01-01T00:00:00.000</xtce:Epoch>
                 </xtce:ReferenceTime>
             </xtce:AbsoluteTimeParameterType>
-            <xtce:StringParameterType name="CallsignType">
-                <xtce:StringDataEncoding encoding="UTF-8">
-                    <xtce:SizeInBits>
-                        <xtce:Fixed>
-                            <xtce:FixedValue>48</xtce:FixedValue>
-                        </xtce:Fixed>
-                    </xtce:SizeInBits>
-                </xtce:StringDataEncoding>
-            </xtce:StringParameterType>
             <xtce:StringParameterType name="DataTypeIdType">
                 <xtce:StringDataEncoding encoding="UTF-8">
                     <xtce:SizeInBits>
@@ -236,12 +227,6 @@
             </xtce:FloatParameterType>
         </xtce:ParameterTypeSet>
         <xtce:ParameterSet>
-            <xtce:Parameter name="APRSDestCallsign" parameterTypeRef="CallsignType"/>
-            <xtce:Parameter name="APRSDestSSID" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="APRSSrcCallsign" parameterTypeRef="CallsignType"/>
-            <xtce:Parameter name="APRSSrcSSID" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="APRSCTRL" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="APRSPID" parameterTypeRef="Uint8Type"/>
             <xtce:Parameter name="APRSDataTypeId" parameterTypeRef="DataTypeIdType" shortDescription=" User-Defined APRS packet format"/>
             <xtce:Parameter name="APRSRevision" parameterTypeRef="Uint8Type"/>
             <xtce:Parameter name="C3M4State" parameterTypeRef="C3StateType"/>
@@ -386,12 +371,6 @@
         <xtce:ContainerSet>
             <xtce:SequenceContainer name="Beacon">
                 <xtce:EntryList>
-                    <xtce:ParameterRefEntry parameterRef="APRSDestCallsign"/>
-                    <xtce:ParameterRefEntry parameterRef="APRSDestSSID"/>
-                    <xtce:ParameterRefEntry parameterRef="APRSSrcCallsign"/>
-                    <xtce:ParameterRefEntry parameterRef="APRSSrcSSID"/>
-                    <xtce:ParameterRefEntry parameterRef="APRSCTRL"/>
-                    <xtce:ParameterRefEntry parameterRef="APRSPID"/>
                     <xtce:ParameterRefEntry parameterRef="APRSDataTypeId"/>
                     <xtce:ParameterRefEntry parameterRef="APRSRevision"/>
                     <xtce:ParameterRefEntry parameterRef="C3M4State"/>

@@ -11,7 +11,7 @@ import org.yamcs.tctm.AbstractPacketPreprocessor;
 import org.yamcs.utils.ByteArrayUtils;
 import org.yamcs.utils.TimeEncoding;
 
-public class Ax25PacketPreprocessor extends AbstractPacketPreprocessor {
+public class BeaconPacketPreprocessor extends AbstractPacketPreprocessor {
 
     // where from the packet to read the 8 bytes timestamp
     int timestampOffset = -1;
@@ -19,35 +19,19 @@ public class Ax25PacketPreprocessor extends AbstractPacketPreprocessor {
     // where from the packet to read the 4 bytes sequence count
     final int seqCountOffset = 0;
 
-    // Ax.25 Header callsigns fields
-    String destCallsign = "";
-    String srcCallsign = "";
-
     // Constructor used when this preprocessor is used without YAML configuration
-    public Ax25PacketPreprocessor(String yamcsInstance) {
+    public BeaconPacketPreprocessor(String yamcsInstance) {
         this(yamcsInstance, YConfiguration.emptyConfig());
     }
 
     // Constructor used when this preprocessor is used with YAML configuration
     // (packetPreprocessorClassArgs)
-    public Ax25PacketPreprocessor(String yamcsInstance, YConfiguration config) {
+    public BeaconPacketPreprocessor(String yamcsInstance, YConfiguration config) {
         super(yamcsInstance, config);
         timestampOffset = config.getInt("timestampOffset");
         //seqCountOffset = config.getInt("seqCountOffset");
         if (!config.containsKey(CONFIG_KEY_TIME_ENCODING)) {
             this.timeEpoch = TimeEpochs.UNIX;
-        }
-
-        this.destCallsign = config.getString("destCallsign", "");
-        this.srcCallsign = config.getString("srcCallsign", "");
-
-        // All callsigns must be 6 chars long, use spaces to fill gaps
-        // If the callsigns are empty string, they will not be checked
-        if (!this.destCallsign.equals("") && this.destCallsign.length() < 6) {
-            this.destCallsign +=  " ".repeat(6 - this.destCallsign.length());
-        }
-        if (!this.destCallsign.equals("") && this.srcCallsign.length() < 6) {
-            this.srcCallsign +=  " ".repeat(6 - this.srcCallsign.length());
         }
     }
 
@@ -64,24 +48,11 @@ public class Ax25PacketPreprocessor extends AbstractPacketPreprocessor {
             return null; // drop packet
         }
 
+        int n = packet.length;
+        byte[] packetData = Arrays.copyOfRange(packet, 16, n - 4);
+
         try {
-            int n = packet.length;
-
-            // check Ax.25 header
-            byte[] header = Arrays.copyOfRange(packet, 0, 16);
-            BigInteger bigInt = new BigInteger(header).shiftRight(1);
-            header = bigInt.toByteArray();
-            header[0] = (byte)((int)header[0] & 0x7f); // fix the leading bit to be 0 after shifted
-            String destCallsign = new String(Arrays.copyOfRange(header, 0, 6));
-            String srcCallsign = new String(Arrays.copyOfRange(header, 7, 13));
-
-            if ((!this.destCallsign.equals("") && !destCallsign.equals(this.destCallsign))|| 
-                (!this.srcCallsign.equals("") && !srcCallsign.equals(this.srcCallsign))) {
-                return null; // drop packet
-            }
-
             // computed crc32
-            byte[] packetData = Arrays.copyOfRange(packet, 16, n - 4);
             CRC32 crc32 = new CRC32();
             crc32.update(packetData);
             computedCheckword = crc32.getValue();
@@ -132,8 +103,11 @@ public class Ax25PacketPreprocessor extends AbstractPacketPreprocessor {
             }
         }
 
-        tmPacket.setGenerationTime(gentime);
-        tmPacket.setInvalid(corrupted);
-        return tmPacket;
+        // drop Ax25 header
+        TmPacket tmPacket2 = new TmPacket(tmPacket.getReceptionTime(), Arrays.copyOfRange(packet, 16, n));
+
+        tmPacket2.setGenerationTime(gentime);
+        tmPacket2.setInvalid(corrupted);
+        return tmPacket2;
     }
 }

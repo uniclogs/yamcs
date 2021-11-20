@@ -26,20 +26,16 @@ dataLinks:
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_realtime
     port: 10015
-    packetPreprocessorClassName: org.oresat.uniclogs.Ax25PacketPreprocessor
+    packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
     packetPreprocessorArgs:
-      destCallsign: "SPACE"
-      srcCallsign: "KJ7SAT"
       timestampOffset: 25
 
   - name: beacon-dump
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_dump
     port: 10020
-    packetPreprocessorClassName: org.oresat.uniclogs.Ax25PacketPreprocessor
+    packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
     packetPreprocessorArgs:
-      destCallsign: "SPACE"
-      srcCallsign: "KJ7SAT"
       timestampOffset: 25
 
   - name: edl-realtime
