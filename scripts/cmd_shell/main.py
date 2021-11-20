@@ -15,6 +15,7 @@ from opd import opd_cmd, opd_help
 from canopen import node_cmd, node_help, sdo_cmd, sdo_help
 from c3 import c3_cmd, c3_help, fs_cmd, fs_help, fw_cmd, fw_help, rtc_cmd, \
     rtc_help
+from tx import tx_cmd, tx_help
 
 
 class TelecommandShell(Cmd):
@@ -94,6 +95,15 @@ class TelecommandShell(Cmd):
 
     def help_rtc(self):
         rtc_help()
+
+    def do_tx(self, inp):
+        try:
+            tx_cmd(self.conn, inp)
+        except Exception as exc:
+            print(exc)
+
+    def help_tx(self):
+        tx_help()
 
     def default(self, inp):
         if inp == 'x' or inp == 'q':
