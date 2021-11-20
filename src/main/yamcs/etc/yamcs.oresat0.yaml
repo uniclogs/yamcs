@@ -22,7 +22,7 @@ services:
         warmupTime: 60
 
 dataLinks:
-  - name: beacon-realtime
+  - name: beacon-tm-realtime
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_realtime
     port: 10015
@@ -30,7 +30,7 @@ dataLinks:
     packetPreprocessorArgs:
       timestampOffset: 25
 
-  - name: beacon-dump
+  - name: beacon-tm-dump
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_dump
     port: 10020
@@ -38,12 +38,22 @@ dataLinks:
     packetPreprocessorArgs:
       timestampOffset: 25
 
-  - name: edl-realtime
+  - name: edl-tc-realtime
     class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
     host: localhost
     port: 10025
     commandPostprocessorClassName: org.oresat.uniclogs.EdlCommandPostprocessor
+
+  - name: edl-tm-realtime
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_realtime
+    port: 10016
+    packetPreprocessorClassName: org.yamcs.tctm.GenericPacketPreprocessor
+    packetPreprocessorArgs:
+      timestampOffset: -1
+      seqCountOffset: -1
+
 
 mdb:
   # Configuration of the active loaders
