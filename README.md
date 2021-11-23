@@ -5,9 +5,11 @@
 
 [Yamcs] based mission control software for UniClOGS
 
-## How to run
+![uniclogs-yamcs](docs/uniclogs-yamcs.jpg)
 
-Locally:
+## Yamcs
+
+Run without docker:
 
 - **Note:** On systems with older versions of Java, like Java v8, the
 `<release>11</release>` line in `pom.xml` will cause a release error. Change
@@ -19,19 +21,20 @@ merged in as that change will cause problems with newer versions of java that
 - Open `http://localhost:8090` in a web browser.
 - Default `user:passwd` is `admin:admin`
 
-Docker:
+Run with docker:
 
 - See [docker/README.md](docker/README.md)
 
-## Things to know
 
-- UDP ports (both in and out) are setup in `uniclogs-yamcs/src/main/yamcs/etc/yamcs.oresat0.yaml`
-   - TM ("telemetry", input) default: UDP 10015 (set up GnuRadio flow graph to send beacon data to this port)
-   - TC ("telecommand", output) default: UDP 10025 (Set up GnuRadio to take commands from this port)
-- Database path is set in `uniclogs-yamcs/src/main/yamcs/etc/yamcs.yaml`
-   - Setting this path saves the database. Else it just keeps getting overwritten in the default `yamcs-data` directory
-- Commands are set in `uniclogs-yamcs/src/main/yamcs/mdb/oresat0-xtce.xml`
+## Command Shell
 
+The user interface for uniclogs yamcs.
+
+How to:
+
+- Install dependencies: `$ pip install yamcs-client`
+- Start Yamcs
+- Run `$ python cmd_shell/main.py`
 
 ## Resources
 
