@@ -1,3 +1,7 @@
+# Idea IDE Crap
+/.idea/
+*.iml
+
 # Eclipse metadata
 /.settings/
 /.classpath
