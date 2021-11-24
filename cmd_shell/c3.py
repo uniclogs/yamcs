@@ -3,6 +3,8 @@ from time import time
 
 from yamcs.core.exceptions import YamcsError
 
+from file_transfer import file_upload
+
 
 def c3_help() -> None:
     '''Print help message for C3 commands'''
@@ -96,10 +98,12 @@ def fs_help() -> None:
     print('Filesystem commands:')
     print('  fs format')
     print('  fs unmount')
-    print('  fs remove FILEPATH')
-    print('  fs crc FILEPATH')
+    print('  fs remove C3_FILEPATH')
+    print('  fs crc C3_FILEPATH')
+    print('  fs upload LOCAL_FILEPATH')
     print('')
-    print('FILEPATH is filepath on the C3 wanted')
+    print('C3_FILEPATH is filepath on the C3')
+    print('LOCAL_FILEPATH is filepath on the local system')
 
 
 def fs_cmd(conn, inp: str) -> None:
@@ -123,6 +127,9 @@ def fs_cmd(conn, inp: str) -> None:
     elif inps[0].lower() == 'remove':
         cmd = '/OreSat0/C3FsRemove'
         args = {'Filepath': inps[1]}
+    elif inps[0].lower() == 'upload':
+        file_upload(inps[1])
+        return
     else:
         raise ValueError('not a valid filesystem command')
 
