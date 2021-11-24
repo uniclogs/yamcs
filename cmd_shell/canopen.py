@@ -4,7 +4,7 @@ from typing import NamedTuple
 
 from yamcs.core.exceptions import YamcsError
 
-from common import str2int, str2intenum
+from .common import str2int, str2intenum
 
 
 class ObjTypeData(NamedTuple):

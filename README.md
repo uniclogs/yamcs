@@ -32,9 +32,9 @@ The user interface for uniclogs yamcs.
 
 How to:
 
-- Install dependencies: `$ pip install yamcs-client`
+- Install dependencies: `$ pip install -r cmd_shell/requirements.txt`
 - Start Yamcs
-- Run `$ python cmd_shell/main.py`
+- Run `$ python3 -m cmd_shell`
 
 ## Resources
 

@@ -3,7 +3,7 @@ from enum import IntEnum
 
 from yamcs.core.exceptions import YamcsError
 
-from common import str2intenum
+from .common import str2intenum
 
 
 class OPDAddr(IntEnum):
