@@ -1,7 +1,6 @@
 '''UniClOGS Yamcs command shell
 '''
 # System imports
-import cmd
 from cmd import Cmd
 from yamcs.client import YamcsClient
 from yamcs.core.auth import Credentials
