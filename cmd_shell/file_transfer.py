@@ -3,8 +3,8 @@ import os
 import socket
 import struct
 
-UPLINK_IP_ADDR = 10016
-DOWNLINK_IP_ADDR = 10025
+UPLINK_IP_ADDR = 10025
+DOWNLINK_IP_ADDR = 10016
 SEGMENT_LEN = 1024
 USLP_HEADER_LEN = 8
 FILENAME_MAX_LEN = 32
@@ -35,7 +35,6 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
         raise ValueError('Filename exceeds max length of 32')
 
     downlink_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    downlink_socket.bind(('127.0.0.1', DOWNLINK_IP_ADDR))
     uplink_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     filename_bytes = filename.encode('utf-8') + b'\x00' * (FILENAME_MAX_LEN -
