@@ -22,7 +22,7 @@ def opd_help():
     print('opd commands:')
     print('  opd sysenable')
     print('  opd sysdisable')
-    print('  opd scan')
+    print('  opd scan OPD_ADDR')
     print('  opd enable OPD_ADDR')
     print('  opd disable OPD_ADDR')
     print('  opd reset OPD_ADDR')

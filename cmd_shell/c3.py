@@ -121,8 +121,8 @@ def fs_cmd(conn, inp: str) -> None:
         cmd = '/OreSat0/C3FsFormat'
     elif inps[0].lower() == 'unmount':
         cmd = '/OreSat0/C3FsUnmount'
-    elif inps[0].lower() == 'remove':
-        cmd = '/OreSat0/C3FsRemove'
+    elif inps[0].lower() == 'crc':
+        cmd = '/OreSat0/C3CFsCRC'
         args = {'Filepath': inps[1]}
     elif inps[0].lower() == 'remove':
         cmd = '/OreSat0/C3FsRemove'

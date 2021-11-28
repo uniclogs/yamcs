@@ -35,6 +35,7 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
         raise ValueError('Filename exceeds max length of 32')
 
     downlink_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    downlink_socket.bind(('127.0.0.1', DOWNLINK_IP_ADDR))
     uplink_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     filename_bytes = filename.encode('utf-8') + b'\x00' * (FILENAME_MAX_LEN -
@@ -74,8 +75,10 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
                 fails += 1
                 continue
 
+            print(data_raw)
+
             try:
-                reply = struct.unpack('I', data_raw)
+                reply = struct.unpack('I', data_raw[8:])
             except Exception:
                 print('fail', fails, ': struct unpack failed')
                 fails += 1
