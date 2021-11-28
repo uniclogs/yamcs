@@ -59,6 +59,7 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
         uslp_header = b'\xC4\xF5\x38\x02' + SEGMENT_LEN.to_bytes(2, 'little') + b'\x00\xE5'
         offset_bytes = offset.to_bytes(4, 'little')
         seg_len = len(seg).to_bytes(4, 'little')
+        print(seg_len)
         packet = uslp_header + filename_bytes + offset_bytes + seg_len + seg
 
         while True:  # keep sending until successful or retry limit is hit
@@ -78,13 +79,13 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
             print(data_raw)
 
             try:
-                reply = struct.unpack('I', data_raw[8:])
+                reply = struct.unpack('<i', data_raw[8:])
             except Exception:
                 print('fail', fails, ': struct unpack failed')
                 fails += 1
                 continue
 
-            if reply[0] != len(packet):
+            if reply[0] != len(seg):
                 print('fail ', fails, ': reply len failed')
                 fails += 1
             else:
