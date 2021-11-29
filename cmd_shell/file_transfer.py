@@ -12,7 +12,7 @@ FILE_OFFSET_LEN = 4
 SEGMENT_DATA_LEN = 4
 
 
-def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
+def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
     '''Upload file to OreSat in segments
 
     Segment definition: 8 bytes for USLP header, 32 bytes for filename buffer,
@@ -24,9 +24,12 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
     filepath: str
         Filepath to local file to upload to OreSat.
     timeout: float
-        Timeout before resending last segment in seconds.
+        Timeout (in seconds) waiting for a response on the downlink before
+        resending last segment again. If set to 0.0 the the respose will not
+        be looked for.
     retry: int
-        Maximum times to retry to resend the same segment before giving up.
+        Maximum times to retry to resend the same segment before giving up. If
+        set to 0 the segment will not be retried.
     '''
 
     filename = os.path.basename(filepath)
@@ -59,15 +62,22 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
         uslp_header = b'\xC4\xF5\x38\x02' + SEGMENT_LEN.to_bytes(2, 'little') + b'\x00\xE5'
         offset_bytes = offset.to_bytes(4, 'little')
         seg_len = len(seg).to_bytes(4, 'little')
-        print(seg_len)
         packet = uslp_header + filename_bytes + offset_bytes + seg_len + seg
 
-        while True:  # keep sending until successful or retry limit is hit
-            if retry == fails:
-                raise Exception('retry failed 5 times')
+        if timeout == 0:
+            uplink_socket.sendto(packet, ('127.0.0.1', UPLINK_IP_ADDR))
+            print('send segment', i)
+            continue  # skip ack loop
+
+        # why doesn't python have do-while loops?
+        while True:
+            # keep sending until successful or retry limit is hit
+            if retry != 0 and fails >= retry:  # loop forever if set 0
+                raise Exception('retry failed ' + str(retry) + ' time(s)')
 
             uplink_socket.sendto(packet, ('127.0.0.1', UPLINK_IP_ADDR))
             print('send segment', i)
+
             downlink_socket.settimeout(timeout)
             try:
                 data_raw, _ = downlink_socket.recvfrom(4096)
@@ -75,8 +85,6 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
                 print('fail', fails, ': reply timeout')
                 fails += 1
                 continue
-
-            print(data_raw)
 
             try:
                 reply = struct.unpack('<i', data_raw[8:])
@@ -89,6 +97,7 @@ def file_upload(filepath: str, timeout: float = 1.0, retry: int = 5) -> None:
                 print('fail ', fails, ': reply len failed')
                 fails += 1
             else:
+                print('seg', i, 'ack')
                 break  # segment sent was successful
 
         i += 1

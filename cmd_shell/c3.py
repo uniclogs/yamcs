@@ -100,10 +100,14 @@ def fs_help() -> None:
     print('  fs unmount')
     print('  fs remove C3_FILEPATH')
     print('  fs crc C3_FILEPATH')
-    print('  fs upload LOCAL_FILEPATH')
+    print('  fs upload LOCAL_FILEPATH TIMEOUT RETRY')
     print('')
     print('C3_FILEPATH is filepath on the C3')
     print('LOCAL_FILEPATH is filepath on the local system')
+    print('TIMEOUT is how long to listen (in seconds) on EDL downlink for an'
+          ' ack before giving up. Set to 0 to ignore downlink replies.')
+    print('RETRY is the number send and ack retries before giving up. Set to 0'
+          ' retry forever.')
 
 
 def fs_cmd(conn, inp: str) -> None:
@@ -128,7 +132,7 @@ def fs_cmd(conn, inp: str) -> None:
         cmd = '/OreSat0/C3FsRemove'
         args = {'Filepath': inps[1]}
     elif inps[0].lower() == 'upload':
-        file_upload(inps[1])
+        file_upload(inps[1], int(inps[2]), float(inps[3]))
         return
     else:
         raise ValueError('not a valid filesystem command')
