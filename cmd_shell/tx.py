@@ -1,5 +1,6 @@
-
+import struct
 from yamcs.core.exceptions import YamcsError
+from .common import get_yamcs_downlink_response
 
 
 def tx_help() -> None:
@@ -29,8 +30,15 @@ def tx_cmd(conn, inp: str) -> None:
         raise ValueError('not a valid tx command')
 
     try:
+        # Issue the command via Yamcs client
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(ack.status)
-    except YamcsError as exc:
-        print(exc)
+        print(f'[FROM (Yamcs Client)]: `{ack.status}`')
+
+        # Get downlink response
+        response = get_yamcs_downlink_response()
+        message = struct.unpack('<I', response)[0]
+        print(f'EDL: {message}')
+
+    except YamcsError as e:
+        print(f'socket error: {e}')

@@ -45,16 +45,6 @@ dataLinks:
     port: 10025
     commandPostprocessorClassName: org.oresat.uniclogs.EdlCommandPostprocessor
 
-  - name: edl-tm-realtime
-    class: org.yamcs.tctm.UdpTmDataLink
-    stream: tm_realtime
-    port: 10016
-    packetPreprocessorClassName: org.yamcs.tctm.GenericPacketPreprocessor
-    packetPreprocessorArgs:
-      timestampOffset: -1
-      seqCountOffset: -1
-
-
 mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
@@ -74,4 +64,3 @@ streamConfig:
   tc:
     - name: "tc_realtime"
       processor: "realtime"
-
