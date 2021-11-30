@@ -3,7 +3,7 @@ from time import time
 
 from yamcs.core.exceptions import YamcsError
 
-from file_transfer import file_upload
+from .file_transfer import file_upload
 
 
 def c3_help() -> None:

@@ -1,30 +1,39 @@
 '''UniClOGS Yamcs command shell
-
-pip dependencies:
-    yamcs-client
 '''
-
-
-import sys
+# System imports
 from cmd import Cmd
-
 from yamcs.client import YamcsClient
 from yamcs.core.auth import Credentials
 
-from opd import opd_cmd, opd_help
-from canopen import node_cmd, node_help, sdo_cmd, sdo_help
-from c3 import c3_cmd, c3_help, fs_cmd, fs_help, fw_cmd, fw_help, rtc_cmd, \
-    rtc_help
-from tx import tx_cmd, tx_help
+# Relative imports
+from . import YAMCS_USERNAME, YAMCS_PASSWORD, YAMCS_URL, YAMCS_INSTANCE
+from .opd import opd_cmd, opd_help
+from .canopen import node_cmd, node_help, sdo_cmd, sdo_help
+from .c3 import c3_cmd, \
+                c3_help, \
+                fs_cmd, \
+                fs_help, \
+                fw_cmd, \
+                fw_help, \
+                rtc_cmd, \
+                rtc_help
+from .tx import tx_cmd, tx_help
 
 
 class TelecommandShell(Cmd):
-    prompt = '> '
-    intro = 'UniClOGS Yamcs command shell. Type ? to list commands'
-    credentials = Credentials(username='admin', password='admin')
-    client = YamcsClient('localhost:8090', credentials=credentials)
-    processor = client.get_processor(instance='oresat0', processor='realtime')
-    conn = processor.create_command_connection()
+    def __init__(self):
+        super().__init__()
+        self.prompt = '> '
+        self.intro = 'UniClOGS Yamcs command shell. Type ? to list commands'
+        self.credentials = Credentials(username=YAMCS_USERNAME, password=YAMCS_PASSWORD)
+        try:
+            self.client = YamcsClient(YAMCS_URL, credentials=self.credentials)
+        except Exception:
+            raise ConnectionRefusedError()
+        self.processor = self.client.get_processor(instance=YAMCS_INSTANCE, processor='realtime')
+        self.session = self.processor.create_command_connection()
+
+        print(f'Loged into to Yamcs (http://{YAMCS_URL}) as {YAMCS_USERNAME}')
 
     def do_exit(self, inp):
         print('Bye')
@@ -35,7 +44,7 @@ class TelecommandShell(Cmd):
 
     def do_opd(self, inp):
         try:
-            opd_cmd(self.conn, inp)
+            opd_cmd(self.session, inp)
         except Exception as exc:
             print(exc)
 
@@ -44,7 +53,7 @@ class TelecommandShell(Cmd):
 
     def do_node(self, inp):
         try:
-            node_cmd(self.conn, inp)
+            node_cmd(self.session, inp)
         except Exception as exc:
             print(exc)
 
@@ -53,7 +62,7 @@ class TelecommandShell(Cmd):
 
     def do_sdo(self, inp):
         try:
-            sdo_cmd(self.conn, inp)
+            sdo_cmd(self.session, inp)
         except Exception as exc:
             print(exc)
 
@@ -62,7 +71,7 @@ class TelecommandShell(Cmd):
 
     def do_c3(self, inp):
         try:
-            c3_cmd(self.conn, inp)
+            c3_cmd(self.session, inp)
         except Exception as exc:
             print(exc)
 
@@ -71,7 +80,7 @@ class TelecommandShell(Cmd):
 
     def do_fs(self, inp):
         try:
-            fs_cmd(self.conn, inp)
+            fs_cmd(self.session, inp)
         except Exception as exc:
             print(exc)
 
@@ -80,7 +89,7 @@ class TelecommandShell(Cmd):
 
     def do_fw(self, inp):
         try:
-            fw_cmd(self.conn, inp)
+            fw_cmd(self.session, inp)
         except Exception as exc:
             print(exc)
 
@@ -89,7 +98,7 @@ class TelecommandShell(Cmd):
 
     def do_rtc(self, inp):
         try:
-            rtc_cmd(self.conn, inp)
+            rtc_cmd(self.session, inp)
         except Exception as exc:
             print(exc)
 
@@ -98,7 +107,7 @@ class TelecommandShell(Cmd):
 
     def do_tx(self, inp):
         try:
-            tx_cmd(self.conn, inp)
+            tx_cmd(self.session, inp)
         except Exception as exc:
             print(exc)
 
@@ -114,6 +123,9 @@ class TelecommandShell(Cmd):
 
 if __name__ == '__main__':
     try:
-        TelecommandShell().cmdloop()
+        shell = TelecommandShell()
+        shell.cmdloop()
+    except ConnectionRefusedError:
+        print(f'Failed to connect to the Yamcs service at http://{YAMCS_URL}\nIs the Yamcs service running?')
     except KeyboardInterrupt:
-        sys.exit()
+        print('Forcefully stopping shell...')

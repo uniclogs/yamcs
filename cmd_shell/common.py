@@ -1,6 +1,24 @@
 '''Common helper functions'''
 
+import socket as s
 from enum import IntEnum
+from . import DOWNLINK_ADDR, BUFFER_SIZE
+
+
+def get_yamcs_downlink_response(addr: tuple = DOWNLINK_ADDR) -> bytes:
+    '''
+    This fetches the asynchronous downlink response from Yamcs via the following steps:
+        1. Create a socket with a unique address
+        2. Announce to Yamcs on it's primary downlink port that the shell exists
+        3. Relay the shell's address to Yamcs
+        4. Wait for a response from Yamcs (usually a 12b bytestring)
+        5. Automatically strip the first 8 bytes off the response (first 8 bytes are always USLP headers)
+    '''
+    with s.socket(s.AF_INET, s.SOCK_DGRAM) as socket:
+        socket.sendto(str.encode('Recv_Ready'), addr)
+
+        message, sender = socket.recvfrom(BUFFER_SIZE)
+        return bytes(list(message)[8:])
 
 
 def str2int(inp: str) -> int:

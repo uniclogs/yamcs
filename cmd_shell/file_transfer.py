@@ -3,8 +3,8 @@ import os
 import socket
 import struct
 
-UPLINK_IP_ADDR = 10025
-DOWNLINK_IP_ADDR = 10016
+from . import UPLINK_PORT
+
 SEGMENT_LEN = 1024
 USLP_HEADER_LEN = 8
 FILENAME_MAX_LEN = 32
@@ -74,7 +74,7 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
             if retry != 0 and fails >= retry:  # loop forever if set 0
                 raise Exception('retry failed ' + str(retry) + ' time(s)')
 
-            uplink_socket.sendto(packet, ('127.0.0.1', UPLINK_IP_ADDR))
+            uplink_socket.sendto(packet, ('127.0.0.1', UPLINK_PORT))
             print('send segment', i)
 
             downlink_socket.settimeout(timeout)

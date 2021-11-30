@@ -1,9 +1,8 @@
 
+import struct
 from enum import IntEnum
-
 from yamcs.core.exceptions import YamcsError
-
-from common import str2intenum
+from .common import str2intenum, get_yamcs_downlink_response
 
 
 class OPDAddr(IntEnum):
@@ -37,34 +36,34 @@ def opd_cmd(conn, inp: str) -> None:
     '''Run a opd command'''
 
     inps = inp.split(' ')
+    cmd_str = inps[0].lower()
     cmd = None
     args = None
 
-    if inps[0].lower() == 'help':
+    if cmd_str == 'help':
         opd_help()
         return
-
-    if inps[0].lower() == 'sysenable':
+    elif cmd_str == 'sysenable':
         cmd = '/OreSat0/OPDSysenable'
-    elif inps[0].lower() == 'sysdisable':
+    elif cmd_str == 'sysdisable':
         cmd = '/OreSat0/OPDSysdisable'
-    elif inps[0].lower() == 'scan':
+    elif cmd_str == 'scan':
         cmd = '/OreSat0/OPDScan'
         opd_id = str2intenum(inps[1], OPDAddr)
         args = {'OPDAddr': opd_id.name, 'Reset': True}
-    elif inps[0].lower() == 'enable':
+    elif cmd_str == 'enable':
         cmd = '/OreSat0/OPDPower'
         opd_id = str2intenum(inps[1], OPDAddr)
         args = {'OPDAddr': opd_id.name, 'Command': 'On'}
-    elif inps[0].lower() == 'disable':
+    elif cmd_str == 'disable':
         cmd = '/OreSat0/OPDPower'
         opd_id = str2intenum(inps[1], OPDAddr)
         args = {'OPDAddr': opd_id.name, 'Command': 'Off'}
-    elif inps[0].lower() == 'reset':
+    elif cmd_str == 'reset':
         cmd = '/OreSat0/OPDReset'
         opd_id = str2intenum(inps[1], OPDAddr)
         args = {'OPDAddr': opd_id.name}
-    elif inps[0].lower() == 'status':
+    elif cmd_str == 'status':
         cmd = '/OreSat0/OPDStatus'
         opd_id = str2intenum(inps[1], OPDAddr)
         args = {'OPDAddr': opd_id.name}
@@ -72,8 +71,25 @@ def opd_cmd(conn, inp: str) -> None:
         raise ValueError('not a valid opd command')
 
     try:
+        # Issue the command via Yamcs client
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(ack.status)
+        print(f'[FROM (Yamcs Client)]: `{ack.status}`')
+
+        # Determine the response data type
+        unpack_formats = {
+            'sysenable': '<I',
+            'sysdisable': '<I',
+            'scan': '<I',
+            'enable': '<i',
+            'disable': '<i',
+            'reset': '<i'
+        }
+
+        # Get downlink response
+        response = get_yamcs_downlink_response()
+        unpack_format = unpack_formats.get(cmd_str, '<p')
+        message = struct.unpack(unpack_format, response)
+        print(f'[FROM (EDL)]: `{message}`')
     except YamcsError as exc:
         print(exc)
