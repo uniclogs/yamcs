@@ -241,7 +241,7 @@
             <xtce:Parameter name="C3LRxBytesReceived" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3LRxValidPackets" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3LRxRSSI" parameterTypeRef="DecibelUint8Type"/>
-            <xtce:Parameter name="C3TxPLLLock" parameterTypeRef="Uint8Type"/>
+            <xtce:Parameter name="C3LRxPLLLock" parameterTypeRef="Uint8Type"/>
             <xtce:Parameter name="C3UHFTxTemperature" parameterTypeRef="TemperatureInt8Type"/>
             <xtce:Parameter name="C3UHFTxFWDPower" parameterTypeRef="DecibelUint16Type"/>
             <xtce:Parameter name="C3UHFTxREVPower" parameterTypeRef="DecibelUint16Type"/>
@@ -385,7 +385,7 @@
                     <xtce:ParameterRefEntry parameterRef="C3LRxBytesReceived"/>
                     <xtce:ParameterRefEntry parameterRef="C3LRxValidPackets"/>
                     <xtce:ParameterRefEntry parameterRef="C3LRxRSSI"/>
-                    <xtce:ParameterRefEntry parameterRef="C3TxPLLLock"/>
+                    <xtce:ParameterRefEntry parameterRef="C3LRxPLLLock"/>
                     <xtce:ParameterRefEntry parameterRef="C3UHFTxTemperature"/>
                     <xtce:ParameterRefEntry parameterRef="C3UHFTxFWDPower"/>
                     <xtce:ParameterRefEntry parameterRef="C3UHFTxREVPower"/>
