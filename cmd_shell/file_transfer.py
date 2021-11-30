@@ -1,9 +1,9 @@
-
 import os
-import socket
 import struct
-
-from . import UPLINK_PORT
+from . import UPLINK_SOCKET, \
+              UPLINK_ADDR, \
+              DOWNLINK_SOCKET, \
+              BUFFER_SIZE
 
 SEGMENT_LEN = 1024
 USLP_HEADER_LEN = 8
@@ -37,10 +37,6 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
     if len(filename) > FILENAME_MAX_LEN:
         raise ValueError('Filename exceeds max length of 32')
 
-    downlink_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    downlink_socket.bind(('127.0.0.1', DOWNLINK_IP_ADDR))
-    uplink_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
     filename_bytes = filename.encode('utf-8') + b'\x00' * (FILENAME_MAX_LEN -
                                                            len(filename))
 
@@ -65,7 +61,7 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
         packet = uslp_header + filename_bytes + offset_bytes + seg_len + seg
 
         if timeout == 0:
-            uplink_socket.sendto(packet, ('127.0.0.1', UPLINK_IP_ADDR))
+            UPLINK_SOCKET.sendto(packet, UPLINK_ADDR)
             print('send segment', i)
 
         # why doesn't python have do-while loops?
@@ -74,12 +70,12 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
             if retry != 0 and fails >= retry:  # loop forever if set 0
                 raise Exception('retry failed ' + str(retry) + ' time(s)')
 
-            uplink_socket.sendto(packet, ('127.0.0.1', UPLINK_PORT))
+            UPLINK_SOCKET.sendto(packet, UPLINK_ADDR)
             print('send segment', i)
 
-            downlink_socket.settimeout(timeout)
+            DOWNLINK_SOCKET.settimeout(timeout)
             try:
-                data_raw, _ = downlink_socket.recvfrom(4096)
+                data_raw, _ = DOWNLINK_SOCKET.recvfrom(BUFFER_SIZE)
             except Exception:
                 print('fail', fails, ': reply timeout')
                 fails += 1

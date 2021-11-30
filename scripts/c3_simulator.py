@@ -15,7 +15,6 @@ uplink_socket.bind(UPLINK_ADDR)
 DOWNLINK_PORT = 10016
 DOWNLINK_ADDR = (SOCKET_HOST, DOWNLINK_PORT)
 downlink_socket = s.socket(s.AF_INET, s.SOCK_DGRAM)
-downlink_socket.bind(DOWNLINK_ADDR)
 
 while True:
     # Mock receiving commands
@@ -28,12 +27,7 @@ while True:
         print('Client sent an empty message! Skipping...')
         continue
 
-    # Wait for shell address info
-    message, sender = downlink_socket.recvfrom(BUFFER_SIZE)
-    message = str(message)[2:-1]
-    print(f'[FROM {sender}]: `{message}`')
-
     # Send the response
     response = b'\x00' * 8 + len(message).to_bytes(4, 'little')
-    print(f'[TO {sender}]: `{response}`')
-    downlink_socket.sendto(response, sender)
+    print(f'[TO {DOWNLINK_ADDR}]: `{response}`')
+    downlink_socket.sendto(response, DOWNLINK_ADDR)
