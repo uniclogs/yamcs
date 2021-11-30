@@ -67,10 +67,9 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
         if timeout == 0:
             uplink_socket.sendto(packet, ('127.0.0.1', UPLINK_IP_ADDR))
             print('send segment', i)
-            continue  # skip ack loop
 
         # why doesn't python have do-while loops?
-        while True:
+        while timeout != 0:
             # keep sending until successful or retry limit is hit
             if retry != 0 and fails >= retry:  # loop forever if set 0
                 raise Exception('retry failed ' + str(retry) + ' time(s)')
