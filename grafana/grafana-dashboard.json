@@ -71,7 +71,7 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/APRS_Src_Callsign",
+          "parameter": "/OreSat0/APRSSrcCallsign",
           "queryType": "ParameterValue",
           "refId": "A",
           "valueKind": "ENGINEERING"
@@ -131,14 +131,14 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/C3_CAN1",
+          "parameter": "/OreSat0/C3CAN1",
           "queryType": "ParameterValueHistory",
           "refId": "A"
         },
         {
           "hide": false,
           "maxPages": 1,
-          "parameter": "/oresat0/C3_CAN2",
+          "parameter": "/OreSat0/C3CAN2",
           "queryType": "ParameterValueHistory",
           "refId": "B"
         }
@@ -155,8 +155,8 @@
           "id": "organize",
           "options": {
             "excludeByName": {
-              "/oresat0/C3_CAN1": true,
-              "/oresat0/C3_CAN2": true,
+              "/OreSat0/C3CAN1": true,
+              "/OreSat0/C3CAN2": true,
               "monitoringResult 1": true,
               "monitoringResult 2": true,
               "rangeCondition 1": true,
@@ -166,8 +166,8 @@
             },
             "indexByName": {},
             "renameByName": {
-              "raw:///oresat0/C3_CAN1": "CAN1 Bytes Sent",
-              "raw:///oresat0/C3_CAN2": "CAN2 Bytes Sent",
+              "raw:///OreSat0/C3CAN1": "CAN1 Bytes Sent",
+              "raw:///OreSat0/C3CAN2": "CAN2 Bytes Sent",
               "status 1": "",
               "time": "Time"
             }
@@ -216,7 +216,7 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/C3_M4_Uptime",
+          "parameter": "/OreSat0/C3M4Uptime",
           "queryType": "ParameterValue",
           "refId": "A",
           "stats": [
@@ -238,7 +238,7 @@
             },
             "indexByName": {},
             "renameByName": {
-              "/oresat0/C3_M4_Uptime": "Uptime",
+              "/OreSat0/C3M4Uptime": "Uptime",
               "time": "Time"
             }
           }
@@ -325,7 +325,7 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/C3_M4_State",
+          "parameter": "/OreSat0/C3M4State",
           "queryType": "ParameterValueHistory",
           "refId": "A"
         }
@@ -338,12 +338,12 @@
             "excludeByName": {
               "monitoringResult": true,
               "rangeCondition": true,
-              "raw:///oresat0/C3_M4_State": true,
+              "raw:///OreSat0/C3M4State": true,
               "status": true
             },
             "indexByName": {},
             "renameByName": {
-              "/oresat0/C3_M4_State": "State",
+              "/OreSat0/C3M4State": "State",
               "time": "Time"
             }
           }
@@ -403,14 +403,14 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/C3_L_RX_Valid_Packets",
+          "parameter": "/OreSat0/C3LRXValidPackets",
           "queryType": "ParameterValueHistory",
           "refId": "A"
         },
         {
           "hide": false,
           "maxPages": 1,
-          "parameter": "/oresat0/C3_L_TX_PLL_Lock",
+          "parameter": "/OreSat0/C3LTXPLLLock",
           "queryType": "ParameterValueHistory",
           "refId": "B"
         }
@@ -427,11 +427,11 @@
           "id": "organize",
           "options": {
             "excludeByName": {
-              "/oresat0/C3_CAN1": true,
-              "/oresat0/C3_CAN2": true,
-              "/oresat0/C3_L_RX_Bytes_Received": true,
-              "/oresat0/C3_L_RX_Valid_Packets": true,
-              "/oresat0/C3_L_TX_PLL_Lock": true,
+              "/OreSat0/C3CAN1": true,
+              "/OreSat0/C3CAN2": true,
+              "/OreSat0/C3LRXBytesReceived": true,
+              "/OreSat0/C3LRXValidPackets": true,
+              "/OreSat0/C3LTXPLLLock": true,
               "monitoringResult 1": true,
               "monitoringResult 2": true,
               "rangeCondition 1": true,
@@ -440,25 +440,25 @@
               "status 2": true
             },
             "indexByName": {
-              "/oresat0/C3_L_RX_Valid_Packets": 10,
-              "/oresat0/C3_L_TX_PLL_Lock": 6,
+              "/OreSat0/C3LRXValidPackets": 10,
+              "/OreSat0/C3LTXPLLLock": 6,
               "monitoringResult 1": 3,
               "monitoringResult 2": 7,
               "rangeCondition 1": 4,
               "rangeCondition 2": 8,
-              "raw:///oresat0/C3_L_RX_Valid_Packets": 2,
-              "raw:///oresat0/C3_L_TX_PLL_Lock": 1,
+              "raw:///OreSat0/C3LRXValidPackets": 2,
+              "raw:///OreSat0/C3LTXPLLLock": 1,
               "status 1": 5,
               "status 2": 9,
               "time": 0
             },
             "renameByName": {
-              "/oresat0/C3_L_RX_Bytes_Received": "",
-              "raw:///oresat0/C3_CAN1": "CAN1 Bytes Sent",
-              "raw:///oresat0/C3_CAN2": "CAN2 Bytes Sent",
-              "raw:///oresat0/C3_L_RX_Bytes_Received": "Rx",
-              "raw:///oresat0/C3_L_RX_Valid_Packets": "Rx",
-              "raw:///oresat0/C3_L_TX_PLL_Lock": "Tx",
+              "/OreSat0/C3LRXBytesReceived": "",
+              "raw:///OreSat0/C3CAN1": "CAN1 Bytes Sent",
+              "raw:///OreSat0/C3CAN2": "CAN2 Bytes Sent",
+              "raw:///OreSat0/C3LRXBytesReceived": "Rx",
+              "raw:///OreSat0/C3LRXValidPackets": "Rx",
+              "raw:///OreSat0/C3LTXPLLLock": "Tx",
               "status 1": "",
               "time": "Time"
             }
@@ -558,14 +558,14 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/Battery_Pack1_Charge",
+          "parameter": "/OreSat0/BatteryPack1Charge",
           "queryType": "ParameterValueHistory",
           "refId": "A"
         },
         {
           "hide": false,
           "maxPages": 1,
-          "parameter": "/oresat0/Battery_Pack1_Discharging",
+          "parameter": "/OreSat0/BatteryPack1Discharging",
           "queryType": "ParameterValueHistory",
           "refId": "B"
         }
@@ -584,21 +584,21 @@
           "id": "organize",
           "options": {
             "excludeByName": {
-              "/oresat0/Battery_Pack1_Discharging": false,
+              "/OreSat0/BatteryPack1Discharging": false,
               "monitoringResult 1": true,
               "monitoringResult 2": true,
               "rangeCondition 1": true,
               "rangeCondition 2": true,
-              "raw:///oresat0/Battery_Pack1_Charge": true,
-              "raw:///oresat0/Battery_Pack1_Discharging": true,
+              "raw:///OreSat0/BatteryPack1Charge": true,
+              "raw:///OreSat0/BatteryPack1Discharging": true,
               "status 1": true,
               "status 2": true
             },
             "indexByName": {},
             "renameByName": {
-              "/oresat0/Battery_Pack1_Charge": "Charging State",
-              "/oresat0/Battery_Pack1_Discharging": "Discharging State",
-              "raw:///oresat0/Battery_Pack1_Charge": "",
+              "/OreSat0/BatteryPack1Charge": "Charging State",
+              "/OreSat0/BatteryPack1Discharging": "Discharging State",
+              "raw:///OreSat0/BatteryPack1Charge": "",
               "time": "Time"
             }
           }
@@ -669,7 +669,7 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/Battery_Pack1_Vcell",
+          "parameter": "/OreSat0/BatteryPack1Vcell",
           "queryType": "ParameterValue",
           "refId": "A",
           "valueKind": "RAW"
@@ -683,7 +683,7 @@
             "excludeByName": {
               "monitoringResult": true,
               "rangeCondition": true,
-              "raw:///oresat0/Battery_Pack1_Vcell": false,
+              "raw:///OreSat0/BatteryPack1Vcell": false,
               "status": true,
               "time": true
             },
@@ -691,7 +691,7 @@
             "renameByName": {
               "monitoringResult": "",
               "rangeCondition": "",
-              "raw:///oresat0/Battery_Pack1_Vcell": "Voltage"
+              "raw:///OreSat0/BatteryPack1Vcell": "Voltage"
             }
           }
         }
@@ -759,7 +759,7 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/Battery_Pack1_Current",
+          "parameter": "/OreSat0/BatteryPack1Current",
           "queryType": "ParameterValueHistory",
           "refId": "A"
         }
@@ -770,16 +770,16 @@
           "id": "organize",
           "options": {
             "excludeByName": {
-              "/oresat0/Battery_Pack1_Current": true,
+              "/OreSat0/BatteryPack1Current": true,
               "monitoringResult": false,
               "rangeCondition": true,
-              "raw:///oresat0/Battery_Pack1_Current": false,
+              "raw:///OreSat0/BatteryPack1Current": false,
               "status": true
             },
             "indexByName": {},
             "renameByName": {
-              "/oresat0/Battery_Pack1_Current": "",
-              "raw:///oresat0/Battery_Pack1_Current": "Current",
+              "/OreSat0/BatteryPack1Current": "",
+              "raw:///OreSat0/BatteryPack1Current": "Current",
               "time": "Time"
             }
           }
@@ -856,7 +856,7 @@
       "targets": [
         {
           "maxPages": 1,
-          "parameter": "/oresat0/Battery_Pack1_Temperature",
+          "parameter": "/OreSat0/BatteryPack1Temperature",
           "queryType": "ParameterValue",
           "refId": "A",
           "stats": [
@@ -878,8 +878,8 @@
             },
             "indexByName": {},
             "renameByName": {
-              "/oresat0/Battery_Pack1_Temperature": "Temperature",
-              "raw:///oresat0/Battery_Pack1_Temperature": "Temperature"
+              "/OreSat0/BatteryPack1Temperature": "Temperature",
+              "raw:///OreSat0/BatteryPack1Temperature": "Temperature"
             }
           }
         }
