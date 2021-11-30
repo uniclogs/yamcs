@@ -1,10 +1,8 @@
-
+import struct
 from enum import IntEnum
 from typing import NamedTuple
-
 from yamcs.core.exceptions import YamcsError
-
-from .common import str2int, str2intenum
+from .common import str2int, str2intenum, get_yamcs_downlink_response
 
 
 class ObjTypeData(NamedTuple):
@@ -56,21 +54,21 @@ def node_cmd(conn, inp: str) -> None:
 
     inps = inp.split(' ')
     cmd = None
+    cmd_str = inps[0].lower()
     args = None
 
-    if inps[0].lower() == 'help':
+    if cmd_str == 'help':
         node_help()
         return
-
-    if inps[0].lower() == 'enable':
-        cmd = '/OreSat0/NodePower'
+    elif cmd_str == 'enable':
+        cmd = '/OreSat0/NodeEnable'
         node_id = str2intenum(inps[1], NodeId)
-        args = {'NodeId': node_id.name, 'Enable': 'On'}
-    elif inps[0].lower() == 'disable':
-        cmd = '/OreSat0/NodePower'
+        args = {'NodeId': node_id.name, 'Enable': 'Enable'}
+    elif cmd_str == 'disable':
+        cmd = '/OreSat0/NodeEnable'
         node_id = str2intenum(inps[1], NodeId)
-        args = {'NodeId': node_id.name, 'Enable': 'Off'}
-    elif inps[0].lower() == 'status':
+        args = {'NodeId': node_id.name, 'Enable': 'Disable'}
+    elif cmd_str == 'status':
         cmd = '/OreSat0/NodeStatus'
         node_id = str2intenum(inps[1], NodeId)
         args = {'NodeId': node_id.name}
@@ -78,9 +76,23 @@ def node_cmd(conn, inp: str) -> None:
         raise ValueError('not a valid node command')
 
     try:
+        # Issue the command via Yamcs client
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(ack.status)
+        print(f'[FROM (Yamcs Client)]: `{ack.status}`')
+
+        # Determine the response data type
+        unpack_formats = {
+            'enable': '<i',
+            'disable': '<i',
+        }
+
+        # Get downlink response
+        if(unpack_formats.get(cmd_str) is not None):
+            response = get_yamcs_downlink_response()
+            unpack_format = unpack_formats.get(cmd_str, '<p')
+            message = struct.unpack(unpack_format, response)[0]
+            print(f'[FROM (EDL)]: `{message}`')
     except YamcsError as exc:
         print(exc)
 
@@ -104,10 +116,11 @@ def sdo_cmd(conn, inp: str) -> None:
 
     inps = inp.split(' ')
     cmd = None
+    cmd_str = inps[0].lower()
     args = None
     value = None
 
-    if inps[0].lower() == 'help':
+    if cmd_str == 'help':
         node_help()
         return
 
@@ -116,7 +129,7 @@ def sdo_cmd(conn, inp: str) -> None:
     subindex = str2int(inps[3])
     obj_type = inps[4]
 
-    if inps[0].lower() in ['w', 'write']:
+    if cmd_str in ['w', 'write']:
         cmd = OBJ_TYPES[obj_type].write_cmd
     else:
         raise ValueError('not a valid node command')
@@ -143,8 +156,14 @@ def sdo_cmd(conn, inp: str) -> None:
     }
 
     try:
+        # Issue the command via Yamcs client
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(ack.status)
+        print(f'[FROM (Yamcs Client)]: `{ack.status}`')
+
+        # Get downlink response
+        response = get_yamcs_downlink_response()
+        message = struct.unpack('<I', response)
+        print(f'[FROM (EDL)]: `{message}`')
     except YamcsError as exc:
         print(exc)

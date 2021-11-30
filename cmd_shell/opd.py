@@ -89,7 +89,7 @@ def opd_cmd(conn, inp: str) -> None:
         # Get downlink response
         response = get_yamcs_downlink_response()
         unpack_format = unpack_formats.get(cmd_str, '<p')
-        message = struct.unpack(data_type_unpack_format, response)[0]
-        print(f'EDL: {message}')
+        message = struct.unpack(unpack_format, response)
+        print(f'[FROM (EDL)]: `{message}`')
     except YamcsError as exc:
         print(exc)

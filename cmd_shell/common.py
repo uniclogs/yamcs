@@ -14,11 +14,11 @@ def get_yamcs_downlink_response(addr: tuple = DOWNLINK_ADDR) -> bytes:
         4. Wait for a response from Yamcs (usually a 12b bytestring)
         5. Automatically strip the first 8 bytes off the response (first 8 bytes are always USLP headers)
     '''
-    socket = s.socket(s.AF_INET, s.SOCK_DGRAM)
-    socket.sendto(str.encode('Recv_Ready'), addr)
+    with s.socket(s.AF_INET, s.SOCK_DGRAM) as socket:
+        socket.sendto(str.encode('Recv_Ready'), addr)
 
-    message, sender = socket.recvfrom(BUFFER_SIZE)
-    return bytes(list(message)[8:])
+        message, sender = socket.recvfrom(BUFFER_SIZE)
+        return bytes(list(message)[8:])
 
 
 def str2int(inp: str) -> int:

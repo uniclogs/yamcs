@@ -38,7 +38,6 @@ def tx_cmd(conn, inp: str) -> None:
         # Get downlink response
         response = get_yamcs_downlink_response()
         message = struct.unpack('<I', response)[0]
-        print(f'EDL: {message}')
-
-    except YamcsError as e:
-        print(f'socket error: {e}')
+        print(f'[FROM (EDL)]: `{message}`')
+    except YamcsError as exc:
+        print(exc)
