@@ -144,11 +144,13 @@ def fs_cmd(conn, inp: str) -> None:
         ack = command.await_acknowledgment('Acknowledge_Sent')
         print('  Yamcs response:', ack.status)
 
-        if inps[0].lower() == 'crc':
-            # Get downlink response
-            response = get_yamcs_downlink_response()
+        # Get downlink response
+        response = get_yamcs_downlink_response()
+        if inps[0].lower() in 'crc':
             message = struct.unpack('<I', response)
-            print('  Downlink packet:',  hex(message))
+        else:
+            message = struct.unpack('<i', response)
+        print('  Downlink packet:',  hex(message))
     except YamcsError as exc:
         print(exc)
 
