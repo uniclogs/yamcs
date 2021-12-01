@@ -53,6 +53,8 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
     old_timeout = DOWNLINK_SOCKET.gettimeout()
     DOWNLINK_SOCKET.settimeout(timeout)
 
+    print('  total segments to send:', len(segments))
+
     i = 0
     offset = 0
     for seg in segments:
@@ -80,7 +82,6 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
             try:
                 data_raw, _ = DOWNLINK_SOCKET.recvfrom(BUFFER_SIZE)
             except Exception:
-                DOWNLINK_SOCKET.settimeout(old_timeout)
                 print('  fail', fails, ': reply timeout')
                 fails += 1
                 continue
@@ -88,7 +89,6 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
             try:
                 reply = struct.unpack('<i', data_raw[8:])
             except Exception:
-                DOWNLINK_SOCKET.settimeout(old_timeout)
                 print('  fail', fails, ': struct unpack failed')
                 fails += 1
                 continue
