@@ -33,11 +33,11 @@ def tx_cmd(conn, inp: str) -> None:
         # Issue the command via Yamcs client
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(f'[FROM (Yamcs Client)]: `{ack.status}`')
+        print(f'  Yamcs response: `{ack.status}`')
 
         # Get downlink response
         response = get_yamcs_downlink_response()
-        message = struct.unpack('<I', response)[0]
-        print(f'[FROM (EDL)]: `{message}`')
+        message = struct.unpack('<B', response)[0]
+        print(f'  Downlink packet: `{hex(message)}`')
     except YamcsError as exc:
         print(exc)

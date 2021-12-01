@@ -62,7 +62,7 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
 
         if timeout == 0:
             UPLINK_SOCKET.sendto(packet, UPLINK_ADDR)
-            print('send segment', i)
+            print('  send segment', i)
 
         # why doesn't python have do-while loops?
         while timeout != 0:
@@ -71,28 +71,28 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
                 raise Exception('retry failed ' + str(retry) + ' time(s)')
 
             UPLINK_SOCKET.sendto(packet, UPLINK_ADDR)
-            print('send segment', i)
+            print('  send segment', i)
 
             DOWNLINK_SOCKET.settimeout(timeout)
             try:
                 data_raw, _ = DOWNLINK_SOCKET.recvfrom(BUFFER_SIZE)
             except Exception:
-                print('fail', fails, ': reply timeout')
+                print('  fail', fails, ': reply timeout')
                 fails += 1
                 continue
 
             try:
                 reply = struct.unpack('<i', data_raw[8:])
             except Exception:
-                print('fail', fails, ': struct unpack failed')
+                print('  fail', fails, ': struct unpack failed')
                 fails += 1
                 continue
 
             if reply[0] != len(seg):
-                print('fail ', fails, ': reply len failed')
+                print('  fail ', fails, ': reply len failed')
                 fails += 1
             else:
-                print('seg', i, 'ack')
+                print('  seg', i, 'ack')
                 break  # segment sent was successful
 
         i += 1
