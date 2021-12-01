@@ -144,7 +144,7 @@ def fs_cmd(conn, inp: str) -> None:
         ack = command.await_acknowledgment('Acknowledge_Sent')
         print('  Yamcs response:', ack.status)
 
-        if inps[0].lower == 'crc':
+        if inps[0].lower() == 'crc':
             # Get downlink response
             response = get_yamcs_downlink_response()
             message = struct.unpack('<I', response)
