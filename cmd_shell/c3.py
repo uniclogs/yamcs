@@ -1,9 +1,11 @@
 
+import struct
 from time import time
 
 from yamcs.core.exceptions import YamcsError
 
 from .file_transfer import file_upload
+from .common import get_yamcs_downlink_response
 
 
 def c3_help() -> None:
@@ -36,7 +38,7 @@ def c3_cmd(conn, inp: str) -> None:
     try:
         command = conn.issue(cmd)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(ack.status)
+        print('  Yamcs response:', ack.status)
     except YamcsError as exc:
         print(exc)
 
@@ -87,7 +89,7 @@ def fw_cmd(conn, inp: str) -> None:
     try:
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(ack.status)
+        print('  Yamcs response:', ack.status)
     except YamcsError as exc:
         print(exc)
 
@@ -140,7 +142,13 @@ def fs_cmd(conn, inp: str) -> None:
     try:
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(ack.status)
+        print('  Yamcs response:', ack.status)
+
+        if inps[0].lower == 'crc':
+            # Get downlink response
+            response = get_yamcs_downlink_response()
+            message = struct.unpack('<I', response)
+            print('  Downlink packet:',  hex(message))
     except YamcsError as exc:
         print(exc)
 
@@ -179,6 +187,6 @@ def rtc_cmd(conn, inp: str) -> None:
     try:
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(ack.status)
+        print('  Yamcs response:', ack.status)
     except YamcsError as exc:
         print(exc)
