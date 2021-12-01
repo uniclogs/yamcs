@@ -62,7 +62,7 @@ def file_upload(filepath: str,
     old_timeout = DOWNLINK_SOCKET.gettimeout()
     DOWNLINK_SOCKET.settimeout(timeout)
 
-    i = 0
+    i = start
     offset = 0
     for seg in segments[start:]:
         fails = 0
