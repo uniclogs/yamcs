@@ -56,7 +56,7 @@ def file_upload(filepath: str,
             segment = fptr.read(read_len)
 
     print('  total segments to send:', len(segments))
-    if start >= len(segment):
+    if start >= len(segments):
         raise ValueError('start is greater than the number of segments')
 
     old_timeout = DOWNLINK_SOCKET.gettimeout()
