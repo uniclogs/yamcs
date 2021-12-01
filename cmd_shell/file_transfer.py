@@ -101,6 +101,6 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
                 break  # segment sent was successful
 
         i += 1
-        offset += len(packet)
+        offset += len(seg)
 
     DOWNLINK_SOCKET.settimeout(old_timeout)
