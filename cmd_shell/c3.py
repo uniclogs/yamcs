@@ -147,9 +147,9 @@ def fs_cmd(conn, inp: str) -> None:
         # Get downlink response
         response = get_yamcs_downlink_response()
         if inps[0].lower() in 'crc':
-            message = struct.unpack('<I', response)
+            message = struct.unpack('<I', response)[0]
         else:
-            message = struct.unpack('<i', response)
+            message = struct.unpack('<i', response)[0]
         print('  Downlink packet:',  hex(message))
     except YamcsError as exc:
         print(exc)
