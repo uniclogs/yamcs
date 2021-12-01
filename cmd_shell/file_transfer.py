@@ -12,7 +12,10 @@ FILE_OFFSET_LEN = 4
 SEGMENT_DATA_LEN = 4
 
 
-def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
+def file_upload(filepath: str,
+                timeout: float = 0.0,
+                retry: int = 0,
+                start: int = 0) -> None:
     '''Upload file to OreSat in segments
 
     Segment definition: 8 bytes for USLP header, 32 bytes for filename buffer,
@@ -30,6 +33,8 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
     retry: int
         Maximum times to retry to resend the same segment before giving up. If
         set to 0 the segment will not be retried.
+    start: int
+        The segment to start on. Set to 0 todo the whole file.
     '''
 
     filename = os.path.basename(filepath)
@@ -50,14 +55,16 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
             segments.append(segment)
             segment = fptr.read(read_len)
 
+    print('  total segments to send:', len(segments))
+    if start >= len(segment):
+        raise ValueError('start is greater than the number of segments')
+
     old_timeout = DOWNLINK_SOCKET.gettimeout()
     DOWNLINK_SOCKET.settimeout(timeout)
 
-    print('  total segments to send:', len(segments))
-
     i = 0
     offset = 0
-    for seg in segments:
+    for seg in segments[start:]:
         fails = 0
 
         uslp_header = b'\xC4\xF5\x38\x02' + SEGMENT_LEN.to_bytes(2, 'little') + b'\x00\xE5'
