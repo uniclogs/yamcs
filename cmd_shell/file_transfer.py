@@ -5,7 +5,7 @@ from . import UPLINK_SOCKET, \
               DOWNLINK_SOCKET, \
               BUFFER_SIZE
 
-SEGMENT_LEN = 1024
+SEGMENT_LEN = 64
 USLP_HEADER_LEN = 8
 FILENAME_MAX_LEN = 32
 FILE_OFFSET_LEN = 4
@@ -50,6 +50,9 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
             segments.append(segment)
             segment = fptr.read(read_len)
 
+    old_timeout = DOWNLINK_SOCKET.gettimeout()
+    DOWNLINK_SOCKET.settimeout(timeout)
+
     i = 0
     offset = 0
     for seg in segments:
@@ -68,15 +71,16 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
         while timeout != 0:
             # keep sending until successful or retry limit is hit
             if retry != 0 and fails >= retry:  # loop forever if set 0
+                DOWNLINK_SOCKET.settimeout(old_timeout)
                 raise Exception('retry failed ' + str(retry) + ' time(s)')
 
             UPLINK_SOCKET.sendto(packet, UPLINK_ADDR)
             print('  send segment', i)
 
-            DOWNLINK_SOCKET.settimeout(timeout)
             try:
                 data_raw, _ = DOWNLINK_SOCKET.recvfrom(BUFFER_SIZE)
             except Exception:
+                DOWNLINK_SOCKET.settimeout(old_timeout)
                 print('  fail', fails, ': reply timeout')
                 fails += 1
                 continue
@@ -84,6 +88,7 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
             try:
                 reply = struct.unpack('<i', data_raw[8:])
             except Exception:
+                DOWNLINK_SOCKET.settimeout(old_timeout)
                 print('  fail', fails, ': struct unpack failed')
                 fails += 1
                 continue
@@ -97,3 +102,5 @@ def file_upload(filepath: str, timeout: float = 0.0, retry: int = 0) -> None:
 
         i += 1
         offset += len(packet)
+
+    DOWNLINK_SOCKET.settimeout(old_timeout)
