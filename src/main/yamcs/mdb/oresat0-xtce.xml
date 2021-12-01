@@ -358,14 +358,6 @@
             <xtce:Parameter name="DxwifiUpdaterStatus" parameterTypeRef="OLUStateType"/>
             <xtce:Parameter name="DxwifiUpdatesCached" parameterTypeRef="Uint8Type"/>
             <xtce:Parameter name="DxwifiTransmitting" parameterTypeRef="BoolType"/>
-            <xtce:Parameter name="CFCEmmcCapacity" parameterTypeRef="PercentUint8Type"/>
-            <xtce:Parameter name="CFCReadableFiles" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="CFCUpdaterStatus" parameterTypeRef="OLUStateType"/>
-            <xtce:Parameter name="CFCUpdatesCached" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="CFCTECEnabled" parameterTypeRef="BoolType"/>
-            <xtce:Parameter name="CFCTECSaturated" parameterTypeRef="BoolType"/>
-            <xtce:Parameter name="CFCTECTemperature" parameterTypeRef="TemperatureInt8Type"/>
-            <xtce:Parameter name="CFCCaptures" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="APRSCRC32" parameterTypeRef="Uint32Type"/>
         </xtce:ParameterSet>
         <xtce:ContainerSet>
@@ -502,14 +494,6 @@
                     <xtce:ParameterRefEntry parameterRef="DxwifiUpdaterStatus"/>
                     <xtce:ParameterRefEntry parameterRef="DxwifiUpdatesCached"/>
                     <xtce:ParameterRefEntry parameterRef="DxwifiTransmitting"/>
-                    <xtce:ParameterRefEntry parameterRef="CFCEmmcCapacity"/>
-                    <xtce:ParameterRefEntry parameterRef="CFCReadableFiles"/>
-                    <xtce:ParameterRefEntry parameterRef="CFCUpdaterStatus"/>
-                    <xtce:ParameterRefEntry parameterRef="CFCUpdatesCached"/>
-                    <xtce:ParameterRefEntry parameterRef="CFCTECEnabled"/>
-                    <xtce:ParameterRefEntry parameterRef="CFCTECSaturated"/>
-                    <xtce:ParameterRefEntry parameterRef="CFCTECTemperature"/>
-                    <xtce:ParameterRefEntry parameterRef="CFCCaptures"/>
                     <xtce:ParameterRefEntry parameterRef="APRSCRC32"/>
                 </xtce:EntryList>
             </xtce:SequenceContainer>
