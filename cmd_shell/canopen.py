@@ -79,7 +79,7 @@ def node_cmd(conn, inp: str) -> None:
         # Issue the command via Yamcs client
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(f'  Yamcs response: `{ack.status}`')
+        print('  Yamcs response:', ack.status)
 
         # Determine the response data type
         unpack_formats = {
@@ -92,7 +92,7 @@ def node_cmd(conn, inp: str) -> None:
             response = get_yamcs_downlink_response()
             unpack_format = unpack_formats.get(cmd_str, '<p')
             message = struct.unpack(unpack_format, response)[0]
-            print(f'  Downlink packet: `{hex(message)}`')
+            print('  Downlink packet:',  hex(message))
     except YamcsError as exc:
         print(exc)
 
@@ -159,11 +159,11 @@ def sdo_cmd(conn, inp: str) -> None:
         # Issue the command via Yamcs client
         command = conn.issue(cmd, args=args)
         ack = command.await_acknowledgment('Acknowledge_Sent')
-        print(f'  Yamcs response: `{ack.status}`')
+        print('  Yamcs response:', ack.status)
 
         # Get downlink response
         response = get_yamcs_downlink_response()
         message = struct.unpack('<I', response)
-        print(f'  Downlink packet: `{hex(message)}`')
+        print('  Downlink packet:',  hex(message))
     except YamcsError as exc:
         print(exc)

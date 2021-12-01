@@ -46,7 +46,7 @@ class TelecommandShell(Cmd):
         try:
             opd_cmd(self.session, inp)
         except Exception as exc:
-            print('  ' + exc)
+            print('  ' + str(exc))
 
     def help_opd(self):
         opd_help()
@@ -55,7 +55,7 @@ class TelecommandShell(Cmd):
         try:
             node_cmd(self.session, inp)
         except Exception as exc:
-            print('  ' + exc)
+            print('  ' + str(exc))
 
     def help_node(self):
         node_help()
@@ -64,7 +64,7 @@ class TelecommandShell(Cmd):
         try:
             sdo_cmd(self.session, inp)
         except Exception as exc:
-            print('  ' + exc)
+            print('  ' + str(exc))
 
     def help_sdo(self):
         sdo_help()
@@ -73,7 +73,7 @@ class TelecommandShell(Cmd):
         try:
             c3_cmd(self.session, inp)
         except Exception as exc:
-            print('  ' + exc)
+            print('  ' + str(exc))
 
     def help_c3(self):
         c3_help()
@@ -82,7 +82,7 @@ class TelecommandShell(Cmd):
         try:
             fs_cmd(self.session, inp)
         except Exception as exc:
-            print('  ' + exc)
+            print('  ' + str(exc))
 
     def help_fs(self):
         fs_help()
@@ -91,7 +91,7 @@ class TelecommandShell(Cmd):
         try:
             fw_cmd(self.session, inp)
         except Exception as exc:
-            print('  ' + exc)
+            print('  ' + str(exc))
 
     def help_fw(self):
         fw_help()
@@ -100,7 +100,7 @@ class TelecommandShell(Cmd):
         try:
             rtc_cmd(self.session, inp)
         except Exception as exc:
-            print('  ' + exc)
+            print('  ' + str(exc))
 
     def help_rtc(self):
         rtc_help()
@@ -109,7 +109,7 @@ class TelecommandShell(Cmd):
         try:
             tx_cmd(self.session, inp)
         except Exception as exc:
-            print('  ' + exc)
+            print('  ' + str(exc))
 
     def help_tx(self):
         tx_help()
