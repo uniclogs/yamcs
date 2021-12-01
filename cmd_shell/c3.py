@@ -113,6 +113,7 @@ def fs_help() -> None:
     print('START is the segement to start on when uploading. Set to 0 to'
           ' upload whole file')
 
+
 def fs_cmd(conn, inp: str) -> None:
     '''Run a C3 filesystem command'''
 
@@ -135,7 +136,10 @@ def fs_cmd(conn, inp: str) -> None:
         cmd = '/OreSat0/C3FsRemove'
         args = {'Filepath': inps[1]}
     elif inps[0].lower() == 'upload':
-        file_upload(inps[1], int(inps[2]), float(inps[3]), int(inps[4]))
+        try:
+            file_upload(inps[1], int(inps[2]), float(inps[3]), int(inps[4]))
+        except KeyboardInterrupt:
+            pass
         return
     else:
         raise ValueError('not a valid filesystem command')
