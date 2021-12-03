@@ -1,5 +1,7 @@
 import os
 import struct
+from time import sleep
+
 from . import UPLINK_SOCKET, \
               UPLINK_ADDR, \
               DOWNLINK_SOCKET, \
@@ -13,9 +15,10 @@ SEGMENT_DATA_LEN = 4
 
 
 def file_upload(filepath: str,
-                timeout: float = 0.0,
-                retry: int = 0,
-                start: int = 0) -> None:
+                timeout: float,
+                retry: int,
+                start: int,
+                rate_limit: float) -> None:
     '''Upload file to OreSat in segments
 
     Segment definition: 8 bytes for USLP header, 32 bytes for filename buffer,
@@ -109,5 +112,6 @@ def file_upload(filepath: str,
 
         i += 1
         offset += len(seg)
+        sleep(rate_limit)
 
     DOWNLINK_SOCKET.settimeout(old_timeout)

@@ -102,7 +102,7 @@ def fs_help() -> None:
     print('  fs unmount')
     print('  fs remove C3_FILEPATH')
     print('  fs crc C3_FILEPATH')
-    print('  fs upload LOCAL_FILEPATH TIMEOUT RETRY START')
+    print('  fs upload LOCAL_FILEPATH TIMEOUT RETRY START RATE_LIMIT')
     print('')
     print('C3_FILEPATH is filepath on the C3')
     print('LOCAL_FILEPATH is filepath on the local system')
@@ -112,6 +112,7 @@ def fs_help() -> None:
           ' retry forever.')
     print('START is the segement to start on when uploading. Set to 0 to'
           ' upload whole file')
+    print('RATE_LIMIT is the delay between successful packets being sent')
 
 
 def fs_cmd(conn, inp: str) -> None:
@@ -137,7 +138,7 @@ def fs_cmd(conn, inp: str) -> None:
         args = {'Filepath': inps[1]}
     elif inps[0].lower() == 'upload':
         try:
-            file_upload(inps[1], int(inps[2]), float(inps[3]), int(inps[4]))
+            file_upload(inps[1], int(inps[2]), float(inps[3]), int(inps[4]), float(inps[5]))
         except KeyboardInterrupt:
             pass
         return
