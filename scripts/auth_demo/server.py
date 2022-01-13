@@ -1,38 +1,24 @@
 #!/usr/bin/env python3
-import socket
+from common import SAT_ADDR
 from time import ctime
-from cryptography.fernet import Fernet, InvalidToken
-
-
-# Get the params
-with open('secret', 'r') as file:
-    KEY = Fernet(file.read())
-KEY_SIZE = 140
-ADDR = ('127.0.0.1', 9842)
-EXPECTED_SYMBOL = 'ORESAT0'
-
+from rsa import PrivateKey, decrypt
+from socket import socket, AF_INET, SOCK_DGRAM
 
 # Create the socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.bind(ADDR)
+sock = socket(AF_INET, SOCK_DGRAM)
+sock.bind(SAT_ADDR)
 
+# Fetch the private key
+expected_symbol = "ORESAT0"
+with open('id_rsa', 'r') as file:
+    private_key = PrivateKey.load_pkcs1(file.read(), "PEM")
 
-# Wait for messages
+# Listen for messages
 while True:
-    cmd, recv_ok = sock.recvfrom(512)
-    print(f'[{ctime()}]: received raw cmd: {cmd} ({len(cmd)} bytes)')
-    callsign = cmd[0:7].decode('utf-8')
-    buffer = list(map(lambda x: int(x), cmd[7:15]))
-    enc_auth_key = cmd[15:(15 + KEY_SIZE)]
-    payload = cmd[(15 + KEY_SIZE):].decode('utf-8')
-    print(f'\tCallsign: `{callsign}`\n\tBuffer: {buffer}\n\tAuth Key: `{enc_auth_key}`\n\tPayload: `{payload}`')
+    message, recv_ok = sock.recvfrom(4096)
+    message = decrypt(message, private_key).decode('utf-8')
+    (symbol, timestamp) = message.split(' ', maxsplit=1)
 
-    try:
-        auth_key = KEY.decrypt(enc_auth_key).decode('utf-8')
-        __parts = auth_key.split(' ')
-        symbol = __parts[0]
-        timestamp = ' '.join(__parts[1:])
-        is_authenticated = 'AUTHENTICATED' if(symbol == EXPECTED_SYMBOL) else 'UNAUTHENTICATED'
-        print(f'[{is_authenticated}]: Symbol: {symbol} sent at {timestamp}')
-    except InvalidToken as e:
-        print(f'[UNAUTHENTICATED]: bad auth: `{enc_auth_key}`')
+    is_valid = 'OK' if(symbol == expected_symbol) else 'UNAUTHORIZED'
+
+    print(f'[{ctime()} @ tcp://{recv_ok[0]}:{recv_ok[1]}]: received {is_valid} message from {symbol} sent on {timestamp}')

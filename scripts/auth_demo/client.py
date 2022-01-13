@@ -1,26 +1,23 @@
 #!/usr/bin/env python3
-import socket
-import random
-import string
+from common import SAT_ADDR, MISC_ADDR
+from socket import socket, AF_INET, SOCK_DGRAM
 from time import ctime
-from cryptography.fernet import Fernet
+from rsa import PublicKey, encrypt
 
-# Get the params
-with open('secret', 'r') as file:
-    KEY = Fernet(file.read())
-KEY_SIZE = 140
-ADDR = ('127.0.0.1', 9842)
 
-# Encrypt the message
-key_phrase = f'ORESAT0 {ctime()}'
-# cmd_auth_key = str(KEY.encrypt(key_phrase.encode()))[2:-1] # An actual encrypted auth key
-cmd_auth_key = ''.join(random.choice(string.ascii_letters) for _ in range(KEY_SIZE)) # Low effort random string for auth key
-print(f'Generated cmd auth: `{cmd_auth_key}` ({len(cmd_auth_key)} bytes)')
+# Create the socket(s) mocking RF Tx
+sock = socket(AF_INET, SOCK_DGRAM)
 
-# Create the complete "command" string
-cmd = bytes(f'ORESAT0\0\0\0\0\0\0\0\0{cmd_auth_key}\0non-encrypted payload data...', 'utf-8')
+# Grab the public key
+with open('id_rsa.pub', 'r') as file:
+    pub_key = PublicKey.load_pkcs1(file.read(), "PEM")
 
-# Send the message
-print(f'[{ctime()}]: sending cmd: {cmd} ({len(cmd)} bytes)')
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.sendto(cmd, ADDR)
+while True:
+    # Generate secret message
+    print('\nGenerating new secret message...')
+    secret_message = encrypt(bytes(f"ORESAT0 {ctime()}", 'utf-8'), pub_key)
+
+    input('Press any key to send a message...')
+    print(f'\n[{ctime()}]: Sending block-encoded message of {len(secret_message)} bytes:\n{secret_message}')
+    sock.sendto(secret_message, SAT_ADDR)
+    sock.sendto(secret_message, MISC_ADDR)
