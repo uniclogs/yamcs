@@ -11,6 +11,10 @@ sock.bind(MISC_ADDR)
 # Listen for messages
 while True:
     message, recv_ok = sock.recvfrom(4096)
+    if(message == b'UNAUTHORIZED'):
+        print(f'Failed to replay command: `{message.decode("utf-8")}`')
+        continue
+
     print(f'[{ctime()}]: Got message with {len(message)} bytes!')
 
     print('Waiting a bit before attempting replay attack...')
