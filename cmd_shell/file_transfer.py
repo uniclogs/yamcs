@@ -92,19 +92,19 @@ def file_upload(filepath: str,
             try:
                 data_raw, _ = DOWNLINK_SOCKET.recvfrom(BUFFER_SIZE)
             except Exception:
-                print('  fail', fails, ': reply timeout')
+                print(f'[{fails} FAILURES]: response timed out!')
                 fails += 1
                 continue
 
             try:
                 reply = struct.unpack('<i', data_raw[8:])
             except Exception:
-                print('  fail', fails, ': struct unpack failed')
+                print(f'[{fails} FAILURES]: struct unpack failed with payload: {data_raw}')
                 fails += 1
                 continue
 
             if reply[0] != len(seg):
-                print('  fail ', fails, ': reply len failed')
+                print(f'[{fails} FAILURES]: Expected payload `{data_raw}` to be {len(seg)} bytes but got {reply[0]} bytes instead!')
                 fails += 1
             else:
                 print('  seg', i, 'ack')
