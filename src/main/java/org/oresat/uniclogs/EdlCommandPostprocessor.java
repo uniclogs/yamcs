@@ -41,7 +41,7 @@ public class EdlCommandPostprocessor implements CommandPostprocessor {
         String secret = "asdf12345"; // TODO: Make this come from an environment variable or something
 
         // Generate HMAC
-        HmacUtils hmacGenerator = new HmacUtils(HmacAlgorithms.HMAC_SHA_1, secret);
+        HmacUtils hmacGenerator = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, secret);
         byte[] hmacKey = hmacGenerator.hmac(payload);
         String hmacHex = hmacGenerator.hmacHex(payload);
         LOG.debug("Generated HMAC Key: (" + hmacKey + " : " + hmacKey.length + " bytes)" + hmacHex);

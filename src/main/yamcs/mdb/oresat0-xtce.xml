@@ -628,13 +628,11 @@
             <xtce:MetaCommand name="C3FwBank" shortDescription="swap firmware bank">
                 <xtce:ArgumentList>
                     <xtce:Argument name="Bank" argumentTypeRef="Uint32Type"/>
-                    <xtce:Argument name="HMAC32" argumentTypeRef="Uint32Type"/>
                 </xtce:ArgumentList>
                 <xtce:CommandContainer name="C3FwBank">
                     <xtce:EntryList>
                         <xtce:FixedValueEntry binaryValue="02" sizeInBits="8"/>
                         <xtce:ArgumentRefEntry argumentRef="Bank"/>
-                        <xtce:ArgumentRefEntry argumentRef="HMAC32"/>
                     </xtce:EntryList>
                 </xtce:CommandContainer>
                 <xtce:DefaultSignificance consequenceLevel="forbidden"/>
