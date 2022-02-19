@@ -1,9 +1,5 @@
 package org.oresat.uniclogs;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.math.BigInteger;
-
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.HmacAlgorithms;
@@ -12,9 +8,12 @@ import org.yamcs.YConfiguration;
 import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.logging.Log;
-import org.yamcs.tctm.CcsdsSeqCountFiller;
 import org.yamcs.tctm.CommandPostprocessor;
 import org.yamcs.utils.ByteArrayUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class EdlCommandPostprocessor implements CommandPostprocessor {
 
@@ -27,6 +26,7 @@ public class EdlCommandPostprocessor implements CommandPostprocessor {
     }
 
     public EdlCommandPostprocessor(String yamcsInstance, YConfiguration config) {
+        LOG.debug("Yamcs hotpatched EDL Post-Processor with yamcs instance: " + yamcsInstance + ", and config: " + config.toString());
     }
 
     // Called by Yamcs during initialization
@@ -81,8 +81,8 @@ public class EdlCommandPostprocessor implements CommandPostprocessor {
 
         // Since we modified the binary, update the binary in Command History too.
         commandHistory.publish(pc.getCommandId(), PreparedCommand.CNAME_BINARY, binary);
-
-        LOG.debug("");
+        
+        LOG.debug("Sending payload: `" + new String(binary, StandardCharsets.UTF_8) + "`");
         return binary;
     }
 }
