@@ -1,7 +1,5 @@
 package org.oresat.uniclogs;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.yamcs.YConfiguration;
@@ -10,10 +8,6 @@ import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.logging.Log;
 import org.yamcs.tctm.CommandPostprocessor;
 import org.yamcs.utils.ByteArrayUtils;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class EdlCommandPostprocessor implements CommandPostprocessor {
 
@@ -26,7 +20,7 @@ public class EdlCommandPostprocessor implements CommandPostprocessor {
     }
 
     public EdlCommandPostprocessor(String yamcsInstance, YConfiguration config) {
-        LOG.debug("Yamcs hotpatched EDL Post-Processor with yamcs instance: " + yamcsInstance + ", and config: " + config.toString());
+        LOG.debug("Yamcs hot patched EDL Post-Processor with Yamcs-client-instance: " + yamcsInstance + ", and config: " + config);
     }
 
     // Called by Yamcs during initialization
@@ -41,48 +35,34 @@ public class EdlCommandPostprocessor implements CommandPostprocessor {
     public byte[] process(PreparedCommand pc) {
         byte[] payload = pc.getBinary();
         byte[] header = new byte[] {(byte)0xC4, (byte)0xF5, (byte)0x38, 0x00, 0x00, 0x00, 0x00, (byte)0xE5};
+        LOG.debug("Header: " + header.length + " bytes, Payload: " + payload.length + " bytes");
 
         // Load Secret
-        String secret = "asdf";
+        String secret = "asdf12345"; // TODO: Make this come from an environment variable or something
 
         // Generate HMAC
-        byte[] hmacBin = null;
-        String hmacHex = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, secret).hmacHex(payload);
-        LOG.debug("Generated HMAC Key: " + hmacHex);
+        HmacUtils hmacGenerator = new HmacUtils(HmacAlgorithms.HMAC_SHA_1, secret);
+        byte[] hmacKey = hmacGenerator.hmac(payload);
+        String hmacHex = hmacGenerator.hmacHex(payload);
+        LOG.debug("Generated HMAC Key: (" + hmacKey + " : " + hmacKey.length + " bytes)" + hmacHex);
 
-        try {
-            hmacBin = Hex.decodeHex(hmacHex);
-        } catch (DecoderException e) {
-            LOG.error("Failed to decode hex string: " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
-
-
-        byte[] binary = new byte[header.length + payload.length];
+        // Initialize the returnable byte string
+        final int preKeyLength = header.length + payload.length;
+        final int postKeyLength = preKeyLength + (hmacKey.length);
+        byte[] binary = new byte[postKeyLength];
 
         // Set packet length bytes
         ByteArrayUtils.encodeUnsignedShort(payload.length + 12, header, 4);
 
-        System.arraycopy(header, 0, binary, 0, header.length);
-        System.arraycopy(payload, 0, binary, header.length, payload.length);
-
-        // Append HMAC to binary
-        try {
-            ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-            bStream.write(binary);
-            bStream.write(hmacBin);
-            binary = bStream.toByteArray();
-        } catch (IOException e) {
-            LOG.error("Failed to append to payload: " + e.getMessage());
-            e.printStackTrace();
-            return null;
-        }
+        // Load the returnable byte string
+        System.arraycopy(header, 0, binary, 0, header.length); // Load the header
+        System.arraycopy(payload, 0, binary, header.length, payload.length); // Load the payload
+        System.arraycopy(hmacKey, 0, binary, preKeyLength, hmacKey.length); // Load the HMAC key
 
         // Since we modified the binary, update the binary in Command History too.
         commandHistory.publish(pc.getCommandId(), PreparedCommand.CNAME_BINARY, binary);
-        
-        LOG.debug("Sending payload: `" + new String(binary, StandardCharsets.UTF_8) + "`");
+
+        LOG.debug("Sending payload with " + binary.length +  " bytes!");
         return binary;
     }
 }
