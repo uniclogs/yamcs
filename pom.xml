@@ -32,6 +32,12 @@
       <artifactId>yamcs-web</artifactId>
       <version>${yamcsVersion}</version>
     </dependency>
+    <!-- HMAC Generation Utils    -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.15</version>
+    </dependency>
   </dependencies>
 
   <build>
