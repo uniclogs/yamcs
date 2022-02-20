@@ -9,6 +9,8 @@ import org.yamcs.logging.Log;
 import org.yamcs.tctm.CommandPostprocessor;
 import org.yamcs.utils.ByteArrayUtils;
 
+import java.io.File;
+
 public class EdlCommandPostprocessor implements CommandPostprocessor {
 
     final static Log LOG = new Log(EdlCommandPostprocessor.class);
@@ -21,6 +23,11 @@ public class EdlCommandPostprocessor implements CommandPostprocessor {
 
     public EdlCommandPostprocessor(String yamcsInstance, YConfiguration config) {
         LOG.debug("Yamcs hot patched EDL Post-Processor with Yamcs-client-instance: " + yamcsInstance + ", and config: " + config);
+
+        // Make the log dir
+        File path = new File(System.getProperty("user.home") + "/.cache/yamcs/logs");
+        boolean isMade = path.mkdirs();
+        LOG.info("Created path: ["+ isMade + "]" + path);
     }
 
     // Called by Yamcs during initialization
