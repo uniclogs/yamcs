@@ -32,6 +32,12 @@
       <artifactId>yamcs-web</artifactId>
       <version>${yamcsVersion}</version>
     </dependency>
+    <!-- HMAC Generation Utils    -->
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.15</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -39,7 +45,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.9.0</version>
+        <version>3.10.0</version>
         <configuration>
             <release>11</release>
         </configuration>
