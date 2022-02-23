@@ -24,6 +24,15 @@
                     </xtce:SizeInBits>
                 </xtce:StringDataEncoding>
             </xtce:StringParameterType>
+            <xtce:EnumeratedParameterType name="SatelliteIDType">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="8"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="OreSat0"/>
+                    <xtce:Enumeration value="1" label="OreSat0.5"/>
+                    <xtce:Enumeration value="2" label="OreSat1"/>
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
             <xtce:EnumeratedParameterType name="C3StateType">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8"/>
@@ -83,6 +92,14 @@
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8"/>
             </xtce:BooleanParameterType>
+            <xtce:IntegerParameterType name="FwBankType">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="1"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="FwNextBankType">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding bitOrder="leastSignificantBitFirst" sizeInBits="7"/>
+            </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="Int8Type" signed="true">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding encoding="twosComplement" sizeInBits="8"/>
@@ -228,32 +245,21 @@
         </xtce:ParameterTypeSet>
         <xtce:ParameterSet>
             <xtce:Parameter name="APRSDataTypeId" parameterTypeRef="DataTypeIdType" shortDescription=" User-Defined APRS packet format"/>
+            <xtce:Parameter name="APRSSatelliteID" parameterTypeRef="SatelliteIDType"/>
             <xtce:Parameter name="APRSRevision" parameterTypeRef="Uint8Type"/>
             <xtce:Parameter name="C3M4State" parameterTypeRef="C3StateType"/>
             <xtce:Parameter name="C3M4Uptime" parameterTypeRef="SecondUint32Type"/>
             <xtce:Parameter name="C3RTCTime" parameterTypeRef="CoarseTimeType"/>
-            <xtce:Parameter name="C3M4Temperature" parameterTypeRef="TemperatureInt8Type"/>
-            <xtce:Parameter name="C3M4RefVoltage" parameterTypeRef="C3VolatageType"/>
-            <xtce:Parameter name="C3M4VbuspVoltage" parameterTypeRef="C3VolatageType"/>
-            <xtce:Parameter name="C3M4VbuspCurrent" parameterTypeRef="C3CurrentType"/>
-            <xtce:Parameter name="C3WDTNumTimeouts" parameterTypeRef="Uint16Type"/>
+            <xtce:Parameter name="C3PowerCycles" parameterTypeRef="Uint16Type"/>
             <xtce:Parameter name="C3EmmcCapacity" parameterTypeRef="PercentUint8Type"/>
             <xtce:Parameter name="C3LRxBytesReceived" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3LRxValidPackets" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3LRxRSSI" parameterTypeRef="DecibelUint8Type"/>
-            <xtce:Parameter name="C3LRxPLLLock" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="C3UHFTxTemperature" parameterTypeRef="TemperatureInt8Type"/>
-            <xtce:Parameter name="C3UHFTxFWDPower" parameterTypeRef="DecibelUint16Type"/>
-            <xtce:Parameter name="C3UHFTxREVPower" parameterTypeRef="DecibelUint16Type"/>
             <xtce:Parameter name="C3UHFRxBytesReceived" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3UHFRxValidPackets" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3UHFRxRSSI" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="C3UHFRxPLLLock" parameterTypeRef="DecibelUint8Type"/>
-            <xtce:Parameter name="C3FwBank" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="C3CAN1" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="C3CAN2" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="C3OPDCurrent" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="C3OPDState" parameterTypeRef="Uint8Type"/>
+            <xtce:Parameter name="C3FwBank" parameterTypeRef="FwBankType"/>
+            <xtce:Parameter name="C3FwNextBank" parameterTypeRef="FwNextBankType"/>
             <xtce:Parameter name="BatteryPack1Vbatt" parameterTypeRef="VoltsUint16Type"/>
             <xtce:Parameter name="BatteryPack1Vcell" parameterTypeRef="VoltsUint16Type"/>
             <xtce:Parameter name="BatteryPack1VcellMax" parameterTypeRef="VoltsUint16Type"/>
@@ -364,32 +370,21 @@
             <xtce:SequenceContainer name="Beacon">
                 <xtce:EntryList>
                     <xtce:ParameterRefEntry parameterRef="APRSDataTypeId"/>
+                    <xtce:ParameterRefEntry parameterRef="APRSSatelliteID"/>
                     <xtce:ParameterRefEntry parameterRef="APRSRevision"/>
                     <xtce:ParameterRefEntry parameterRef="C3M4State"/>
                     <xtce:ParameterRefEntry parameterRef="C3M4Uptime"/>
                     <xtce:ParameterRefEntry parameterRef="C3RTCTime"/>
-                    <xtce:ParameterRefEntry parameterRef="C3M4Temperature"/>
-                    <xtce:ParameterRefEntry parameterRef="C3M4RefVoltage"/>
-                    <xtce:ParameterRefEntry parameterRef="C3M4VbuspVoltage"/>
-                    <xtce:ParameterRefEntry parameterRef="C3M4VbuspCurrent"/>
-                    <xtce:ParameterRefEntry parameterRef="C3WDTNumTimeouts"/>
+                    <xtce:ParameterRefEntry parameterRef="C3PowerCycles"/>
                     <xtce:ParameterRefEntry parameterRef="C3EmmcCapacity"/>
                     <xtce:ParameterRefEntry parameterRef="C3LRxBytesReceived"/>
                     <xtce:ParameterRefEntry parameterRef="C3LRxValidPackets"/>
                     <xtce:ParameterRefEntry parameterRef="C3LRxRSSI"/>
-                    <xtce:ParameterRefEntry parameterRef="C3LRxPLLLock"/>
-                    <xtce:ParameterRefEntry parameterRef="C3UHFTxTemperature"/>
-                    <xtce:ParameterRefEntry parameterRef="C3UHFTxFWDPower"/>
-                    <xtce:ParameterRefEntry parameterRef="C3UHFTxREVPower"/>
                     <xtce:ParameterRefEntry parameterRef="C3UHFRxBytesReceived"/>
                     <xtce:ParameterRefEntry parameterRef="C3UHFRxValidPackets"/>
                     <xtce:ParameterRefEntry parameterRef="C3UHFRxRSSI"/>
-                    <xtce:ParameterRefEntry parameterRef="C3UHFRxPLLLock"/>
                     <xtce:ParameterRefEntry parameterRef="C3FwBank"/>
-                    <xtce:ParameterRefEntry parameterRef="C3CAN1"/>
-                    <xtce:ParameterRefEntry parameterRef="C3CAN2"/>
-                    <xtce:ParameterRefEntry parameterRef="C3OPDState"/>
-                    <xtce:ParameterRefEntry parameterRef="C3OPDCurrent"/>
+                    <xtce:ParameterRefEntry parameterRef="C3FwNextBank"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1Vbatt"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1Vcell"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1VcellMax"/>
