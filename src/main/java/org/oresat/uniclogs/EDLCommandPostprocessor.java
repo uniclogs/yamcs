@@ -66,8 +66,8 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         String secret = PrepareEnvironment.getHmacSecret();
         HmacUtils hmacGenerator = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, secret);
         ByteArray payloadSalt = new ByteArray();
-        payloadSalt.add(payload);
         payloadSalt.add(salt);
+        payloadSalt.add(payload);
         byte[] hmacKey = hmacGenerator.hmac(payloadSalt.toArray());
         String hmacHex = hmacGenerator.hmacHex(payloadSalt.toArray());
         LOG.debug("Generated HMAC Key: " + hmacHex.toLowerCase());
@@ -75,9 +75,9 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         // Begin assembling the message
         ByteArray message = new ByteArray();
         message.add(header);
-        message.add(payload);
-        message.add(salt);
         message.add(hmacKey);
+        message.add(salt);
+        message.add(payload);
 
         // Since we modified the binary, update the binary in Command History too.
         commandHistory.publish(pc.getCommandId(), PreparedCommand.CNAME_BINARY, message.toArray());
