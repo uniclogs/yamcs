@@ -7,6 +7,9 @@ import org.yamcs.YamcsServer;
 import org.yamcs.http.HttpServer;
 import org.yamcs.logging.Log;
 
+import java.io.File;
+import java.nio.file.Path;
+
 public class UniclogsServer extends HttpServer {
     private final static Log LOG = new Log(UniclogsServer.class);
     private final static YamcsServer server = YamcsServer.getServer();
@@ -19,5 +22,27 @@ public class UniclogsServer extends HttpServer {
 
         // Add listeners
         server.addReadyListener(new PrepareEnvironment());
+    }
+
+    public static final YamcsServer getServerInstance() {
+        return server;
+    }
+
+    public static Path getCacheDir() {
+        return new File(System.getProperty("user.home") + "/.cache/yamcs").toPath().toAbsolutePath();
+    }
+
+    public static Path getConfigDir() {
+        return server.getConfigDirectory().toAbsolutePath();
+    }
+
+    public static Path getDataDir() {
+        return server.getDataDirectory().toAbsolutePath();
+    }
+
+    public static void throwFatalException(String type, String message) {
+        server.getGlobalCrashHandler().handleCrash(type, message);
+        server.shutDown();
+        System.exit(-1);
     }
 }

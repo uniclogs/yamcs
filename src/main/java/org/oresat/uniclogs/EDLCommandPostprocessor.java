@@ -58,12 +58,12 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         LOG.debug("Command Payload: " + byteArrayToHexString(payload));
 
         // Get the salt
-        Integer serialNumber = 1024; // TODO: Load this from somewhere externally
+        Integer serialNumber = PrepareEnvironment.getSerialNumber(); // TODO: Load this from somewhere externally
         byte[] salt = ByteArrayUtils.encodeInt(serialNumber);
         LOG.debug("Salt as a Serial Number: " + ByteArrayUtils.decodeInt(salt, 0) + ": " + byteArrayToHexString(salt));
 
         // Generate the HMAC Key
-        String secret = "asdg";
+        String secret = PrepareEnvironment.getHmacSecret();
         HmacUtils hmacGenerator = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, secret);
         ByteArray payloadSalt = new ByteArray();
         payloadSalt.add(payload);
