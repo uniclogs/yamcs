@@ -27,6 +27,15 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         this.config = config;
     }
 
+    private final byte[] reverse(byte[] data) {
+        byte[] reversed = new byte[data.length];
+
+        for(int i = 0; i < data.length; ++i) {
+            reversed[data.length - 1 - i] = data[i];
+        }
+        return reversed;
+    }
+
     private final String byteArrayToHexString(ByteArray data) {
         return byteArrayToHexString(data.toArray());
     }
@@ -61,6 +70,7 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         Integer serialNumber = PrepareEnvironment.getSerialNumber(); // TODO: Load this from somewhere externally
         byte[] salt = ByteArrayUtils.encodeInt(serialNumber);
         LOG.debug("Salt as a Serial Number: " + ByteArrayUtils.decodeInt(salt, 0) + ": " + byteArrayToHexString(salt));
+        LOG.debug("Salt Reversed: " + byteArrayToHexString(reverse(salt)));
 
         // Generate the HMAC Key
         String secret = PrepareEnvironment.getHmacSecret();
@@ -71,12 +81,13 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         byte[] hmacKey = hmacGenerator.hmac(payloadSalt.toArray());
         String hmacHex = hmacGenerator.hmacHex(payloadSalt.toArray());
         LOG.debug("Generated HMAC Key: " + hmacHex.toLowerCase());
+        LOG.debug("HMAC Reversed: " + byteArrayToHexString(reverse(hmacKey)));
 
         // Begin assembling the message
         ByteArray message = new ByteArray();
         message.add(header);
-        message.add(hmacKey);
-        message.add(salt);
+        message.add(reverse(hmacKey));
+        message.add(reverse(salt));
         message.add(payload);
 
         // Since we modified the binary, update the binary in Command History too.
