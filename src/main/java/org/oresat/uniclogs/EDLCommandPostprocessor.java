@@ -82,7 +82,7 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
 
         // Get the header
         byte[] header = new byte[] {(byte)0xC4, (byte)0xF5, (byte)0x38, 0x00, 0x00, 0x00, 0x00, (byte)0xE5};
-        int size = header.length + spi.length + salt.length + payload.length + hmacKey.length + 4; // Adding 4for some mysterious reason
+        int size = header.length + spi.length + salt.length + payload.length + hmacKey.length + 2;  // Adding 2 to account for the FECF
         ByteArrayUtils.encodeUnsignedShort((short) size, header, 4);
         LOG.debug("Header: " + byteArrayToHexString(header));
 
