@@ -68,9 +68,14 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
 
         // Get the salt
         Integer serialNumber = PrepareEnvironment.getSerialNumber(); // TODO: Load this from somewhere externally
-        byte[] salt = ByteArrayUtils.encodeInt(serialNumber);
-        LOG.debug("Salt as a Serial Number: " + ByteArrayUtils.decodeInt(salt, 0) + ": " + byteArrayToHexString(salt));
-        LOG.debug("Salt Reversed: " + byteArrayToHexString(reverse(salt)));
+        byte[] salt = reverse(ByteArrayUtils.encodeInt(serialNumber));
+        LOG.debug("Salt as a Serial Number: " + ByteArrayUtils.decodeInt(salt, 0) + ": " + byteArrayToHexString(reverse(salt)));
+
+        // Generate the SPI (Statically set to zero for OreSat0)
+        ByteArray spi = new ByteArray();
+        spi.add((byte) 0);
+        spi.add((byte) 0);
+
 
         // Generate the HMAC Key
         String secret = PrepareEnvironment.getHmacSecret();
@@ -78,17 +83,16 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         ByteArray payloadSalt = new ByteArray();
         payloadSalt.add(salt);
         payloadSalt.add(payload);
-        byte[] hmacKey = hmacGenerator.hmac(payloadSalt.toArray());
-        String hmacHex = hmacGenerator.hmacHex(payloadSalt.toArray());
-        LOG.debug("Generated HMAC Key: " + hmacHex.toLowerCase());
-        LOG.debug("HMAC Reversed: " + byteArrayToHexString(reverse(hmacKey)));
+        byte[] hmacKey = reverse(hmacGenerator.hmac(payloadSalt.toArray()));
+        LOG.debug("Generated HMAC Key: " + byteArrayToHexString(hmacKey));
 
         // Begin assembling the message
         ByteArray message = new ByteArray();
         message.add(header);
-        message.add(reverse(hmacKey));
-        message.add(reverse(salt));
+        message.add(spi.toArray());
+        message.add(salt);
         message.add(payload);
+        message.add(hmacKey);
 
         // Since we modified the binary, update the binary in Command History too.
         commandHistory.publish(pc.getCommandId(), PreparedCommand.CNAME_BINARY, message.toArray());
