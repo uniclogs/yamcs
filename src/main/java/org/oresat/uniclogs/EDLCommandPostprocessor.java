@@ -58,10 +58,6 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
     // This method must return the (possibly modified) packet binary.
     @Override
     public byte[] process(PreparedCommand pc) {
-        // Get the header
-        byte[] header = new byte[] {(byte)0xC4, (byte)0xF5, (byte)0x38, 0x00, 0x00, 0x00, 0x00, (byte)0xE5};
-        LOG.debug("Header: " + byteArrayToHexString(header));
-
         // Get the payload
         byte[] payload = pc.getBinary();
         LOG.debug("Command Payload: " + byteArrayToHexString(payload));
@@ -69,13 +65,11 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         // Get the salt
         Integer serialNumber = PrepareEnvironment.getSerialNumber(); // TODO: Load this from somewhere externally
         byte[] salt = reverse(ByteArrayUtils.encodeInt(serialNumber));
-        LOG.debug("Salt as a Serial Number: " + ByteArrayUtils.decodeInt(salt, 0) + ": " + byteArrayToHexString(reverse(salt)));
+        LOG.debug("Salt as a Serial Number: " + ByteArrayUtils.decodeInt(salt, 0) + ": " + byteArrayToHexString(salt));
 
         // Generate the SPI (Statically set to zero for OreSat0)
-        ByteArray spi = new ByteArray();
-        spi.add((byte) 0);
-        spi.add((byte) 0);
-
+        byte[] spi = new byte[] {0x05, 0x06};
+        LOG.debug("Generated SPI: " + byteArrayToHexString(spi));
 
         // Generate the HMAC Key
         String secret = PrepareEnvironment.getHmacSecret();
@@ -86,10 +80,16 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         byte[] hmacKey = reverse(hmacGenerator.hmac(payloadSalt.toArray()));
         LOG.debug("Generated HMAC Key: " + byteArrayToHexString(hmacKey));
 
+        // Get the header
+        byte[] header = new byte[] {(byte)0xC4, (byte)0xF5, (byte)0x38, 0x00, 0x00, 0x00, 0x00, (byte)0xE5};
+        int size = header.length + spi.length + salt.length + payload.length + hmacKey.length + 4; // Adding 4for some mysterious reason
+        ByteArrayUtils.encodeUnsignedShort((short) size, header, 4);
+        LOG.debug("Header: " + byteArrayToHexString(header));
+
         // Begin assembling the message
         ByteArray message = new ByteArray();
         message.add(header);
-        message.add(spi.toArray());
+        message.add(spi);
         message.add(salt);
         message.add(payload);
         message.add(hmacKey);
@@ -102,4 +102,3 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         return message.toArray();
     }
 }
-
