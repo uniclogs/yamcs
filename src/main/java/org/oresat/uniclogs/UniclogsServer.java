@@ -21,7 +21,7 @@ public class UniclogsServer extends HttpServer {
         LOG.info("Started " + serviceName + ":" + instanceName + " with config: " + config + " from: " + config.configDirectory);
 
         // Add listeners
-        server.addReadyListener(new PrepareEnvironment());
+        server.addReadyListener(new UniclogsEnvironment());
     }
 
     public static final YamcsServer getServerInstance() {

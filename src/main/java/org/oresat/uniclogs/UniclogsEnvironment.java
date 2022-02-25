@@ -9,22 +9,31 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class PrepareEnvironment implements ReadyListener {
-    private final static Log LOG = new Log(PrepareEnvironment.class);
+public class UniclogsEnvironment implements ReadyListener {
+    private final static Log LOG = new Log(UniclogsEnvironment.class);
 
     private static String HMAC_SECRET = null;
-    private static Integer SERIAL_NUMBER = null;
+    private static Integer SEQUENCE_NUMBER = null;
     private static String secretPath = UniclogsServer.getCacheDir() + "/secret";
-    private static String snPath = UniclogsServer.getCacheDir() + "/serial-number";
+    private static String snPath = UniclogsServer.getCacheDir() + "/sequence-number";
 
-    public PrepareEnvironment() {}
+    public UniclogsEnvironment() {}
 
     public static String getHmacSecret() {
         return HMAC_SECRET;
     }
 
-    public static Integer getSerialNumber() {
-        return SERIAL_NUMBER;
+    public static Integer getSequenceNumber() {
+        return SEQUENCE_NUMBER;
+    }
+
+    public static void setSequenceNumber(Integer sequenceNumber) {
+        SEQUENCE_NUMBER = sequenceNumber;
+        dumpSequenceNumber(SEQUENCE_NUMBER);
+    }
+
+    public static void incrementSequenceNumber() {
+        setSequenceNumber(SEQUENCE_NUMBER + 1);
     }
 
     private static String loadOrDefault(String filePath, String defaultValue) {
@@ -55,33 +64,39 @@ public class PrepareEnvironment implements ReadyListener {
         return loadOrDefault(secretPath, "<Change This To A Super Special Secret>");
     }
 
-    private static Integer loadSerialNumber() {
-        String serialNumber = loadOrDefault(snPath, "-1");
+    private static Integer loadSequenceNumber() {
+        String serialNumber = loadOrDefault(snPath, "0");
         if(serialNumber == null) {
             return null;
         }
         return Integer.parseInt(serialNumber);
     }
 
+    private static void dumpSequenceNumber(Integer sequenceNumber) {
+        FileWriter writer;
+        try{
+            writer = new FileWriter(snPath);
+            writer.write(sequenceNumber.toString());
+            writer.flush();
+        } catch (IOException e) {
+            LOG.error(e.getMessage());
+        }
+    }
+
     @Override
     public void onReady() {
         boolean quit = false;
         HMAC_SECRET = loadHmacSecret();
-        LOG.info("SECRET: " + getHmacSecret());
         if(HMAC_SECRET.equals("<Change This To A Super Special Secret>")) {
             LOG.error("DEFAULT SECRET DETECTED! Please update the file: " + secretPath + " with a secret before re-running Yamcs!");
             quit = true;
         }
 
-        SERIAL_NUMBER = loadSerialNumber();
-        LOG.info("SERIAL NUMBER: " + SERIAL_NUMBER.toString());
-        if(SERIAL_NUMBER == null) {
-            LOG.error("DEFAULT SERIAL NUMBER! Please update the file: " + secretPath + " with a serial-number re-running Yamcs!");
-            quit = true;
-        }
+        SEQUENCE_NUMBER = loadSequenceNumber();
 
         if(quit) {
             System.exit(-1);
         }
+        LOG.info("Loaded last-known sequence number: " + SEQUENCE_NUMBER);
     }
 }

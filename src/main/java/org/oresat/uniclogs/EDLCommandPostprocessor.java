@@ -63,16 +63,16 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         LOG.debug("Command Payload: " + byteArrayToHexString(payload));
 
         // Get the salt
-        Integer serialNumber = PrepareEnvironment.getSerialNumber(); // TODO: Load this from somewhere externally
-        byte[] salt = reverse(ByteArrayUtils.encodeInt(serialNumber));
-        LOG.debug("Salt as a Serial Number: " + ByteArrayUtils.decodeInt(salt, 0) + ": " + byteArrayToHexString(salt));
+        Integer sequenceNumber = UniclogsEnvironment.getSequenceNumber();
+        byte[] salt = reverse(ByteArrayUtils.encodeInt(sequenceNumber));
+        LOG.debug("Salt as a Sequence Number: " + sequenceNumber + ": " + byteArrayToHexString(salt));
 
         // Generate the SPI (Statically set to zero for OreSat0)
-        byte[] spi = new byte[] {0x05, 0x06};
+        byte[] spi = new byte[] {0x00, 0x00};
         LOG.debug("Generated SPI: " + byteArrayToHexString(spi));
 
         // Generate the HMAC Key
-        String secret = PrepareEnvironment.getHmacSecret();
+        String secret = UniclogsEnvironment.getHmacSecret();
         HmacUtils hmacGenerator = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, secret);
         ByteArray payloadSalt = new ByteArray();
         payloadSalt.add(salt);
@@ -96,6 +96,7 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
 
         // Since we modified the binary, update the binary in Command History too.
         commandHistory.publish(pc.getCommandId(), PreparedCommand.CNAME_BINARY, message.toArray());
+        UniclogsEnvironment.incrementSequenceNumber(); // Automatically update the salt value
 
         LOG.debug("Here's the CMD message byte structure: {header: " + header.length + "b, payload: " + payload.length + "b, salt: " + salt.length + "b, hmac-key: " + hmacKey.length + "b}");
         LOG.debug("Sending a message with a total size of " + message.size() +" bytes: " + byteArrayToHexString(message));
