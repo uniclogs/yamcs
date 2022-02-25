@@ -1,6 +1,7 @@
 import os
 import struct
 from time import sleep
+from zlib import crc32
 
 from . import UPLINK_SOCKET, \
               UPLINK_ADDR, \
@@ -97,7 +98,7 @@ def file_upload(filepath: str,
                 continue
 
             try:
-                reply = struct.unpack('<i', data_raw[8:])
+                reply = struct.unpack('<ii', data_raw[8:])
             except Exception:
                 print(f'[{fails} FAILURES]: struct unpack failed with payload: {data_raw}')
                 fails += 1
@@ -105,6 +106,9 @@ def file_upload(filepath: str,
 
             if reply[0] != len(seg):
                 print(f'[{fails} FAILURES]: Expected payload `{data_raw}` to be {len(seg)} bytes but got {reply[0]} bytes instead!')
+                fails += 1
+            elif reply[1] != crc32(seg):
+                print(f'[{fails} FAILURES]: Expected CRC be {hex(crc32(seg))} but got {hex(reply[1])} instead!')
                 fails += 1
             else:
                 print('  seg', i, 'ack')
