@@ -70,7 +70,7 @@ def file_upload(filepath: str,
     for seg in segments[start:]:
         fails = 0
 
-        uslp_header = b'\xC4\xF5\x38\x02' + SEGMENT_LEN.to_bytes(2, 'little') + b'\x00\xE5'
+        uslp_header = b'\xC4\xF5\x38\x22' + SEGMENT_LEN.to_bytes(2, 'little') + b'\x00\xE5'
         offset_bytes = offset.to_bytes(4, 'little')
         seg_len = len(seg).to_bytes(4, 'little')
         packet = uslp_header + filename_bytes + offset_bytes + seg_len + seg
