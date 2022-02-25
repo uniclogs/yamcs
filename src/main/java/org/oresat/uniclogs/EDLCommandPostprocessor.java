@@ -27,15 +27,6 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         this.config = config;
     }
 
-    private final byte[] reverse(byte[] data) {
-        byte[] reversed = new byte[data.length];
-
-        for(int i = 0; i < data.length; ++i) {
-            reversed[data.length - 1 - i] = data[i];
-        }
-        return reversed;
-    }
-
     private final String byteArrayToHexString(ByteArray data) {
         return byteArrayToHexString(data.toArray());
     }
@@ -58,17 +49,19 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
     // This method must return the (possibly modified) packet binary.
     @Override
     public byte[] process(PreparedCommand pc) {
+        byte[] frameStart = new byte[] {(byte)0xE5};
+
         // Get the payload
         byte[] payload = pc.getBinary();
         LOG.debug("Command Payload: " + byteArrayToHexString(payload));
 
         // Get the salt
         Integer sequenceNumber = UniclogsEnvironment.getSequenceNumber();
-        byte[] salt = reverse(ByteArrayUtils.encodeInt(sequenceNumber));
+        byte[] salt = ByteArrayUtils.encodeInt(sequenceNumber);
         LOG.debug("Salt as a Sequence Number: " + sequenceNumber + ": " + byteArrayToHexString(salt));
 
         // Generate the SPI (Statically set to zero for OreSat0)
-        byte[] spi = new byte[] {0x00, 0x00};
+        byte[] spi = new byte[] {0x00, (byte)0x01};
         LOG.debug("Generated SPI: " + byteArrayToHexString(spi));
 
         // Generate the HMAC Key
@@ -77,12 +70,12 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         ByteArray payloadSalt = new ByteArray();
         payloadSalt.add(salt);
         payloadSalt.add(payload);
-        byte[] hmacKey = reverse(hmacGenerator.hmac(payloadSalt.toArray()));
+        byte[] hmacKey = hmacGenerator.hmac(payloadSalt.toArray());
         LOG.debug("Generated HMAC Key: " + byteArrayToHexString(hmacKey));
 
         // Get the header
-        byte[] header = new byte[] {(byte)0xC4, (byte)0xF5, (byte)0x38, 0x00, 0x00, 0x00, 0x00, (byte)0xE5};
-        int size = header.length + spi.length + salt.length + payload.length + hmacKey.length + 2;  // Adding 2 to account for the FECF
+        byte[] header = new byte[] {(byte)0xC4, (byte)0xF5, (byte)0x38, 0x00, 0x00, 0x00, 0x00};
+        int size = header.length + spi.length + salt.length + frameStart.length + payload.length + hmacKey.length + 2;  // Adding 2 to account for the FECF
         ByteArrayUtils.encodeUnsignedShort((short) size, header, 4);
         LOG.debug("Header: " + byteArrayToHexString(header));
 
@@ -91,6 +84,7 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         message.add(header);
         message.add(spi);
         message.add(salt);
+        message.add(frameStart);
         message.add(payload);
         message.add(hmacKey);
 
@@ -98,7 +92,7 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         commandHistory.publish(pc.getCommandId(), PreparedCommand.CNAME_BINARY, message.toArray());
         UniclogsEnvironment.incrementSequenceNumber(); // Automatically update the salt value
 
-        LOG.debug("Here's the CMD message byte structure: {header: " + header.length + "b, payload: " + payload.length + "b, salt: " + salt.length + "b, hmac-key: " + hmacKey.length + "b}");
+        LOG.debug("Here's the CMD message byte structure: {header: " + header.length + "b, frame-start: " + frameStart.length + "b, payload: " + payload.length + "b, salt: " + salt.length + "b, hmac-key: " + hmacKey.length + "b}");
         LOG.debug("Sending a message with a total size of " + message.size() +" bytes: " + byteArrayToHexString(message));
         return message.toArray();
     }
