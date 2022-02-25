@@ -68,7 +68,9 @@ public class EDLCommandPostprocessor implements CommandPostprocessor {
         String secret = UniclogsEnvironment.getHmacSecret();
         HmacUtils hmacGenerator = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, secret);
         ByteArray payloadSalt = new ByteArray();
+        payloadSalt.add(spi);
         payloadSalt.add(salt);
+        payloadSalt.add(frameStart);
         payloadSalt.add(payload);
         byte[] hmacKey = hmacGenerator.hmac(payloadSalt.toArray());
         LOG.debug("Generated HMAC Key: " + byteArrayToHexString(hmacKey));
