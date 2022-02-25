@@ -98,14 +98,14 @@ def file_upload(filepath: str,
                 continue
 
             try:
-                reply = struct.unpack('<ii', data_raw[8:])
+                reply = struct.unpack('<iI', data_raw[8:])
             except Exception:
                 print(f'[{fails} FAILURES]: struct unpack failed with payload: {data_raw}')
                 fails += 1
                 continue
 
-            if reply[0] != len(seg):
-                print(f'[{fails} FAILURES]: Expected payload `{data_raw}` to be {len(seg)} bytes but got {reply[0]} bytes instead!')
+            if reply[0] < 0:
+                print(f'[{fails} FAILURES]: Got error code {reply[0]}')
                 fails += 1
             elif reply[1] != crc32(seg):
                 print(f'[{fails} FAILURES]: Expected CRC be {hex(crc32(seg))} but got {hex(reply[1])} instead!')
