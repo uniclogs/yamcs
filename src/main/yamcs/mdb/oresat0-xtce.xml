@@ -114,7 +114,7 @@
             </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="FwNextBankType">
                 <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding bitOrder="leastSignificantBitFirst" sizeInBits="7"/>
+                <xtce:IntegerDataEncoding sizeInBits="7"/>
             </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="Int8Type" signed="true">
                 <xtce:UnitSet/>
@@ -274,8 +274,8 @@
             <xtce:Parameter name="C3UHFRxBytesReceived" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3UHFRxValidPackets" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3UHFRxRSSI" parameterTypeRef="Uint8Type"/>
-            <xtce:Parameter name="C3FwBank" parameterTypeRef="FwBankType"/>
             <xtce:Parameter name="C3FwNextBank" parameterTypeRef="FwNextBankType"/>
+            <xtce:Parameter name="C3FwBank" parameterTypeRef="FwBankType"/>
             <xtce:Parameter name="C3LRxSequenceNumber" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3LRxRejectedPackets" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="BatteryPack1Vbatt" parameterTypeRef="VoltsUint16Type"/>
@@ -401,8 +401,8 @@
                     <xtce:ParameterRefEntry parameterRef="C3UHFRxBytesReceived"/>
                     <xtce:ParameterRefEntry parameterRef="C3UHFRxValidPackets"/>
                     <xtce:ParameterRefEntry parameterRef="C3UHFRxRSSI"/>
-                    <xtce:ParameterRefEntry parameterRef="C3FwBank"/>
                     <xtce:ParameterRefEntry parameterRef="C3FwNextBank"/>
+                    <xtce:ParameterRefEntry parameterRef="C3FwBank"/>
                     <xtce:ParameterRefEntry parameterRef="C3LRxSequenceNumber"/>
                     <xtce:ParameterRefEntry parameterRef="C3LRxRejectedPackets"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1Vbatt"/>
