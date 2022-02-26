@@ -51,7 +51,7 @@ def fw_help() -> None:
     print('  fw bank BANK')
     print('  fw verify BANK')
     print('')
-    print('CRC is the file crc')
+    print('CRC is the file crc (hex must have the leading "0x")')
     print('FILEPATH is filepath on the C3 wanted')
     print('BANK is C3 bank to use, can be 0 or 1')
 
@@ -68,8 +68,13 @@ def fw_cmd(conn, inp: str) -> None:
         return
 
     if inps[0].lower() == 'flash':
-        cmd = '/OreSat0/C3FwFalsh'
-        crc32 = int(inps[1])
+        cmd = '/OreSat0/C3FwFlash'
+        if inps[1][:2] == '0x':
+            crc32 = int(inps[1], 16)
+        else:
+            crc32 = int(inps[1])
+        # yamcs wants a 32 signed int for some reason, this is a stupid fix
+        crc32 = struct.unpack('i', struct.pack('I', crc32))[0]
         args = {'CRC32': crc32, 'Filepath': inps[2]}
     elif inps[0].lower() == 'bank':
         cmd = '/OreSat0/C3FwBank'

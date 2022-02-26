@@ -612,7 +612,7 @@
             </xtce:MetaCommand>
             <xtce:MetaCommand name="C3FwFlash" shortDescription="flash with firmware image">
                 <xtce:ArgumentList>
-                    <xtce:Argument name="CRC32" argumentTypeRef="Int32Type"/>
+                    <xtce:Argument name="CRC32" argumentTypeRef="Uint32Type"/>
                     <xtce:Argument name="Filepath" argumentTypeRef="C3FilepathType"/>
                 </xtce:ArgumentList>
                 <xtce:CommandContainer name="C3FwFlash">
