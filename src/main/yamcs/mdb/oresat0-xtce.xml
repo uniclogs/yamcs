@@ -64,20 +64,36 @@
                     <xtce:Enumeration value="3" label="ParserError"/>
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
-            <xtce:EnumeratedParameterType name="BitOnOffType">
+            <xtce:EnumeratedParameterType name="1BitOffOnType">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="1"/>
                 <xtce:EnumerationList>
-                    <xtce:Enumeration value="0" label="On"/>
-                    <xtce:Enumeration value="1" label="Off"/>
+                    <xtce:Enumeration value="0" label="Off"/>
+                    <xtce:Enumeration value="1" label="On"/>
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
-            <xtce:EnumeratedParameterType name="BitDisableEnableType">
+            <xtce:EnumeratedParameterType name="1BitEnableDisableType">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="1"/>
                 <xtce:EnumerationList>
-                    <xtce:Enumeration value="0" label="Disabled"/>
-                    <xtce:Enumeration value="1" label="Enabled"/>
+                    <xtce:Enumeration value="0" label="Enabled"/>
+                    <xtce:Enumeration value="1" label="Disabled"/>
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+            <xtce:EnumeratedParameterType name="1BitDischargingType">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="1"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="NotDischarging"/>
+                    <xtce:Enumeration value="1" label="Discharging"/>
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+            <xtce:EnumeratedParameterType name="4BitsChargingType">
+                <xtce:UnitSet/>
+                <xtce:IntegerDataEncoding sizeInBits="4"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="NotCharging"/>
+                    <xtce:Enumeration value="1" label="Charging"/>
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
             <xtce:BooleanParameterType name="Bool1BitType">
@@ -277,11 +293,11 @@
             <xtce:Parameter name="BatteryPack1CurrentAvg" parameterTypeRef="CurrentInt16Type"/>
             <xtce:Parameter name="BatteryPack1CurrentMax" parameterTypeRef="CurrentInt16Type"/>
             <xtce:Parameter name="BatteryPack1CurrentMin" parameterTypeRef="CurrentInt16Type"/>
-            <xtce:Parameter name="BatteryPack1Heater" parameterTypeRef="BitOnOffType"/>
-            <xtce:Parameter name="BatteryPack1Discharge" parameterTypeRef="BitDisableEnableType"/>
-            <xtce:Parameter name="BatteryPack1Charge" parameterTypeRef="BitDisableEnableType"/>
-            <xtce:Parameter name="BatteryPack1Discharging" parameterTypeRef="Bool1BitType"/>
-            <xtce:Parameter name="BatteryPack1Charging" parameterTypeRef="Bool4BitType"/>
+            <xtce:Parameter name="BatteryPack1ChargeStatus" parameterTypeRef="4BitsChargingType"/>
+            <xtce:Parameter name="BatteryPack1DischargeStatus" parameterTypeRef="1BitDischargingType"/>
+            <xtce:Parameter name="BatteryPack1Charge" parameterTypeRef="1BitEnableDisableType"/>
+            <xtce:Parameter name="BatteryPack1Discharge" parameterTypeRef="1BitEnableDisableType"/>
+            <xtce:Parameter name="BatteryPack1Heater" parameterTypeRef="1BitOffOnType"/>
             <xtce:Parameter name="BatteryPack1ReportedStateofCharge" parameterTypeRef="PercentUint8Type"/>
             <xtce:Parameter name="BatteryPack1FullCapacity" parameterTypeRef="CapacityUint16Type"/>
             <xtce:Parameter name="BatteryPack1ReportedCapacity" parameterTypeRef="CapacityUint16Type"/>
@@ -300,11 +316,11 @@
             <xtce:Parameter name="BatteryPack2CurrentAvg" parameterTypeRef="CurrentInt16Type"/>
             <xtce:Parameter name="BatteryPack2CurrentMax" parameterTypeRef="CurrentInt16Type"/>
             <xtce:Parameter name="BatteryPack2CurrentMin" parameterTypeRef="CurrentInt16Type"/>
-            <xtce:Parameter name="BatteryPack2Heater" parameterTypeRef="BitOnOffType"/>
-            <xtce:Parameter name="BatteryPack2Discharge" parameterTypeRef="BitDisableEnableType"/>
-            <xtce:Parameter name="BatteryPack2Charge" parameterTypeRef="BitDisableEnableType"/>
-            <xtce:Parameter name="BatteryPack2Discharging" parameterTypeRef="Bool1BitType"/>
-            <xtce:Parameter name="BatteryPack2Charging" parameterTypeRef="Bool4BitType"/>
+            <xtce:Parameter name="BatteryPack2ChargeStatus" parameterTypeRef="4BitsChargingType"/>
+            <xtce:Parameter name="BatteryPack2DischargeStatus" parameterTypeRef="1BitDischargingType"/>
+            <xtce:Parameter name="BatteryPack2Charge" parameterTypeRef="1BitEnableDisableType"/>
+            <xtce:Parameter name="BatteryPack2Discharge" parameterTypeRef="1BitEnableDisableType"/>
+            <xtce:Parameter name="BatteryPack2Heater" parameterTypeRef="1BitOffOnType"/>
             <xtce:Parameter name="BatteryPack2ReportedStateofCharge" parameterTypeRef="PercentUint8Type"/>
             <xtce:Parameter name="BatteryPack2FullCapacity" parameterTypeRef="CapacityUint16Type"/>
             <xtce:Parameter name="BatteryPack2ReportedCapacity" parameterTypeRef="CapacityUint16Type"/>
@@ -404,11 +420,11 @@
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1CurrentAvg"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1CurrentMax"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1CurrentMin"/>
-                    <xtce:ParameterRefEntry parameterRef="BatteryPack1Heater"/>
-                    <xtce:ParameterRefEntry parameterRef="BatteryPack1Discharge"/>
+                    <xtce:ParameterRefEntry parameterRef="BatteryPack1ChargeStatus"/>
+                    <xtce:ParameterRefEntry parameterRef="BatteryPack1DischargeStatus"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1Charge"/>
-                    <xtce:ParameterRefEntry parameterRef="BatteryPack1Discharging"/>
-                    <xtce:ParameterRefEntry parameterRef="BatteryPack1Charging"/>
+                    <xtce:ParameterRefEntry parameterRef="BatteryPack1Discharge"/>
+                    <xtce:ParameterRefEntry parameterRef="BatteryPack1Heater"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1ReportedStateofCharge"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1FullCapacity"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack1ReportedCapacity"/>
@@ -427,11 +443,11 @@
                     <xtce:ParameterRefEntry parameterRef="BatteryPack2CurrentAvg"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack2CurrentMax"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack2CurrentMin"/>
-                    <xtce:ParameterRefEntry parameterRef="BatteryPack2Heater"/>
-                    <xtce:ParameterRefEntry parameterRef="BatteryPack2Discharge"/>
+                    <xtce:ParameterRefEntry parameterRef="BatteryPack2ChargeStatus"/>
+                    <xtce:ParameterRefEntry parameterRef="BatteryPack2DischargeStatus"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack2Charge"/>
-                    <xtce:ParameterRefEntry parameterRef="BatteryPack2Discharging"/>
-                    <xtce:ParameterRefEntry parameterRef="BatteryPack2Charging"/>
+                    <xtce:ParameterRefEntry parameterRef="BatteryPack2Discharge"/>
+                    <xtce:ParameterRefEntry parameterRef="BatteryPack2Heater"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack2ReportedStateofCharge"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack2FullCapacity"/>
                     <xtce:ParameterRefEntry parameterRef="BatteryPack2ReportedCapacity"/>
