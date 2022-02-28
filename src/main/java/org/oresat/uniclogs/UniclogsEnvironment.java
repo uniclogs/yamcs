@@ -1,5 +1,7 @@
 package org.oresat.uniclogs;
 
+import org.apache.commons.codec.DecoderException;
+import org.apache.commons.codec.binary.Hex;
 import org.yamcs.ReadyListener;
 import org.yamcs.logging.Log;
 
@@ -12,14 +14,14 @@ import java.util.Scanner;
 public class UniclogsEnvironment implements ReadyListener {
     private final static Log LOG = new Log(UniclogsEnvironment.class);
 
-    private static String HMAC_SECRET = null;
+    private static byte[] HMAC_SECRET = null;
     private static Integer SEQUENCE_NUMBER = null;
     private static String secretPath = UniclogsServer.getCacheDir() + "/secret";
     private static String snPath = UniclogsServer.getCacheDir() + "/sequence-number";
 
     public UniclogsEnvironment() {}
 
-    public static String getHmacSecret() {
+    public static byte[] getHmacSecret() {
         return HMAC_SECRET;
     }
 
@@ -60,8 +62,14 @@ public class UniclogsEnvironment implements ReadyListener {
         }
     }
 
-    private static String loadHmacSecret() {
-        return loadOrDefault(secretPath, "<Change This To A Super Special Secret>");
+    private static byte[] loadHmacSecret() {
+        String hexString = loadOrDefault(secretPath, "0");
+        try {
+            return Hex.decodeHex(hexString);
+        } catch (DecoderException e) {
+            LOG.error(e.getMessage());
+            return null;
+        }
     }
 
     private static Integer loadSequenceNumber() {
@@ -86,6 +94,9 @@ public class UniclogsEnvironment implements ReadyListener {
     @Override
     public void onReady() {
         boolean quit = false;
+
+        new File(UniclogsServer.getCacheDir().toString()).mkdirs(); // Generate cache dir
+
         HMAC_SECRET = loadHmacSecret();
         if(HMAC_SECRET.equals("<Change This To A Super Special Secret>")) {
             LOG.error("DEFAULT SECRET DETECTED! Please update the file: " + secretPath + " with a secret before re-running Yamcs!");

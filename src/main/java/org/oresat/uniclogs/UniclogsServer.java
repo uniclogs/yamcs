@@ -31,18 +31,4 @@ public class UniclogsServer extends HttpServer {
     public static Path getCacheDir() {
         return new File(System.getProperty("user.home") + "/.cache/yamcs").toPath().toAbsolutePath();
     }
-
-    public static Path getConfigDir() {
-        return server.getConfigDirectory().toAbsolutePath();
-    }
-
-    public static Path getDataDir() {
-        return server.getDataDirectory().toAbsolutePath();
-    }
-
-    public static void throwFatalException(String type, String message) {
-        server.getGlobalCrashHandler().handleCrash(type, message);
-        server.shutDown();
-        System.exit(-1);
-    }
 }
