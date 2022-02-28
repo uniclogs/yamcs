@@ -28,7 +28,7 @@ dataLinks:
     port: 10015
     packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
     packetPreprocessorArgs:
-      timestampOffset: 25
+      timestampOffset: 26
 
   - name: beacon-tm-dump
     class: org.yamcs.tctm.UdpTmDataLink
@@ -36,7 +36,7 @@ dataLinks:
     port: 10020
     packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
     packetPreprocessorArgs:
-      timestampOffset: 25
+      timestampOffset: 26
 
   - name: edl-tc-realtime
     class: org.yamcs.tctm.UdpTcDataLink
