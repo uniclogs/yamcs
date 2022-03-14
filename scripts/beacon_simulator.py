@@ -41,7 +41,7 @@ packet_header = (bitstring.BitArray(packet_header) << 1).bytes
 tm_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 while True:
-    time_int_byte = int(time()).to_bytes(TIME_LEN, byteorder='big')
+    time_int_byte = int(time()).to_bytes(TIME_LEN, byteorder='little')
     temp = TOTAL_LEN - APRS_HEADER_LEN - TIME_OFFSET - TIME_LEN - CRC_LEN
     packet_data = bytearray(os.urandom(TIME_OFFSET)) + time_int_byte + bytearray(os.urandom(temp))
     calc_crc = binascii.crc32(packet_data)

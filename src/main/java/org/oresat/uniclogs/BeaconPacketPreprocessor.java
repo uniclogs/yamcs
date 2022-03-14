@@ -92,10 +92,7 @@ public class BeaconPacketPreprocessor extends AbstractPacketPreprocessor {
             } else {
                 long rawtime;
 
-                if (byteOrder == ByteOrder.BIG_ENDIAN)
-                    rawtime = (long)ByteArrayUtils.decodeInt(packet, timestampOffset);
-                else
-                    rawtime = (long)ByteArrayUtils.decodeIntLE(packet, timestampOffset);
+                rawtime = (long)ByteArrayUtils.decodeIntLE(packet, timestampOffset);
 
                 // rawtime is in seconds, shiftFromEpoch wants milliseconds
                 gentime = shiftFromEpoch(rawtime*1000);

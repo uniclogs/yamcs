@@ -9,7 +9,7 @@
         <xtce:ParameterTypeSet>
             <xtce:AbsoluteTimeParameterType name="CoarseTimeType" shortDescription="Unix Coarse Timestamp">
                 <xtce:Encoding>
-                    <xtce:IntegerDataEncoding sizeInBits="32"/>
+                    <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
                 </xtce:Encoding>
                 <xtce:ReferenceTime>
                     <xtce:Epoch>1970-01-01T00:00:00.000</xtce:Epoch>
