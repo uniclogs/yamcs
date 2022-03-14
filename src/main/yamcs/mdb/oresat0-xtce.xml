@@ -33,17 +33,15 @@
                     <xtce:Enumeration value="2" label="OreSat1"/>
                 </xtce:EnumerationList>
             </xtce:EnumeratedParameterType>
-            <xtce:EnumeratedParameterType name="C3StateType">
-                <xtce:UnitSet/>
-                <xtce:IntegerDataEncoding sizeInBits="8"/>
-                <xtce:EnumerationList>
-                    <xtce:Enumeration value="66" label="Predeploy"/>
-                    <xtce:Enumeration value="67" label="Deploy"/>
-                    <xtce:Enumeration value="68" label="Standby"/>
-                    <xtce:Enumeration value="69" label="Beacon"/>
-                    <xtce:Enumeration value="70" label="EDL"/>
-                </xtce:EnumerationList>
-            </xtce:EnumeratedParameterType>
+            <xtce:StringParameterType name="C3StateType">
+                <xtce:StringDataEncoding encoding="UTF-8">
+                    <xtce:SizeInBits>
+                        <xtce:Fixed>
+                            <xtce:FixedValue>8</xtce:FixedValue>
+                        </xtce:Fixed>
+                    </xtce:SizeInBits>
+                </xtce:StringDataEncoding>
+            </xtce:StringParameterType>
             <xtce:EnumeratedParameterType name="OLUStateType">
                 <xtce:UnitSet/>
                 <xtce:IntegerDataEncoding sizeInBits="8"/>
