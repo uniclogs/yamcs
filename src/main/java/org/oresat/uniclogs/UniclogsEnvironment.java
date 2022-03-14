@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class UniclogsEnvironment implements ReadyListener {
@@ -16,8 +18,8 @@ public class UniclogsEnvironment implements ReadyListener {
 
     private static byte[] HMAC_SECRET = null;
     private static Integer SEQUENCE_NUMBER = null;
-    private static String secretPath = UniclogsServer.getCacheDir() + "/secret";
-    private static String snPath = UniclogsServer.getCacheDir() + "/sequence-number";
+    private static Path secretPath = Paths.get(UniclogsServer.getDataDirectory() + "/secret");
+    private static Path sequenceNumberPath = Paths.get(UniclogsServer.getDataDirectory() + "/sequence-number");
 
     public UniclogsEnvironment() {}
 
@@ -38,12 +40,17 @@ public class UniclogsEnvironment implements ReadyListener {
         setSequenceNumber(SEQUENCE_NUMBER + 1);
     }
 
-    private static String loadOrDefault(String filePath, String defaultValue) {
-        File file = new File(filePath);
+    private static void makeParent(Path path) {
+        path.getParent().toAbsolutePath().toFile().mkdirs();
+    }
+
+    private static String loadOrDefault(Path path, String defaultValue) {
+        File file = path.toFile();
+        LOG.debug("File `" + path + "` exists: " + file.exists());
         if(!file.exists()) {
             FileWriter writer;
             try {
-                writer = new FileWriter(filePath);
+                writer = new FileWriter(file);
                 writer.write(defaultValue);
                 writer.flush();
                 return defaultValue;
@@ -54,7 +61,7 @@ public class UniclogsEnvironment implements ReadyListener {
         }
 
         try{
-            Scanner in = new Scanner(new File(filePath));
+            Scanner in = new Scanner(path.toFile());
             return in.next();
         } catch (FileNotFoundException e) {
             LOG.error(e.getMessage());
@@ -63,7 +70,7 @@ public class UniclogsEnvironment implements ReadyListener {
     }
 
     private static byte[] loadHmacSecret() {
-        String hexString = loadOrDefault(secretPath, "0");
+        String hexString = loadOrDefault(secretPath, "0A0B0C0D");
         try {
             return Hex.decodeHex(hexString);
         } catch (DecoderException e) {
@@ -73,7 +80,7 @@ public class UniclogsEnvironment implements ReadyListener {
     }
 
     private static Integer loadSequenceNumber() {
-        String serialNumber = loadOrDefault(snPath, "0");
+        String serialNumber = loadOrDefault(sequenceNumberPath, "0");
         if(serialNumber == null) {
             return null;
         }
@@ -83,7 +90,7 @@ public class UniclogsEnvironment implements ReadyListener {
     private static void dumpSequenceNumber(Integer sequenceNumber) {
         FileWriter writer;
         try{
-            writer = new FileWriter(snPath);
+            writer = new FileWriter(sequenceNumberPath.toFile());
             writer.write(sequenceNumber.toString());
             writer.flush();
         } catch (IOException e) {
@@ -95,16 +102,16 @@ public class UniclogsEnvironment implements ReadyListener {
     public void onReady() {
         boolean quit = false;
 
-        new File(UniclogsServer.getCacheDir().toString()).mkdirs(); // Generate cache dir
-
+        LOG.info("Using Data Dir: " + UniclogsServer.getDataDirectory());
+        makeParent(secretPath);
         HMAC_SECRET = loadHmacSecret();
         if(HMAC_SECRET.equals("<Change This To A Super Special Secret>")) {
             LOG.error("DEFAULT SECRET DETECTED! Please update the file: " + secretPath + " with a secret before re-running Yamcs!");
             quit = true;
         }
 
+        makeParent(sequenceNumberPath);
         SEQUENCE_NUMBER = loadSequenceNumber();
-
         if(quit) {
             System.exit(-1);
         }
