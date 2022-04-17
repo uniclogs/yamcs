@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xtce:SpaceSystem name="OreSat0" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
-    <xtce:Header validationStatus="Working" classification="NotClassified" version="1.0" date="2021-11-13">
+    <xtce:Header validationStatus="Working" classification="NotClassified" version="2.0" date="2022-04-17">
         <xtce:AuthorSet>
             <xtce:Author>Portland State Aerospace Society (PSAS)</xtce:Author>
         </xtce:AuthorSet>
@@ -166,17 +166,11 @@
                 </xtce:UnitSet>
                 <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
             </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="DecibelUint8Type" signed="false">
+            <xtce:IntegerParameterType name="DecibelInt8Type" signed="true">
                 <xtce:UnitSet>
                     <xtce:Unit description="decibels">dBm</xtce:Unit>
                 </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
-            </xtce:IntegerParameterType>
-            <xtce:IntegerParameterType name="DecibelUint16Type" signed="false">
-                <xtce:UnitSet>
-                    <xtce:Unit description="decibels">dBm</xtce:Unit>
-                </xtce:UnitSet>
-                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+                <xtce:IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement"  sizeInBits="8"/>
             </xtce:IntegerParameterType>
             <xtce:IntegerParameterType name="SecondUint32Type" signed="false">
                 <xtce:UnitSet>
@@ -268,10 +262,10 @@
             <xtce:Parameter name="C3EmmcCapacity" parameterTypeRef="PercentUint8Type"/>
             <xtce:Parameter name="C3LRxBytesReceived" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3LRxValidPackets" parameterTypeRef="Uint32Type"/>
-            <xtce:Parameter name="C3LRxRSSI" parameterTypeRef="DecibelUint8Type"/>
+            <xtce:Parameter name="C3LRxRSSI" parameterTypeRef="DecibelInt8Type"/>
             <xtce:Parameter name="C3UHFRxBytesReceived" parameterTypeRef="Uint32Type"/>
             <xtce:Parameter name="C3UHFRxValidPackets" parameterTypeRef="Uint32Type"/>
-            <xtce:Parameter name="C3UHFRxRSSI" parameterTypeRef="Uint8Type"/>
+            <xtce:Parameter name="C3UHFRxRSSI" parameterTypeRef="DecibelInt8Type"/>
             <xtce:Parameter name="C3FwNextBank" parameterTypeRef="FwNextBankType"/>
             <xtce:Parameter name="C3FwBank" parameterTypeRef="FwBankType"/>
             <xtce:Parameter name="C3LRxSequenceNumber" parameterTypeRef="Uint32Type"/>
