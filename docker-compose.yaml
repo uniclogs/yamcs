@@ -1,0 +1,13 @@
+services:
+  uniclogs-yamcs:
+    build: .
+    container_name: uniclogs-yamcs
+    network_mode: 'host'
+    ports:
+      - "127.0.0.1:8090:8090"
+      - "127.0.0.1:10015:10015/udp"
+      - "127.0.0.1:10016:10016/udp"
+      - "127.0.0.1:10020:10020/udp"
+      - "127.0.0.1:10025:10025/udp"
+    volumes:
+      - ./:/yamcs
