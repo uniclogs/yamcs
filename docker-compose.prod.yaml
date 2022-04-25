@@ -3,8 +3,8 @@ services:
   uniclogs-yamcs:
     build:
       context: .
-      dockerfile: ./docker/uniclogs-yamcs-dev/Dockerfile
-    image: uniclogs-yamcs-dev
+      dockerfile: ./docker/uniclogs-yamcs-prod/Dockerfile
+    image: oresat/uniclogs-yamcs
     network_mode: 'host'
     ports:
       - '8090:8090'
@@ -12,5 +12,3 @@ services:
       - '10016:10016/udp'
       - '10020:10020/udp'
       - '10025:10025/udp'
-    volumes:
-      - ./:/yamcs

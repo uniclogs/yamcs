@@ -1,4 +1,4 @@
-From maven:3.8-openjdk-17-slim
+FROM maven:3.8-openjdk-17-slim
 
 EXPOSE 8090
 EXPOSE 10015
