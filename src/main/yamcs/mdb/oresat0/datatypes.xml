@@ -252,4 +252,104 @@
             </FloatParameterType>
         </ParameterTypeSet>
     </TelemetryMetaData>
+    <CommandMetaData>
+        <ArgumentTypeSet>
+            <EnumeratedArgumentType name="BoolEnableDisableType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="Disable"/>
+                    <Enumeration value="1" label="Enable"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <EnumeratedArgumentType name="BoolOnOffType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="Off"/>
+                    <Enumeration value="1" label="On"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <StringArgumentType name="C3FilepathType">
+	         <UnitSet/>
+	            <StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
+		            <SizeInBits>
+			            <Fixed>
+				            <FixedValue>400</FixedValue>
+			            </Fixed>
+			            <TerminationChar>00</TerminationChar>
+	    	        </SizeInBits>
+	            </StringDataEncoding>
+            </StringArgumentType>
+            <EnumeratedArgumentType name="OPDAddrType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+                <EnumerationList>
+                    <Enumeration value="24" label="Battery"/>
+                    <Enumeration value="25" label="GPS"/>
+                    <Enumeration value="26" label="ACS"/>
+                    <Enumeration value="27" label="DxWiFi"/>
+                    <Enumeration value="28" label="StarTracker"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <EnumeratedArgumentType name="NodeIdType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+                <EnumerationList>
+                    <Enumeration value="1" label="C3"/>
+                    <Enumeration value="4" label="Battery"/>
+                    <Enumeration value="12" label="SolarPanel0"/>
+                    <Enumeration value="16" label="SolarPanel1"/>
+                    <Enumeration value="20" label="SolarPanel2"/>
+                    <Enumeration value="24" label="SolarPanel3"/>
+                    <Enumeration value="44" label="StarTracker"/>
+                    <Enumeration value="52" label="GPS"/>
+                    <Enumeration value="56" label="ACS"/>
+                    <Enumeration value="76" label="DxWiFi"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <IntegerArgumentType name="ODIndexType" shortDescription="CANopen object dictionary index">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="ODSubIndexType" shortDescription="CANopen object dictionary subindex">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <BooleanArgumentType name="BoolType" shortDescription="new value for bool item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8"/>
+            </BooleanArgumentType>
+            <IntegerArgumentType name="Int8Type" shortDescription="new value for int8 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Int16Type" shortDescription="new value for int16 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Int32Type" shortDescription="new value for int32 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Uint8Type" shortDescription="new value for uint8 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Uint16Type" shortDescription="new value for uint16 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Uint32Type" shortDescription="new value for uint32 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="CoarseTimeType" shortDescription="coarse time">
+                <UnitSet>
+                    <Unit description="seconds">s</Unit>
+                </UnitSet>
+                <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+        </ArgumentTypeSet>
+    </CommandMetaData>
 </SpaceSystem>
