@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="Commands" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+    <Header validationStatus="Working" classification="NotClassified" version="2.0" date="2022-08-15">
+        <AuthorSet>
+            <Author>Portland State Aerospace Society (PSAS)</Author>
+        </AuthorSet>
+    </Header>
+    <CommandMetaData>
+        <ArgumentTypeSet>
+            <EnumeratedArgumentType name="BoolEnableDisableType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="Disable"/>
+                    <Enumeration value="1" label="Enable"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <EnumeratedArgumentType name="BoolOnOffType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="Off"/>
+                    <Enumeration value="1" label="On"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <StringArgumentType name="C3FilepathType">
+	         <UnitSet/>
+	            <StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
+		            <SizeInBits>
+			            <Fixed>
+				            <FixedValue>400</FixedValue>
+			            </Fixed>
+			            <TerminationChar>00</TerminationChar>
+	    	        </SizeInBits>
+	            </StringDataEncoding>
+            </StringArgumentType>
+            <EnumeratedArgumentType name="OPDAddrType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+                <EnumerationList>
+                    <Enumeration value="24" label="Battery"/>
+                    <Enumeration value="25" label="GPS"/>
+                    <Enumeration value="26" label="ACS"/>
+                    <Enumeration value="27" label="DxWiFi"/>
+                    <Enumeration value="28" label="StarTracker"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <EnumeratedArgumentType name="NodeIdType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+                <EnumerationList>
+                    <Enumeration value="1" label="C3"/>
+                    <Enumeration value="4" label="Battery"/>
+                    <Enumeration value="12" label="SolarPanel0"/>
+                    <Enumeration value="16" label="SolarPanel1"/>
+                    <Enumeration value="20" label="SolarPanel2"/>
+                    <Enumeration value="24" label="SolarPanel3"/>
+                    <Enumeration value="44" label="StarTracker"/>
+                    <Enumeration value="52" label="GPS"/>
+                    <Enumeration value="56" label="ACS"/>
+                    <Enumeration value="76" label="DxWiFi"/>
+                </EnumerationList>
+            </EnumeratedArgumentType>
+            <IntegerArgumentType name="ODIndexType" shortDescription="CANopen object dictionary index">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="ODSubIndexType" shortDescription="CANopen object dictionary subindex">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <BooleanArgumentType name="BoolType" shortDescription="new value for bool item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8"/>
+            </BooleanArgumentType>
+            <IntegerArgumentType name="Int8Type" shortDescription="new value for int8 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Int16Type" shortDescription="new value for int16 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Int32Type" shortDescription="new value for int32 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="twosComplement"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Uint8Type" shortDescription="new value for uint8 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Uint16Type" shortDescription="new value for uint16 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="16" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="Uint32Type" shortDescription="new value for uint32 item">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+            <IntegerArgumentType name="CoarseTimeType" shortDescription="coarse time">
+                <UnitSet>
+                    <Unit description="seconds">s</Unit>
+                </UnitSet>
+                <IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" encoding="unsigned"/>
+            </IntegerArgumentType>
+        </ArgumentTypeSet>
+        <MetaCommandSet>
+            <MetaCommand name="C3TxControl" shortDescription="enable/disable tx">
+                <ArgumentList>
+                    <Argument name="Command" argumentTypeRef="BoolEnableDisableType"/>
+                </ArgumentList>
+                <CommandContainer name="C3TxControl">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="00" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="Command"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="forbidden"/>
+            </MetaCommand>
+            <MetaCommand name="C3FwFlash" shortDescription="flash with firmware image">
+                <ArgumentList>
+                    <Argument name="CRC32" argumentTypeRef="Uint32Type"/>
+                    <Argument name="Filepath" argumentTypeRef="C3FilepathType"/>
+                </ArgumentList>
+                <CommandContainer name="C3FwFlash">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="01" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="CRC32"/>
+                        <ArgumentRefEntry argumentRef="Filepath"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="forbidden"/>
+            </MetaCommand>
+            <MetaCommand name="C3FwBank" shortDescription="swap firmware bank">
+                <ArgumentList>
+                    <Argument name="Bank" argumentTypeRef="Uint32Type"/>
+                </ArgumentList>
+                <CommandContainer name="C3FwBank">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="02" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="Bank"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="forbidden"/>
+            </MetaCommand>
+            <MetaCommand name="C3FwVerify" shortDescription="verify firmware on a bank">
+                <ArgumentList>
+                    <Argument name="Bank" argumentTypeRef="Uint32Type"/>
+                </ArgumentList>
+                <CommandContainer name="C3FwVerify">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="03" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="Bank"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="forbidden"/>
+            </MetaCommand>
+            <MetaCommand name="C3SoftReset" shortDescription="soft reset the C3">
+                <CommandContainer name="C3SoftReset">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="04" sizeInBits="8"/>
+                        <FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
+                        <FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="forbidden"/>
+            </MetaCommand>
+            <MetaCommand name="C3HardReset" shortDescription="hard reset the C3">
+                <CommandContainer name="C3HardReset">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="05" sizeInBits="8"/>
+                        <FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
+                        <FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="forbidden"/>
+            </MetaCommand>
+            <MetaCommand name="C3FactoryReset" shortDescription="factory reset the C3">
+                <CommandContainer name="C3FactoryReset">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="06" sizeInBits="8"/>
+                        <FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
+                        <FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="forbidden"/>
+            </MetaCommand>
+            <MetaCommand name="C3I2CReset" shortDescription="reset i2c bus on the C3">
+                <CommandContainer name="C3I2CReset">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="07" sizeInBits="8"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="C3FsFormat" shortDescription="format the filesystem">
+                <CommandContainer name="C3FsFormat">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="08" sizeInBits="8"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="C3FsUnmount" shortDescription="unmount the filesystem">
+                <CommandContainer name="C3FsUnmount">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="09" sizeInBits="8"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="C3FsRemove" shortDescription="remove file from C3">
+                <ArgumentList>
+                    <Argument name="Filepath" argumentTypeRef="C3FilepathType"/>
+                </ArgumentList>
+                <CommandContainer name="C3FsRemove">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="0A" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="Filepath"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="C3FsCRC" shortDescription="check CRC on a file on C3">
+                <ArgumentList>
+                    <Argument name="Filepath" argumentTypeRef="C3FilepathType"/>
+                </ArgumentList>
+                <CommandContainer name="C3FsCRC">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="0B" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="Filepath"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="NodeEnable" shortDescription="enable/disable CAN node">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                    <Argument name="Enable" argumentTypeRef="BoolEnableDisableType"/>
+                </ArgumentList>
+                <CommandContainer name="NodeEnable">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="0C" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                        <ArgumentRefEntry argumentRef="Enable"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="NodeStatus" shortDescription="get CAN node's status">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                </ArgumentList>
+                <CommandContainer name="NodeStatus">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="0D" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="OPDSysenable">
+                <CommandContainer name="OPDSysenable">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="0E" sizeInBits="8"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="OPDSysdisable">
+                <CommandContainer name="OPDSysdisable">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="0F" sizeInBits="8"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="OPDScan">
+                <ArgumentList>
+                    <Argument name="Reset" argumentTypeRef="BoolType"/>
+                </ArgumentList>
+                <CommandContainer name="OPDScan">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="10" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="Reset"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="OPDPower" shortDescription="power on/off cards with OPD">
+                <ArgumentList>
+                    <Argument name="OPDAddr" argumentTypeRef="OPDAddrType"/>
+                    <Argument name="Command" argumentTypeRef="BoolOnOffType"/>
+                </ArgumentList>
+                <CommandContainer name="OPDPower">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="11" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="OPDAddr"/>
+                        <ArgumentRefEntry argumentRef="Command"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="OPDReset" shortDescription="reset cards with OPD">
+                <ArgumentList>
+                    <Argument name="OPDAddr" argumentTypeRef="OPDAddrType"/>
+                </ArgumentList>
+                <CommandContainer name="OPDReset">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="12" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="OPDAddr"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="OPDStatus" shortDescription="get a card's OPD status">
+                <ArgumentList>
+                    <Argument name="OPDAddr" argumentTypeRef="OPDAddrType"/>
+                </ArgumentList>
+                <CommandContainer name="OPDStatus">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="13" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="OPDAddr"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="C3RTCTime" shortDescription="set the C3's RTC">
+                <ArgumentList>
+                    <Argument name="CoarseTime" argumentTypeRef="CoarseTimeType"/>
+                </ArgumentList>
+                <CommandContainer name="C3RTCTime">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="14" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="CoarseTime"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="SDOWriteBool" shortDescription="write a bool to a card's object dicionary">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                    <Argument name="ODIndex" argumentTypeRef="ODIndexType"/>
+                    <Argument name="ODSubIndex" argumentTypeRef="ODSubIndexType"/>
+                    <Argument name="Value" argumentTypeRef="BoolType"/>
+                </ArgumentList>
+                <CommandContainer name="SDOWriteBool">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="15" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                        <ArgumentRefEntry argumentRef="ODIndex"/>
+                        <ArgumentRefEntry argumentRef="ODSubIndex"/>
+                        <FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
+                        <ArgumentRefEntry argumentRef="Value"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="SDOWriteInt8" shortDescription="write a int8 to a card's object dicionary">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                    <Argument name="ODIndex" argumentTypeRef="ODIndexType"/>
+                    <Argument name="ODSubIndex" argumentTypeRef="ODSubIndexType"/>
+                    <Argument name="Value" argumentTypeRef="Int8Type"/>
+                </ArgumentList>
+                <CommandContainer name="SDOWriteInt8">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="15" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                        <ArgumentRefEntry argumentRef="ODIndex"/>
+                        <ArgumentRefEntry argumentRef="ODSubIndex"/>
+                        <FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
+                        <ArgumentRefEntry argumentRef="Value"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="SDOWriteInt16" shortDescription="write a int16 to a card's object dicionary">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                    <Argument name="ODIndex" argumentTypeRef="ODIndexType"/>
+                    <Argument name="ODSubIndex" argumentTypeRef="ODSubIndexType"/>
+                    <Argument name="Value" argumentTypeRef="Int16Type"/>
+                </ArgumentList>
+                <CommandContainer name="SDOWriteInt16">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="15" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                        <ArgumentRefEntry argumentRef="ODIndex"/>
+                        <ArgumentRefEntry argumentRef="ODSubIndex"/>
+                        <FixedValueEntry binaryValue="02000000" sizeInBits="32"/>
+                        <ArgumentRefEntry argumentRef="Value"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="SDOWriteInt32" shortDescription="write a int32 to a card's object dicionary">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                    <Argument name="ODIndex" argumentTypeRef="ODIndexType"/>
+                    <Argument name="ODSubIndex" argumentTypeRef="ODSubIndexType"/>
+                    <Argument name="Value" argumentTypeRef="Int32Type"/>
+                </ArgumentList>
+                <CommandContainer name="SDOWriteInt32">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="15" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                        <ArgumentRefEntry argumentRef="ODIndex"/>
+                        <ArgumentRefEntry argumentRef="ODSubIndex"/>
+                        <FixedValueEntry binaryValue="04000000" sizeInBits="32"/>
+                        <ArgumentRefEntry argumentRef="Value"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="SDOWriteUint8" shortDescription="write a uint8 to a card's object dicionary">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                    <Argument name="ODIndex" argumentTypeRef="ODIndexType"/>
+                    <Argument name="ODSubIndex" argumentTypeRef="ODSubIndexType"/>
+                    <Argument name="Value" argumentTypeRef="Uint8Type"/>
+                </ArgumentList>
+                <CommandContainer name="SDOWriteUint8">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="15" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                        <ArgumentRefEntry argumentRef="ODIndex"/>
+                        <ArgumentRefEntry argumentRef="ODSubIndex"/>
+                        <FixedValueEntry binaryValue="01000000" sizeInBits="32"/>
+                        <ArgumentRefEntry argumentRef="Value"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="SDOWriteUint16" shortDescription="write a uint16 to a card's object dicionary">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                    <Argument name="ODIndex" argumentTypeRef="ODIndexType"/>
+                    <Argument name="ODSubIndex" argumentTypeRef="ODSubIndexType"/>
+                    <Argument name="Value" argumentTypeRef="Uint16Type"/>
+                </ArgumentList>
+                <CommandContainer name="SDOWriteUint16">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="15" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                        <ArgumentRefEntry argumentRef="ODIndex"/>
+                        <ArgumentRefEntry argumentRef="ODSubIndex"/>
+                        <FixedValueEntry binaryValue="02000000" sizeInBits="32"/>
+                        <ArgumentRefEntry argumentRef="Value"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+            <MetaCommand name="SDOWriteUint32" shortDescription="write a uint32 to a card's object dicionary">
+                <ArgumentList>
+                    <Argument name="NodeId" argumentTypeRef="NodeIdType"/>
+                    <Argument name="ODIndex" argumentTypeRef="ODIndexType"/>
+                    <Argument name="ODSubIndex" argumentTypeRef="ODSubIndexType"/>
+                    <Argument name="Value" argumentTypeRef="Uint32Type"/>
+                </ArgumentList>
+                <CommandContainer name="SDOWriteUint32">
+                    <EntryList>
+                        <FixedValueEntry binaryValue="15" sizeInBits="8"/>
+                        <ArgumentRefEntry argumentRef="NodeId"/>
+                        <ArgumentRefEntry argumentRef="ODIndex"/>
+                        <ArgumentRefEntry argumentRef="ODSubIndex"/>
+                        <FixedValueEntry binaryValue="04000000" sizeInBits="32"/>
+                        <ArgumentRefEntry argumentRef="Value"/>
+                    </EntryList>
+                </CommandContainer>
+                <DefaultSignificance consequenceLevel="vital"/>
+            </MetaCommand>
+        </MetaCommandSet>
+    </CommandMetaData>
+</SpaceSystem>

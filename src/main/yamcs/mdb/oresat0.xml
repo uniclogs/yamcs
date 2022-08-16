@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="OreSat0" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+    <Header validationStatus="Working" classification="NotClassified" version="2.0" date="2022-08-15">
+        <AuthorSet>
+            <Author>Portland State Aerospace Society (PSAS)</Author>
+        </AuthorSet>
+    </Header>
+    <TelemetryMetaData>
+        <ContainerSet>
+            <SequenceContainer name="Beacon">
+                <EntryList>
+                    <ContainerRefEntry containerRef="/OreSat0/Parameters/C3" />
+                    <ContainerRefEntry containerRef="/OreSat0/Parameters/BatteryPack" />
+                    <ContainerRefEntry containerRef="/OreSat0/Parameters/APRS" />
+                    <ContainerRefEntry containerRef="/OreSat0/Parameters/Solar" />
+                    <ContainerRefEntry containerRef="/OreSat0/Parameters/StarTracker" />
+                    <ContainerRefEntry containerRef="/OreSat0/Parameters/GPS" />
+                    <ContainerRefEntry containerRef="/OreSat0/Parameters/ADSGryo" />
+                    <ContainerRefEntry containerRef="/OreSat0/Parameters/Dxwifi" />
+                </EntryList>
+            </SequenceContainer>
+        </ContainerSet>
+    </TelemetryMetaData>
+</SpaceSystem>

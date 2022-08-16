@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="Parameters">
+    <Header validationStatus="Unknown" version="1.0" date="2022-08-15">
+        <AuthorSet>
+            <Author>Portland State Aerospace Society (PSAS)</Author>
+        </AuthorSet>
+    </Header>
+    <TelemetryMetaData>
+        <ParameterSet>
+            <Parameter name="ADSGryoRollDot" parameterTypeRef="/OreSat0/DataTypes/DotDegInt16Type"/>
+            <Parameter name="ADSGryoPitchDot" parameterTypeRef="/OreSat0/DataTypes/DotDegInt16Type"/>
+            <Parameter name="ADSGryoYawDot" parameterTypeRef="/OreSat0/DataTypes/DotDegInt16Type"/>
+            <Parameter name="ADSGryoImuTemp" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt8Type"/>
+            <Parameter name="APRSCRC32" parameterTypeRef="/OreSat0/DataTypes/Uint32Type"/>
+            <Parameter name="APRSDataTypeId" parameterTypeRef="/OreSat0/DataTypes/DataTypeIdType" shortDescription=" User-Defined APRS packet format"/>
+            <Parameter name="APRSSatelliteID" parameterTypeRef="/OreSat0/DataTypes/SatelliteIDType"/>
+            <Parameter name="APRSRevision" parameterTypeRef="/OreSat0/DataTypes/Uint8Type"/>
+            <Parameter name="BatteryPack1Vbatt" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack1Vcell" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack1VcellMax" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack1VcellMin" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack1Vcell1" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack1Vcell2" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack1VcellAvg" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack1Temperature" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt16Type"/>
+            <Parameter name="BatteryPack1TemperatureAvg" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt16Type"/>
+            <Parameter name="BatteryPack1TemperatureMax" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt16Type"/>
+            <Parameter name="BatteryPack1TemperatureMin" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt16Type"/>
+            <Parameter name="BatteryPack1Current" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="BatteryPack1CurrentAvg" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="BatteryPack1CurrentMax" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="BatteryPack1CurrentMin" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="BatteryPack1ChargeStatus" parameterTypeRef="/OreSat0/DataTypes/4BitsChargingType"/>
+            <Parameter name="BatteryPack1DischargeStatus" parameterTypeRef="/OreSat0/DataTypes/1BitDischargingType"/>
+            <Parameter name="BatteryPack1Charge" parameterTypeRef="/OreSat0/DataTypes/1BitEnableDisableType"/>
+            <Parameter name="BatteryPack1Discharge" parameterTypeRef="/OreSat0/DataTypes/1BitEnableDisableType"/>
+            <Parameter name="BatteryPack1Heater" parameterTypeRef="/OreSat0/DataTypes/1BitOffOnType"/>
+            <Parameter name="BatteryPack1ReportedStateofCharge" parameterTypeRef="/OreSat0/DataTypes/PercentUint8Type"/>
+            <Parameter name="BatteryPack1FullCapacity" parameterTypeRef="/OreSat0/DataTypes/CapacityUint16Type"/>
+            <Parameter name="BatteryPack1ReportedCapacity" parameterTypeRef="/OreSat0/DataTypes/CapacityUint16Type"/>
+            <Parameter name="BatteryPack2Vbatt" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack2Vcell" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack2VcellMax" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack2VcellMin" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack2Vcell1" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack2Vcell2" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack2VcellAvg" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="BatteryPack2Temperature" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt16Type"/>
+            <Parameter name="BatteryPack2TemperatureAvg" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt16Type"/>
+            <Parameter name="BatteryPack2TemperatureMax" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt16Type"/>
+            <Parameter name="BatteryPack2TemperatureMin" parameterTypeRef="/OreSat0/DataTypes/TemperatureInt16Type"/>
+            <Parameter name="BatteryPack2Current" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="BatteryPack2CurrentAvg" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="BatteryPack2CurrentMax" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="BatteryPack2CurrentMin" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="BatteryPack2ChargeStatus" parameterTypeRef="/OreSat0/DataTypes/4BitsChargingType"/>
+            <Parameter name="BatteryPack2DischargeStatus" parameterTypeRef="/OreSat0/DataTypes/1BitDischargingType"/>
+            <Parameter name="BatteryPack2Charge" parameterTypeRef="/OreSat0/DataTypes/1BitEnableDisableType"/>
+            <Parameter name="BatteryPack2Discharge" parameterTypeRef="/OreSat0/DataTypes/1BitEnableDisableType"/>
+            <Parameter name="BatteryPack2Heater" parameterTypeRef="/OreSat0/DataTypes/1BitOffOnType"/>
+            <Parameter name="BatteryPack2ReportedStateofCharge" parameterTypeRef="/OreSat0/DataTypes/PercentUint8Type"/>
+            <Parameter name="BatteryPack2FullCapacity" parameterTypeRef="/OreSat0/DataTypes/CapacityUint16Type"/>
+            <Parameter name="BatteryPack2ReportedCapacity" parameterTypeRef="/OreSat0/DataTypes/CapacityUint16Type"/>
+            <Parameter name="C3M4State" parameterTypeRef="/OreSat0/DataTypes/C3StateType"/>
+            <Parameter name="C3M4Uptime" parameterTypeRef="/OreSat0/DataTypes/SecondUint32Type"/>
+            <Parameter name="C3RTCTime" parameterTypeRef="/OreSat0/DataTypes/CoarseTimeType"/>
+            <Parameter name="C3PowerCycles" parameterTypeRef="/OreSat0/DataTypes/Uint16Type"/>
+            <Parameter name="C3EmmcCapacity" parameterTypeRef="/OreSat0/DataTypes/PercentUint8Type"/>
+            <Parameter name="C3LRxBytesReceived" parameterTypeRef="/OreSat0/DataTypes/Uint32Type"/>
+            <Parameter name="C3LRxValidPackets" parameterTypeRef="/OreSat0/DataTypes/Uint32Type"/>
+            <Parameter name="C3LRxRSSI" parameterTypeRef="/OreSat0/DataTypes/DecibelInt8Type"/>
+            <Parameter name="C3UHFRxBytesReceived" parameterTypeRef="/OreSat0/DataTypes/Uint32Type"/>
+            <Parameter name="C3UHFRxValidPackets" parameterTypeRef="/OreSat0/DataTypes/Uint32Type"/>
+            <Parameter name="C3UHFRxRSSI" parameterTypeRef="/OreSat0/DataTypes/DecibelInt8Type"/>
+            <Parameter name="C3FwNextBank" parameterTypeRef="/OreSat0/DataTypes/FwNextBankType"/>
+            <Parameter name="C3FwBank" parameterTypeRef="/OreSat0/DataTypes/FwBankType"/>
+            <Parameter name="C3LRxSequenceNumber" parameterTypeRef="/OreSat0/DataTypes/Uint32Type"/>
+            <Parameter name="C3LRxRejectedPackets" parameterTypeRef="/OreSat0/DataTypes/Uint32Type"/>
+            <Parameter name="DxwifiEmmcCapacity" parameterTypeRef="/OreSat0/DataTypes/PercentUint8Type"/>
+            <Parameter name="DxwifiReadableFiles" parameterTypeRef="/OreSat0/DataTypes/Uint8Type"/>
+            <Parameter name="DxwifiUpdaterStatus" parameterTypeRef="/OreSat0/DataTypes/OLUStateType"/>
+            <Parameter name="DxwifiUpdatesCached" parameterTypeRef="/OreSat0/DataTypes/Uint8Type"/>
+            <Parameter name="DxwifiTransmitting" parameterTypeRef="/OreSat0/DataTypes/BoolType"/>
+            <Parameter name="GPSEmmcCapacity" parameterTypeRef="/OreSat0/DataTypes/PercentUint8Type"/>
+            <Parameter name="GPSReadableFiles" parameterTypeRef="/OreSat0/DataTypes/Uint8Type"/>
+            <Parameter name="GPSUpdaterStatus" parameterTypeRef="/OreSat0/DataTypes/OLUStateType"/>
+            <Parameter name="GPSUpdatesCached" parameterTypeRef="/OreSat0/DataTypes/Uint8Type"/>
+            <Parameter name="GPSStatus" parameterTypeRef="/OreSat0/DataTypes/GPSStatusType"/>
+            <Parameter name="GPSSatLocked" parameterTypeRef="/OreSat0/DataTypes/Uint8Type"/>
+            <Parameter name="GPSPositionX" parameterTypeRef="/OreSat0/DataTypes/PositionUint32Type"/>
+            <Parameter name="GPSPositionY" parameterTypeRef="/OreSat0/DataTypes/PositionUint32Type"/>
+            <Parameter name="GPSPositionZ" parameterTypeRef="/OreSat0/DataTypes/PositionUint32Type"/>
+            <Parameter name="GPSVelocityX" parameterTypeRef="/OreSat0/DataTypes/VelocityUint32Type"/>
+            <Parameter name="GPSVelocityY" parameterTypeRef="/OreSat0/DataTypes/VelocityUint32Type"/>
+            <Parameter name="GPSVelocityZ" parameterTypeRef="/OreSat0/DataTypes/VelocityUint32Type"/>
+            <Parameter name="GPSLastPacketTimestamp" parameterTypeRef="/OreSat0/DataTypes/MillsecondUint32Type"/> 
+            <Parameter name="SolarNegXVoltageAvg" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="SolarNegXCurrentAvg" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="SolarNegXPowerAvg" parameterTypeRef="/OreSat0/DataTypes/WattsUint16Type"/>
+            <Parameter name="SolarNegXVoltageMax" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="SolarNegXCurrentMax" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="SolarNegXPowerMax" parameterTypeRef="/OreSat0/DataTypes/WattsUint16Type"/>
+            <Parameter name="SolarNegXEnergy" parameterTypeRef="/OreSat0/DataTypes/JoulesUint16Type"/>
+            <Parameter name="SolarNegYVoltageAvg" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="SolarNegYCurrentAvg" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="SolarNegYPowerAvg" parameterTypeRef="/OreSat0/DataTypes/WattsUint16Type"/>
+            <Parameter name="SolarNegYVoltageMax" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="SolarNegYCurrentMax" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="SolarNegYPowerMax" parameterTypeRef="/OreSat0/DataTypes/WattsUint16Type"/>
+            <Parameter name="SolarNegYEnergy" parameterTypeRef="/OreSat0/DataTypes/JoulesUint16Type"/>
+            <Parameter name="SolarPosXVoltageAvg" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="SolarPosXCurrentAvg" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="SolarPosXPowerAvg" parameterTypeRef="/OreSat0/DataTypes/WattsUint16Type"/>
+            <Parameter name="SolarPosXVoltageMax" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="SolarPosXCurrentMax" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="SolarPosXPowerMax" parameterTypeRef="/OreSat0/DataTypes/WattsUint16Type"/>
+            <Parameter name="SolarPosXEnergy" parameterTypeRef="/OreSat0/DataTypes/JoulesUint16Type"/>
+            <Parameter name="SolarPosYVoltageAvg" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="SolarPosYCurrentAvg" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="SolarPosYPowerAvg" parameterTypeRef="/OreSat0/DataTypes/WattsUint16Type"/>
+            <Parameter name="SolarPosYVoltageMax" parameterTypeRef="/OreSat0/DataTypes/VoltsUint16Type"/>
+            <Parameter name="SolarPosYCurrentMax" parameterTypeRef="/OreSat0/DataTypes/CurrentInt16Type"/>
+            <Parameter name="SolarPosYPowerMax" parameterTypeRef="/OreSat0/DataTypes/WattsUint16Type"/>
+            <Parameter name="SolarPosYEnergy" parameterTypeRef="/OreSat0/DataTypes/JoulesUint16Type"/>
+            <Parameter name="StarTrackerEmmcCapacity" parameterTypeRef="/OreSat0/DataTypes/PercentUint8Type"/>
+            <Parameter name="StarTrackerReadableFiles" parameterTypeRef="/OreSat0/DataTypes/Uint8Type"/>
+            <Parameter name="StarTrackerUpdaterStatus" parameterTypeRef="/OreSat0/DataTypes/OLUStateType"/>
+            <Parameter name="StarTrackerUpdatesCached" parameterTypeRef="/OreSat0/DataTypes/Uint8Type"/>
+            <Parameter name="StarTrackerRightAscension" parameterTypeRef="/OreSat0/DataTypes/Int16Type"/>
+            <Parameter name="StarTrackerDeclination" parameterTypeRef="/OreSat0/DataTypes/Int16Type"/>
+            <Parameter name="StarTrackerRoll" parameterTypeRef="/OreSat0/DataTypes/Int16Type"/>
+            <Parameter name="StarTrackerLastPacketTimestamp" parameterTypeRef="/OreSat0/DataTypes/MillsecondUint32Type"/>           
+        </ParameterSet>
+        <ContainerSet>
+            <SequenceContainer name="C3">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="C3M4State" name="M4State"/>
+                    <ParameterRefEntry parameterRef="C3M4Uptime" name="M4Uptime"/>
+                    <ParameterRefEntry parameterRef="C3RTCTime" name="RTCTime"/>
+                    <ParameterRefEntry parameterRef="C3PowerCycles" name="PowerCycles"/>
+                    <ParameterRefEntry parameterRef="C3EmmcCapacity" namef="EmmcCapacity"/>
+                    <ParameterRefEntry parameterRef="C3LRxBytesReceived" name="LRxBytesReceived"/>
+                    <ParameterRefEntry parameterRef="C3LRxValidPackets" name="LRxValidPackets"/>
+                    <ParameterRefEntry parameterRef="C3LRxRSSI" name="LRxRSSI"/>
+                    <ParameterRefEntry parameterRef="C3UHFRxBytesReceived" name="UHFRxBytesReceived"/>
+                    <ParameterRefEntry parameterRef="C3UHFRxValidPackets" name="UHFRxValidPackets"/>
+                    <ParameterRefEntry parameterRef="C3UHFRxRSSI" name="UHFRxRSSI"/>
+                    <ParameterRefEntry parameterRef="C3FwNextBank" name="FwNextBank"/>
+                    <ParameterRefEntry parameterRef="C3FwBank" name="FwBank"/>
+                    <ParameterRefEntry parameterRef="C3LRxSequenceNumber" name="LRxSequenceNumber"/>
+                    <ParameterRefEntry parameterRef="C3LRxRejectedPackets" name="LRxRejectedPackets"/>
+                </EntryList>
+            </SequenceContainer>
+            <SequenceContainer name="BatteryPack">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="BatteryPack1Vbatt" name="1Vbatt"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1Vcell" name="1Vcell"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1VcellMax" name="1VcellMax"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1VcellMin" name="1VcellMin"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1Vcell1" name="1Vcell1"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1Vcell2" name="1Vcell2"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1VcellAvg" name="1VcellAvg"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1Temperature" name="1Temperature"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1TemperatureAvg" name="1TemperatureAvg"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1TemperatureMax" name="1TemperatureMax"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1TemperatureMin" name="1TemperatureMin"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1Current" name="1Current"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1CurrentAvg" name="1CurrentAvg"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1CurrentMax" name="1CurrentMax"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1CurrentMin" name="1CurrentMin"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1ChargeStatus" name="1ChargeStatus"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1DischargeStatus" name="1DischargeStatus"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1Charge" name="1Charge"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1Discharge" name="1Discharge"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1Heater" name="1Heater"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1ReportedStateofCharge" name="1ReportedStateofCharge"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1FullCapacity" name="1FullCapacity"/>
+                    <ParameterRefEntry parameterRef="BatteryPack1ReportedCapacity" name="1ReportedCapacity"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Vbatt" name="2Vbatt"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Vcell" name="2Vcell"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2VcellMax" name="2VcellMax"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2VcellMin" name="2VcellMin"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Vcell1" name="2Vcell1"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Vcell2" name="2Vcell2"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2VcellAvg" name="2VcellAvg"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Temperature" name="2Temperature"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2TemperatureAvg" name="2TemperatureAvg"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2TemperatureMax" name="2TemperatureMax"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2TemperatureMin" name="2TemperatureMin"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Current" name="2Current"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2CurrentAvg" name="2CurrentAvg"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2CurrentMax" name="2CurrentMax"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2CurrentMin" name="2CurrentMin"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2ChargeStatus" name="2ChargeStatus"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2DischargeStatus" name="2DischargeStatus"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Charge" name="2Charge"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Discharge" name="2Discharge"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2Heater" name="2Heater"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2ReportedStateofCharge" name="2ReportedStateofCharge"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2FullCapacity" name="2FullCapacity"/>
+                    <ParameterRefEntry parameterRef="BatteryPack2ReportedCapacity" name="2ReportedCapacity"/>
+                </EntryList>
+            </SequenceContainer>
+            <SequenceContainer name="APRS">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="APRSCRC32" name="CRC32"/>
+                    <ParameterRefEntry parameterRef="APRSDataTypeId" name="DataTypeId" shortDescription=" User-Defined APRS packet format"/>
+                    <ParameterRefEntry parameterRef="APRSSatelliteID" name="SatelliteID"/>
+                    <ParameterRefEntry parameterRef="APRSRevision" name="Revision"/>
+                </EntryList>
+            </SequenceContainer>
+            <SequenceContainer name="Solar">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="SolarNegXVoltageAvg" name="NegXVoltageAvg"/>
+                    <ParameterRefEntry parameterRef="SolarNegXCurrentAvg" name="NegXCurrentAvg"/>
+                    <ParameterRefEntry parameterRef="SolarNegXPowerAvg" name="NegXPowerAvg"/>
+                    <ParameterRefEntry parameterRef="SolarNegXVoltageMax" name="NegXVoltageMax"/>
+                    <ParameterRefEntry parameterRef="SolarNegXCurrentMax" name="NegXCurrentMax"/>
+                    <ParameterRefEntry parameterRef="SolarNegXPowerMax" name="NegXPowerMax"/>
+                    <ParameterRefEntry parameterRef="SolarNegXEnergy" name="NegXEnergy"/>
+                    <ParameterRefEntry parameterRef="SolarNegYVoltageAvg" name="NegYVoltageAvg"/>
+                    <ParameterRefEntry parameterRef="SolarNegYCurrentAvg" name="NegYCurrentAvg"/>
+                    <ParameterRefEntry parameterRef="SolarNegYPowerAvg" name="NegYPowerAvg"/>
+                    <ParameterRefEntry parameterRef="SolarNegYVoltageMax" name="NegYVoltageMax"/>
+                    <ParameterRefEntry parameterRef="SolarNegYCurrentMax" name="NegYCurrentMax"/>
+                    <ParameterRefEntry parameterRef="SolarNegYPowerMax" name="NegYPowerMax"/>
+                    <ParameterRefEntry parameterRef="SolarNegYEnergy" name="NegYEnergy"/>
+                    <ParameterRefEntry parameterRef="SolarPosXVoltageAvg" name="PosXVoltageAvg"/>
+                    <ParameterRefEntry parameterRef="SolarPosXCurrentAvg" name="PosXCurrentAvg"/>
+                    <ParameterRefEntry parameterRef="SolarPosXPowerAvg" name="PosXPowerAvg"/>
+                    <ParameterRefEntry parameterRef="SolarPosXVoltageMax" name="PosXVoltageMax"/>
+                    <ParameterRefEntry parameterRef="SolarPosXCurrentMax" name="PosXCurrentMax"/>
+                    <ParameterRefEntry parameterRef="SolarPosXPowerMax" name="PosXPowerMax"/>
+                    <ParameterRefEntry parameterRef="SolarPosXEnergy" name="PosXEnergy"/>
+                    <ParameterRefEntry parameterRef="SolarPosYVoltageAvg" name="PosYVoltageAvg"/>
+                    <ParameterRefEntry parameterRef="SolarPosYCurrentAvg" name="PosYCurrentAvg"/>
+                    <ParameterRefEntry parameterRef="SolarPosYPowerAvg" name="PosYPowerAvg"/>
+                    <ParameterRefEntry parameterRef="SolarPosYVoltageMax" name="PosYVoltageMax"/>
+                    <ParameterRefEntry parameterRef="SolarPosYCurrentMax" name="PosYCurrentMax"/>
+                    <ParameterRefEntry parameterRef="SolarPosYPowerMax" name="PosYPowerMax"/>
+                    <ParameterRefEntry parameterRef="SolarPosYEnergy" name="PosYEnergy"/>
+                </EntryList>
+            </SequenceContainer>
+            <SequenceContainer name="StarTracker">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="StarTrackerEmmcCapacity" name="EmmcCapacity"/>
+                    <ParameterRefEntry parameterRef="StarTrackerReadableFiles" name="ReadableFiles"/>
+                    <ParameterRefEntry parameterRef="StarTrackerUpdaterStatus" name="UpdaterStatus"/>
+                    <ParameterRefEntry parameterRef="StarTrackerUpdatesCached" name="UpdatesCached"/>
+                    <ParameterRefEntry parameterRef="StarTrackerRightAscension" name="RightAscension"/>
+                    <ParameterRefEntry parameterRef="StarTrackerDeclination" name="Declination"/>
+                    <ParameterRefEntry parameterRef="StarTrackerRoll" name="Roll"/>
+                    <ParameterRefEntry parameterRef="StarTrackerLastPacketTimestamp" name="LastPacketTimestamp"/>
+                </EntryList>
+            </SequenceContainer>
+            <SequenceContainer name="GPS">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="GPSEmmcCapacity" name="EmmcCapacity"/>
+                    <ParameterRefEntry parameterRef="GPSReadableFiles" name="ReadableFiles"/>
+                    <ParameterRefEntry parameterRef="GPSUpdaterStatus" name="UpdaterStatus"/>
+                    <ParameterRefEntry parameterRef="GPSUpdatesCached" name="UpdatesCached"/>
+                    <ParameterRefEntry parameterRef="GPSStatus" name="Status"/>
+                    <ParameterRefEntry parameterRef="GPSSatLocked" name="SatLocked"/>
+                    <ParameterRefEntry parameterRef="GPSPositionX" name="PositionX"/>
+                    <ParameterRefEntry parameterRef="GPSPositionY" name="PositionY"/>
+                    <ParameterRefEntry parameterRef="GPSPositionZ" name="PositionZ"/>
+                    <ParameterRefEntry parameterRef="GPSVelocityX" name="VelocityX"/>
+                    <ParameterRefEntry parameterRef="GPSVelocityY" name="VelocityY"/>
+                    <ParameterRefEntry parameterRef="GPSVelocityZ" name="VelocityZ"/>
+                    <ParameterRefEntry parameterRef="GPSLastPacketTimestamp" name="LastPacketTimestamp"/>
+                </EntryList>
+            </SequenceContainer>
+            <SequenceContainer name="ADSGryo">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="ADSGryoRollDot" name="RollDot"/>
+                    <ParameterRefEntry parameterRef="ADSGryoPitchDot" name="PitchDot"/>
+                    <ParameterRefEntry parameterRef="ADSGryoYawDot" name="YawDot"/>
+                    <ParameterRefEntry parameterRef="ADSGryoImuTemp" name="ImuTemp"/>
+                </EntryList>
+            </SequenceContainer>
+            <SequenceContainer name="Dxwifi">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="DxwifiEmmcCapacity" name="EmmcCapacity"/>
+                    <ParameterRefEntry parameterRef="DxwifiReadableFiles" name="ReadableFiles"/>
+                    <ParameterRefEntry parameterRef="DxwifiUpdaterStatus" name="UpdaterStatus"/>
+                    <ParameterRefEntry parameterRef="DxwifiUpdatesCached" name="UpdatesCached"/>
+                    <ParameterRefEntry parameterRef="DxwifiTransmitting" name="Transmitting"/>
+                </EntryList>
+            </SequenceContainer>
+        </ContainerSet>
+    </TelemetryMetaData>
+</SpaceSystem>

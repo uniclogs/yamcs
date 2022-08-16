@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="DataTypes">
+    <Header validationStatus="Unknown" version="1.0" date="2022-08-15">
+        <AuthorSet>
+            <Author>Portland State Aerospace Society (PSAS)</Author>
+        </AuthorSet>
+    </Header>
+    <TelemetryMetaData>
+        <ParameterTypeSet>
+            <AbsoluteTimeParameterType name="CoarseTimeType" shortDescription="Unix Coarse Timestamp">
+                <Encoding>
+                    <IntegerDataEncoding byteOrder="leastSignificantByteFirst" sizeInBits="32"/>
+                </Encoding>
+                <ReferenceTime>
+                    <Epoch>1970-01-01T00:00:00.000</Epoch>
+                </ReferenceTime>
+            </AbsoluteTimeParameterType>
+            <StringParameterType name="DataTypeIdType">
+                <StringDataEncoding encoding="UTF-8">
+                    <SizeInBits>
+                        <Fixed>
+                            <FixedValue>24</FixedValue>
+                        </Fixed>
+                    </SizeInBits>
+                </StringDataEncoding>
+            </StringParameterType>
+            <EnumeratedParameterType name="SatelliteIDType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="OreSat0"/>
+                    <Enumeration value="1" label="OreSat0.5"/>
+                    <Enumeration value="2" label="OreSat1"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+            <StringParameterType name="C3StateType">
+                <StringDataEncoding encoding="UTF-8">
+                    <SizeInBits>
+                        <Fixed>
+                            <FixedValue>8</FixedValue>
+                        </Fixed>
+                    </SizeInBits>
+                </StringDataEncoding>
+            </StringParameterType>
+            <EnumeratedParameterType name="OLUStateType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="Standby"/>
+                    <Enumeration value="1" label="Update"/>
+                    <Enumeration value="2" label="UpdateFailed"/>
+                    <Enumeration value="3" label="StatusFile"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+            <EnumeratedParameterType name="GPSStatusType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="Searching"/>
+                    <Enumeration value="1" label="Locked"/>
+                    <Enumeration value="2" label="HardwareError"/>
+                    <Enumeration value="3" label="ParserError"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+            <EnumeratedParameterType name="1BitOffOnType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="1"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="Off"/>
+                    <Enumeration value="1" label="On"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+            <EnumeratedParameterType name="1BitEnableDisableType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="1"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="Enabled"/>
+                    <Enumeration value="1" label="Disabled"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+            <EnumeratedParameterType name="1BitDischargingType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="1"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="NotDischarging"/>
+                    <Enumeration value="1" label="Discharging"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+            <EnumeratedParameterType name="4BitsChargingType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="4"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="NotCharging"/>
+                    <Enumeration value="1" label="Charging"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+            <BooleanParameterType name="Bool1BitType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="1"/>
+            </BooleanParameterType>
+            <BooleanParameterType name="Bool4BitType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="4"/>
+            </BooleanParameterType>
+            <BooleanParameterType name="Bool8BitType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8"/>
+            </BooleanParameterType>
+            <IntegerParameterType name="FwBankType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="1"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="FwNextBankType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="7"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="Int8Type" signed="true">
+                <UnitSet/>
+                <IntegerDataEncoding encoding="twosComplement" sizeInBits="8"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="Int16Type" signed="true">
+                <UnitSet/>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="Int32t" signed="true">
+                <UnitSet/>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="Uint8Type" signed="false">
+                <UnitSet/>
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="Uint16Type" signed="false">
+                <UnitSet/>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="Uint32Type" signed="false">
+                <UnitSet/>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+            </IntegerParameterType>
+            <BooleanParameterType name="BoolType">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8"/>
+            </BooleanParameterType>
+            <IntegerParameterType name="VoltsUint16Type" signed="false">
+                <UnitSet>
+                    <Unit description="millivoltage">mV</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="WattsUint16Type" signed="false">
+                <UnitSet>
+                    <Unit description="milliwatts">mW</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="JoulesUint16Type" signed="false">
+                <UnitSet>
+                    <Unit description="joules">J</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="CapacityUint16Type" signed="false">
+                <UnitSet>
+                    <Unit description="milliamp hours">mAh</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="DecibelInt8Type" signed="true">
+                <UnitSet>
+                    <Unit description="decibels">dBm</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement"  sizeInBits="8"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="SecondUint32Type" signed="false">
+                <UnitSet>
+                    <Unit description="seconds">s</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="MillsecondUint32Type" signed="false">
+                <UnitSet>
+                    <Unit description="milliseconds">ms</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="CurrentInt16Type" signed="true">
+                <UnitSet>
+                    <Unit description="milliamps">mA</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="TemperatureInt8Type" signed="true">
+                <UnitSet>
+                    <Unit description="celsius">C</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="8"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="TemperatureInt16Type" signed="true">
+                <UnitSet>
+                    <Unit description="celsius">C</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="DotDegInt16Type" signed="true">
+                <UnitSet>
+                    <Unit description="degrees per second">deg/s</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="PositionUint32Type" signed="false">
+                <UnitSet>
+                    <Unit description="centimeters">cm</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="VelocityUint32Type" signed="false">
+                <UnitSet>
+                    <Unit description="centimeters">cm/s</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+            </IntegerParameterType>
+            <IntegerParameterType name="PercentUint8Type" signed="false">
+                <UnitSet>
+                    <Unit description="percent">%</Unit>
+                </UnitSet>
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="8"/>
+            </IntegerParameterType>
+            <FloatParameterType name="C3VolatageType" sizeInBits="32">
+                <UnitSet>
+                    <Unit description="volts">v</Unit>
+                </UnitSet>
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="8">
+                    <DefaultCalibrator>
+                        <PolynomialCalibrator>
+                            <Term exponent="1" coefficient="0.02"/>
+                        </PolynomialCalibrator>
+                    </DefaultCalibrator>
+                </IntegerDataEncoding>
+            </FloatParameterType>
+            <FloatParameterType name="C3CurrentType" sizeInBits="32">
+                <UnitSet>
+                    <Unit description="milliamps">mA</Unit>
+                </UnitSet>
+                <IntegerDataEncoding encoding="unsigned" sizeInBits="8">
+                    <DefaultCalibrator>
+                        <PolynomialCalibrator>
+                            <Term exponent="1" coefficient="0.02"/>
+                        </PolynomialCalibrator>
+                    </DefaultCalibrator>
+                </IntegerDataEncoding>
+            </FloatParameterType>
+        </ParameterTypeSet>
+    </TelemetryMetaData>
+</SpaceSystem>

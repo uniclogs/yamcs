@@ -33,10 +33,11 @@ dataLinks:
   - name: beacon-tm-dump
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_dump
-    port: 10020
+    port: 10025
     packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
     packetPreprocessorArgs:
       timestampOffset: 26
+
 
   - name: edl-tc-realtime
     class: org.yamcs.tctm.UdpTcDataLink
@@ -45,12 +46,28 @@ dataLinks:
     port: 10025
     commandPostprocessorClassName: org.oresat.uniclogs.EDLCommandPostprocessor
 
+  - name: edl-tm-realtime
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_realtime
+    host: localhost
+    port: 10016
+    packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
+    packetPreprocessorArgs:
+      timestampOffset: 26
+
 mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
   - type: xtce
-    args:
-      file: mdb/oresat0-xtce.xml
+    spec: mdb/oresat0.xml
+    subLoaders:
+      - type: xtce
+        spec: mdb/oresat0/datatypes.xml
+      - type: xtce
+        spec: mdb/oresat0/parameters.xml
+      - type: xtce
+        spec: mdb/oresat0/commands.xml
+        
 
 # Configuration for streams created at server startup
 streamConfig:
