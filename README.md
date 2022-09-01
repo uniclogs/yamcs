@@ -23,7 +23,12 @@ merged in as that change will cause problems with newer versions of java that
 
 Run with docker:
 
-- See [docker/README.md](docker/README.md)
+- For dev image (just runs yamcs in a container, no install):
+  - `$ docker-compose build`
+  - `$ docker-compose up`
+- For prod image (install yamcs into correct dirs in docker image):
+  - `$ docker-compose -f docker-compose.prod.yaml build`
+  - `$ docker-compose -f docker-compose.prod.yaml up`
 
 
 ## Command Shell
