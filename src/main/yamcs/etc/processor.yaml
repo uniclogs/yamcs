@@ -2,7 +2,7 @@ realtime:
   services:
     - class: org.yamcs.StreamTmPacketProvider
       args:
-        streams: ["tm_realtime"]
+        streams: ["edl_tm_realtime", "beacon_tm_realtime", "tm_dump"]
     - class: org.yamcs.StreamTcCommandReleaser
     - class: org.yamcs.tctm.StreamParameterProvider
     - class: org.yamcs.algorithms.AlgorithmManager
@@ -13,6 +13,7 @@ realtime:
     alarm:
       parameterCheck: true
       parameterServer: enabled
+
     parameterCache:
       enabled: false
     tmProcessor:

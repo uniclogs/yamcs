@@ -504,6 +504,8 @@
                     <xtce:ParameterRefEntry parameterRef="APRSCRC32"/>
                 </xtce:EntryList>
             </xtce:SequenceContainer>
+            <xtce:SequenceContainer>
+            </xtce:SequenceContainer>
         </xtce:ContainerSet>
     </xtce:TelemetryMetaData>
     <xtce:CommandMetaData>

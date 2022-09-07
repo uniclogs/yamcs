@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtce:SpaceSystem name="OreSat0" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+    <xtce:Header validationStatus="Unknown" classification="NotClassified" version="2.0" date="2022-09-06" />
+    <xtce:TelemetryMetaData>
+        <xtce:ParameterTypeSet>
+            <xtce:IntegerParameterType name="uint4">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="4"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint3">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="3"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint5">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="5"/>
+            </xtce:IntegerParameterType>
+            <xtce:StringParameterType name="string16">
+                <xtce:StringDataEncoding encoding="UTF-ASCII">
+                    <xtce:SizeInBits>
+                        <xtce:Fixed>
+                        <xtce:FixedValue>16</xtce:FixedValue>
+                        </xtce:Fixed>
+                    </xtce:SizeInBits>
+                </xtce:StringDataEncoding>
+            </xtce:StringParameterType>
+            <xtce:EnumeratedParameterType name="srcdest">
+                <xtce:IntegerDataEncoding sizeInBits="1"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="Source"/>
+                    <xtce:Enumeration value="1" label="Destination"/>
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+            <xtce:EnumeratedParameterType name="trunc">
+                <xtce:IntegerDataEncoding sizeInBits="1"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="Header Not Truncated"/>
+                    <xtce:Enumeration value="1" label="Header Truncated"/>
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+            <xtce:EnumeratedParameterType name="bypass">
+                <xtce:IntegerDataEncoding sizeInBits="1"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="Sequence Controlled QoS"/>
+                    <xtce:Enumeration value="1" label="Expedited QoS"/>
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+            <xtce:EnumeratedParameterType name="protoctrl">
+                <xtce:IntegerDataEncoding sizeInBits="1"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="TFDF contains user data"/>
+                    <xtce:Enumeration value="1" label="TFDF contains protocol information"/>
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+            <xtce:EnumeratedParameterType name="opctrl">
+                <xtce:IntegerDataEncoding sizeInBits="1"/>
+                <xtce:EnumerationList>
+                    <xtce:Enumeration value="0" label="Operational Control Field is present"/>
+                    <xtce:Enumeration value="1" label="Operational Control Field is not present"/>
+                </xtce:EnumerationList>
+            </xtce:EnumeratedParameterType>
+            <xtce:IntegerParameterType name="uint6">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="6"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint2">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="2"/>
+            </xtce:IntegerParameterType>
+            <xtce:IntegerParameterType name="uint16">
+                <xtce:IntegerDataEncoding encoding="unsigned" sizeInBits="16"/>
+            </xtce:IntegerParameterType>
+            <xtce:BinaryParameterType name="b32">
+                <xtce:BinaryDataEncoding sizeInBits="32"/>
+            </xtce:BinaryParameterType>
+        </xtce:ParameterTypeSet>
+        <xtce:ParameterSet>
+            <Parameter parameterTypeRef="uint4" name="tfvn"/>
+            <Parameter parameterTypeRef="uint16" name="scid"/>
+            <Parameter parameterTypeRef="srcdest" name="srcdest"/>
+            <Parameter parameterTypeRef="uint6" name="vcid"/>
+            <Parameter parameterTypeRef="uint4" name="mapid"/>
+            <Parameter parameterTypeRef="trunc" name="htrunc"/>
+            <Parameter parameterTypeRef="uint16" name="framelen"/>
+            <Parameter parameterTypeRef="bypass" name="bypass"/>
+            <Parameter parameterTypeRef="protoctrl" name="protoctrl"/>
+            <Parameter parameterTypeRef="opctrl" name="opctrl"/>
+            <Parameter parameterTypeRef="uint3" name="vcframectlen"/>
+            <Parameter parameterTypeRef="uint3" name="tfdzconstr"/>
+            <Parameter parameterTypeRef="uint5" name="uslpproto"/>
+            <Parameter parameterTypeRef="uint2" name="cmd"/>
+            <Parameter parameterTypeRef="uint2" name="arg0"/>
+            <Parameter parameterTypeRef="uint2" name="arg1"/>
+        </xtce:ParameterSet>
+        <xtce:ContainerSet>
+            <xtce:SequenceContainer name="EDL">
+                <EntryList>
+                    <xtce:ParameterRefEntry parameterRef="tfvn"/>
+                    <xtce:ParameterRefEntry parameterRef="scid"/>
+                    <xtce:ParameterRefEntry parameterRef="srcdest"/>
+                    <xtce:ParameterRefEntry parameterRef="vcid"/>
+                    <xtce:ParameterRefEntry parameterRef="mapid"/>
+                    <xtce:ParameterRefEntry parameterRef="htrunc"/>
+                    <xtce:ParameterRefEntry parameterRef="framelen"/>
+                    <xtce:ParameterRefEntry parameterRef="bypass"/>
+                    <xtce:ParameterRefEntry parameterRef="protoctrl"/>
+                    <xtce:ParameterRefEntry parameterRef="opctrl">
+                        <xtce:LocationInContainerInBits referenceLocation="containerStart">
+                            <xtce:FixedValue>52</xtce:FixedValue>
+                        </xtce:LocationInContainerInBits>
+                    </xtce:ParameterRefEntry>
+                    <xtce:ParameterRefEntry parameterRef="vcframectlen"/>
+                    <xtce:ParameterRefEntry parameterRef="tfdzconstr" name="tfdzconstr"/>
+                    <xtce:ParameterRefEntry parameterRef="uslpproto" name="uslpproto"/>
+                    <xtce:ParameterRefEntry parameterRef="cmd" name="cmd"/>
+                    <xtce:ParameterRefEntry parameterRef="arg0" name="arg0"/>
+                    <xtce:ParameterRefEntry parameterRef="arg1" name="arg1"/>
+                </EntryList>
+            </xtce:SequenceContainer>
+        </xtce:ContainerSet>
+    </xtce:TelemetryMetaData>
+</xtce:SpaceSystem>
