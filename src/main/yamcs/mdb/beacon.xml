@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="Beacon" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+    <Header validationStatus="Working" classification="NotClassified" version="2.0" date="2022-09-08">
+        <AuthorSet>
+            <Author>Portland State Aerospace Society (PSAS)</Author>
+        </AuthorSet>
+    </Header>
+    <TelemetryMetaData>
+        <ParameterTypeSet>
+            <EnumeratedParameterType name="sat_id">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8"/>
+                <EnumerationList>
+                    <Enumeration value="0" label="OreSat0"/>
+                    <Enumeration value="1" label="OreSat0.5"/>
+                    <Enumeration value="2" label="OreSat1"/>
+                </EnumerationList>
+            </EnumeratedParameterType>
+        </ParameterTypeSet>
+        <ParameterSet>
+            <Parameter name="Data_Type_Id" parameterTypeRef="string24"/>
+            <Parameter name="Satellite_Id" parameterTypeRef="sat_id"/>
+            <Parameter name="Revision" parameterTypeRef="uint8"/>
+            <Parameter name="Crc32" parameterTypeRef="uint32"/>
+        </ParameterSet>
+        <ContainerSet>
+            <SequenceContainer name="APRS">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="Data_Type_Id">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>128</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Satellite_Id"/>
+                    <ParameterRefEntry parameterRef="Revision"/>
+                    <ParameterRefEntry parameterRef="Crc32">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>248</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                </EntryList>
+            </SequenceContainer>
+            <SequenceContainer name="Beacon">
+                <EntryList>
+                    <ContainerRefEntry containerRef="APRS"/>
+                    <ContainerRefEntry containerRef="Oresat0/C3/C3">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>168</FixedValue>
+                        </LocationInContainerInBits>
+                    </ContainerRefEntry>
+                    <ContainerRefEntry containerRef="Oresat0/BatteryPack/BatteryPack">
+                        <RepeatEntry>
+                            <Count>
+                                <FixedValue>2</FixedValue>
+                            </Count>
+                        </RepeatEntry>
+                    </ContainerRefEntry>
+                </EntryList>
+            </SequenceContainer>
+        </ContainerSet>
+    </TelemetryMetaData>
+</SpaceSystem>

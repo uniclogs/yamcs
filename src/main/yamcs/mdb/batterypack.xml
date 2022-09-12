@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SpaceSystem name="BatteryPack" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+    <Header validationStatus="Working" classification="NotClassified" version="2.0" date="2022-09-08">
+        <AuthorSet>
+            <Author>Portland State Aerospace Society (PSAS)</Author>
+        </AuthorSet>
+    </Header>
+    <TelemetryMetaData>
+        <ParameterTypeSet>
+            <IntegerParameterType name="volts" parameterTypeRef="uint32">
+                <UnitSet>
+                    <Unit description="volts">v</Unit>
+                </UnitSet>
+                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8">
+                    <DefaultCalibrator>
+                        <PolynomialCalibrator>
+                            <Term exponent="1" coefficient="0.02"/>
+                        </PolynomialCalibrator>
+                    </DefaultCalibrator>
+                </IntegerDataEncoding>
+            </IntegerParameterType>
+        </ParameterTypeSet>
+        <ParameterSet>
+            <Parameter name="Voltage" parameterTypeRef="volts">
+            <ParameterProperties dataSource="telemetered" readOnly="true"/>
+            </Parameter>
+        </ParameterSet>
+        <ContainerSet>
+            <SequenceContainer name="BatteryPack">
+                <EntryList>
+                    <ParameterRefEntry parameterRef="Voltage"/>
+                </EntryList>
+            </SequenceContainer>
+        </ContainerSet>
+    </TelemetryMetaData>
+</SpaceSystem>
