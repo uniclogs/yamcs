@@ -18,7 +18,7 @@ services:
       realtimeFiller:
         enabled: true
       backFiller:
-        enabled: false
+        enabled: true
         warmupTime: 60
 
 dataLinks:
@@ -41,7 +41,7 @@ dataLinks:
     stream: tc_realtime
     host: localhost
     port: 10025
-    commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+    commandPostprocessorClassName: org.oresat.uniclogs.EdlCommandPostprocessor
 
   - name: edl-tm-realtime
     class: org.yamcs.tctm.UdpTmDataLink
@@ -54,15 +54,21 @@ mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
   - type: xtce
-    args:
-      file: mdb/USLP.xml
+    spec: mdb/datatypes.xml
+    subLoaders:
+      - type: xtce
+        spec: mdb/c3.xml
+      - type: xtce
+        spec: mdb/batterypack.xml
+      - type: xtce
+        spec: mdb/beacon.xml
 
 # Configuration for streams created at server startup
 streamConfig:
   tm:
     - name: "beacon_tm_realtime"
     - name: "edl_tm_realtime"
-      rootContainer: "/OreSat0/EDL"
+      rootContainer: "/OreSat/EDL_Packet"
     - name: "tm_dump"
   cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
   event: ["events_realtime", "events_dump"]

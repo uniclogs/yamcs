@@ -12,8 +12,7 @@ import org.yamcs.utils.ByteArrayUtils;
 
 public class EDLCommandPostprocessor implements CommandPostprocessor {
 
-    final static Log LOG = new Log(EDLCommandPostprocessor.class);
-
+    static final Log LOG = new Log(EDLCommandPostprocessor.class);
     private String instanceName;
     private YConfiguration config;
     private CommandHistoryPublisher commandHistory;

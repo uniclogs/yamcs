@@ -9,13 +9,16 @@ realtime:
     - class: org.yamcs.parameter.LocalParameterManager
   config:
     subscribeAll: true
+    generateEvents: true
     # Check alarms and also enable the alarm server (that keeps track of unacknowledged alarms)
     alarm:
       parameterCheck: true
       parameterServer: enabled
 
     parameterCache:
-      enabled: false
+      enabled: true
+      cacheAll: true
+      duration: 600
     tmProcessor:
       # If container entries fit outside the binary packet, setting this to true causes the error
       # to be ignored, otherwise an exception will be printed in Yamcs log output

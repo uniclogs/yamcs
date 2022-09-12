@@ -16,8 +16,8 @@ import java.util.Scanner;
 public class UniclogsEnvironment implements ReadyListener {
     private final static Log LOG = new Log(UniclogsEnvironment.class);
 
-    private static byte[] HMAC_SECRET = null;
-    private static Integer SEQUENCE_NUMBER = null;
+    private static byte[] HMAC_SECRET = {0x00, 0x01};
+    private static Integer SEQUENCE_NUMBER = 1;
     private static Path secretPath = Paths.get(UniclogsServer.getDataDirectory() + "/secret");
     private static Path sequenceNumberPath = Paths.get(UniclogsServer.getDataDirectory() + "/sequence-number");
 

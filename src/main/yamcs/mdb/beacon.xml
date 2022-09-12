@@ -43,12 +43,12 @@
             <SequenceContainer name="Beacon">
                 <EntryList>
                     <ContainerRefEntry containerRef="APRS"/>
-                    <ContainerRefEntry containerRef="Oresat0/C3/C3">
+                    <ContainerRefEntry containerRef="OreSat/C3/C3">
                         <LocationInContainerInBits referenceLocation="containerStart">
                             <FixedValue>168</FixedValue>
                         </LocationInContainerInBits>
                     </ContainerRefEntry>
-                    <ContainerRefEntry containerRef="Oresat0/BatteryPack/BatteryPack">
+                    <ContainerRefEntry containerRef="OreSat/BatteryPack/BatteryPack">
                         <RepeatEntry>
                             <Count>
                                 <FixedValue>2</FixedValue>
