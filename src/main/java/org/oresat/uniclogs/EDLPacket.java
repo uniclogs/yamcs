@@ -18,10 +18,14 @@ public class EDLPacket {
 
         this.packet = ByteArray.wrap(packet);
         this.addHmac(hmacSecret);
-        this.addCrc();
 
         // set frame length in packet: C = (Total Number of Octets in the Transfer Frame) − 1
-        ByteArrayUtils.encodeUnsignedShort(this.packet.size()-1, this.packet.array(), 4);
+        // CRC adds 8 -> (size + (8 - 1))
+        ByteArrayUtils.encodeUnsignedShort(this.packet.size()+7, this.packet.array(), 4);
+        
+        // Add CRC data to packet
+        this.packet.addLong(this.createCrc(this.packet.array()));
+
     }
 
     public EDLPacket(TmPacket tmPacket) {
@@ -37,21 +41,25 @@ public class EDLPacket {
         return num.intValue();
     }
 
-    private void addCrc() {
+    private Long createCrc(byte[] data) {
         CRC32 crc = new CRC32();
-        crc.update(this.packet.array());
-        packet.addLong(crc.getValue());
+        crc.update(data);
+        return crc.getValue();
     }
 
     public byte[] getBinary() {
         return this.packet.toArray();
     }
 
-
     public boolean containsValidCrc() {
-        CRC32 crc = new CRC32();
-        crc.update(this.packet.array());
-        Long expected = ByteArrayUtils.decodeLong(this.packet.array(), packet.size()-2);
-        return expected.equals(crc.getValue());
+        // get packet data without the CRC data, calculate CRC value from packet data       
+        byte[] pkt = Arrays.copyOfRange(this.packet.array(), 0, this.packet.size()-8);
+        Long calcCrc = this.createCrc(pkt);
+
+        // get CRC data from packet
+        Long packetCrc = ByteArrayUtils.decodeLong(this.packet.array(), this.packet.size()-8);
+        
+        // return the result of if the calculated CRC matches the returning CRC data
+        return packetCrc.equals(calcCrc);
     }
 }

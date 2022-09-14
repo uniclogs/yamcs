@@ -1,5 +1,5 @@
 services:
-  - class: org.oresat.uniclogs.UniclogsService
+  - class: org.oresat.uniclogs.UniclogsEnvironment
   - class: org.yamcs.archive.XtceTmRecorder
   - class: org.yamcs.archive.ParameterRecorder
   - class: org.yamcs.archive.AlarmRecorder
@@ -43,6 +43,8 @@ dataLinks:
     host: localhost
     port: 10025
     commandPostprocessorClassName: org.oresat.uniclogs.EdlCommandPostprocessor
+    commandPostprocessorArgs:
+      envService: UniclogsEnvironment
 
   - name: edl-tm-realtime
     class: org.yamcs.tctm.UdpTmDataLink

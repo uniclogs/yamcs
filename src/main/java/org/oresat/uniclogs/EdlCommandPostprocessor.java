@@ -1,23 +1,19 @@
 package org.oresat.uniclogs;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.yamcs.AbstractYamcsService;
+import org.yamcs.ConfigurationException;
 import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;
 import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.PreparedCommand;
-import org.yamcs.protobuf.Commanding;
-import org.yamcs.protobuf.Commanding.VerifierConfig;
 import org.yamcs.tctm.CommandPostprocessor;
-import org.yamcs.xtce.XtceDb;
+
+import com.google.common.util.concurrent.Service;
+
 
 public class EdlCommandPostprocessor implements CommandPostprocessor {
-
     protected CommandHistoryPublisher cmdHistory;
-    private String instanceName;
-    private YConfiguration config;
-    UniclogsService env;
+    UniclogsEnvironment env;
 
     @Override
     public byte[] process(PreparedCommand pc) {
@@ -39,9 +35,12 @@ public class EdlCommandPostprocessor implements CommandPostprocessor {
     }
 
     public EdlCommandPostprocessor(String instanceName, YConfiguration config) {
-        this.instanceName = instanceName;
-        this.config = config;
-        this.env = YamcsServer.getServer().getInstance(instanceName).getServices(UniclogsService.class).get(0);
+        String envName = config.getString("envService");
+        this.env = YamcsServer.getServer().getInstance(instanceName).getService(UniclogsEnvironment.class, envName);
+        
+        if (this.env == null) {
+            throw new ConfigurationException("Service " + envName + " does not exist or is not of class UniclogsEnvironment.");
+        }
     }
 
     public EdlCommandPostprocessor(String instanceName) {

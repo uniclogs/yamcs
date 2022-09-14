@@ -1,124 +1,99 @@
 package org.oresat.uniclogs;
 
-import org.apache.commons.codec.DecoderException;
-import org.apache.commons.codec.binary.Hex;
-import org.yamcs.ReadyListener;
-import org.yamcs.YamcsServer;
-import org.yamcs.logging.Log;
+import java.io.IOException;
+
+import org.yamcs.AbstractYamcsService;
+import org.yamcs.InitException;
+import org.yamcs.YConfiguration;
+import org.yamcs.utils.ByteArrayUtils;
+import org.yamcs.yarch.Bucket;
+import org.yamcs.yarch.YarchDatabase;
 import org.yamcs.yarch.YarchDatabaseInstance;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Scanner;
+public class UniclogsEnvironment extends AbstractYamcsService {
+    static String sequenceNumberId = "seqNum";
+    static String hmacKeyId = "hmacKey";
 
-public class UniclogsEnvironment implements ReadyListener {
-    private final static Log LOG = new Log(UniclogsEnvironment.class);
-    YarchDatabaseInstance db;
 
-    private static byte[] HMAC_SECRET = {0x00, 0x01};
-    private static Integer SEQUENCE_NUMBER = 1;
-    private static Path secretPath = Paths.get(UniclogsServer.getDataDirectory() + "/secret");
-    private static Path sequenceNumberPath = Paths.get(UniclogsServer.getDataDirectory() + "/sequence-number");
+    byte[] hmacKey;
+    Integer seqNum;
+    Bucket db;
 
-    public UniclogsEnvironment() {
-    }
-
-    public static byte[] getHmacSecret() {
-        return HMAC_SECRET;
-    }
-
-    public static Integer getSequenceNumber() {
-        return SEQUENCE_NUMBER;
-    }
-
-    public static void setSequenceNumber(Integer sequenceNumber) {
-        SEQUENCE_NUMBER = sequenceNumber;
-        dumpSequenceNumber(SEQUENCE_NUMBER);
-    }
-
-    public static void incrementSequenceNumber() {
-        setSequenceNumber(SEQUENCE_NUMBER + 1);
-    }
-
-    private static void makeParent(Path path) {
-        path.getParent().toAbsolutePath().toFile().mkdirs();
-    }
-
-    private static String loadOrDefault(Path path, String defaultValue) {
-        File file = path.toFile();
-        LOG.debug("File `" + path + "` exists: " + file.exists());
-        if(!file.exists()) {
-            FileWriter writer;
-            try {
-                writer = new FileWriter(file);
-                writer.write(defaultValue);
-                writer.flush();
-                return defaultValue;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        try{
-            Scanner in = new Scanner(path.toFile());
-            return in.next();
-        } catch (FileNotFoundException e) {
-            LOG.error(e.getMessage());
-            return null;
-        }
-    }
-
-    private static byte[] loadHmacSecret() {
-        String hexString = loadOrDefault(secretPath, "0A0B0C0D");
+    @Override
+    protected void doStart() {
         try {
-            return Hex.decodeHex(hexString);
-        } catch (DecoderException e) {
-            LOG.error(e.getMessage());
-            return null;
-        }
-    }
-
-    private static Integer loadSequenceNumber() {
-        String serialNumber = loadOrDefault(sequenceNumberPath, "0");
-        if(serialNumber == null) {
-            return null;
-        }
-        return Integer.parseInt(serialNumber);
-    }
-
-    private static void dumpSequenceNumber(Integer sequenceNumber) {
-        FileWriter writer;
-        try{
-            writer = new FileWriter(sequenceNumberPath.toFile());
-            writer.write(sequenceNumber.toString());
-            writer.flush();
+            this.hmacKey = this.loadHmacKey();
+            this.seqNum = this.loadSeqNum();
+            this.log.info("Loaded Sequence Number: " + this.seqNum);
         } catch (IOException e) {
-            LOG.error(e.getMessage());
+            this.log.error(e.getMessage());
         }
+        this.notifyStarted();
+        
     }
 
     @Override
-    public void onReady() {
-        boolean quit = false;
-
-        LOG.info("Using Data Dir: " + UniclogsServer.getDataDirectory());
-        makeParent(secretPath);
-        HMAC_SECRET = loadHmacSecret();
-        if(HMAC_SECRET.equals("<Change This To A Super Special Secret>")) {
-            LOG.error("DEFAULT SECRET DETECTED! Please update the file: " + secretPath + " with a secret before re-running Yamcs!");
-            quit = true;
+    protected void doStop() {
+        try {
+            this.saveSeqNum(this.seqNum);
+            this.saveHmacKey(this.hmacKey);
+        } catch (IOException e) {
+            this.log.error(e.getMessage());
         }
+        this.notifyStopped();
+    }
 
-        makeParent(sequenceNumberPath);
-        SEQUENCE_NUMBER = loadSequenceNumber();
-        if(quit) {
-            System.exit(-1);
+    public Integer getSeqNum() {
+        Integer num = this.seqNum;
+        this.seqNum++;
+        return num;
+    }
+
+    public byte[] getHmacKey() {
+        return this.hmacKey;
+    }
+
+    @Override
+    public void init(String yamcsInstance, String serviceName, YConfiguration config) throws InitException {
+        super.init(yamcsInstance, serviceName, config);
+        YarchDatabaseInstance instanceDb = YarchDatabase.getInstance(yamcsInstance);
+        try {
+            this.db = instanceDb.getBucket("env");
+            if (this.db == null) {
+                this.log.info(String.format("Env not found for %s, creating new env...", yamcsInstance));
+                this.db = instanceDb.createBucket("env");
+            }
+        } catch (IOException e) {
+            throw new InitException(e.getMessage());
         }
-        LOG.info("Loaded last-known sequence number: " + SEQUENCE_NUMBER);
+    }
+
+    private Integer loadSeqNum() throws IOException {
+        byte[] numBytes = db.getObject(sequenceNumberId);
+        if (numBytes == null) {
+            this.log.info(String.format("Sequence Number not found for %s, Sequence Number set to 1", yamcsInstance));
+            this.saveSeqNum(1);
+            return seqNum;
+        }
+        return ByteArrayUtils.decodeInt(db.getObject(sequenceNumberId), 0);
+    }
+
+    private byte[] loadHmacKey() throws IOException {
+        byte[] testKey = {0x00, 0x01};
+        byte[] hmac = this.db.getObject(hmacKeyId);
+        if (hmac == null) {
+            this.log.info(String.format("Hmac Key not found for %s, Hmac Key set to %s", yamcsInstance, testKey));
+            this.saveHmacKey(testKey);
+            return testKey;
+        }
+        return hmac;
+    }
+
+    private void saveSeqNum(Integer seqNum) throws IOException {
+        db.putObject(sequenceNumberId, "Integer", null, ByteArrayUtils.encodeInt(seqNum));
+    }
+
+    private void saveHmacKey(byte[] hmacKey) throws IOException {
+        db.putObject(hmacKeyId, "bytes", null, hmacKey);
     }
 }
