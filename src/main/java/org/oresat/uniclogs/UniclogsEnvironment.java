@@ -3,7 +3,9 @@ package org.oresat.uniclogs;
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.yamcs.ReadyListener;
+import org.yamcs.YamcsServer;
 import org.yamcs.logging.Log;
+import org.yamcs.yarch.YarchDatabaseInstance;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,13 +17,15 @@ import java.util.Scanner;
 
 public class UniclogsEnvironment implements ReadyListener {
     private final static Log LOG = new Log(UniclogsEnvironment.class);
+    YarchDatabaseInstance db;
 
     private static byte[] HMAC_SECRET = {0x00, 0x01};
     private static Integer SEQUENCE_NUMBER = 1;
     private static Path secretPath = Paths.get(UniclogsServer.getDataDirectory() + "/secret");
     private static Path sequenceNumberPath = Paths.get(UniclogsServer.getDataDirectory() + "/sequence-number");
 
-    public UniclogsEnvironment() {}
+    public UniclogsEnvironment() {
+    }
 
     public static byte[] getHmacSecret() {
         return HMAC_SECRET;

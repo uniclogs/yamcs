@@ -66,8 +66,33 @@
         </ContainerSet>
     </TelemetryMetaData>
     <CommandMetaData>
+        <ArgumentTypeSet>
+            <BooleanArgumentType name="bool8_enable" zeroStringValue="Disable" oneStringValue="Enable">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="8" encoding="unsigned"/>
+            </BooleanArgumentType>
+            <StringArgumentType name="filepath">
+	         <UnitSet/>
+	            <StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
+		            <SizeInBits>
+			            <Fixed>
+				            <FixedValue>400</FixedValue>
+			            </Fixed>
+			            <TerminationChar>00</TerminationChar>
+	    	        </SizeInBits>
+	            </StringDataEncoding>
+            </StringArgumentType>
+            <IntegerArgumentType name="fw_bank">
+	         <IntegerDataEncoding sizeInBits="32" encoding="unsigned"/>
+             <ValidRange minInclusive="0" maxInclusive="1"/>
+            </IntegerArgumentType>
+	            
+        </ArgumentTypeSet>
         <MetaCommandSet>
             <MetaCommand name="TX_CTRL">
+                <ArgumentList>
+                    <Argument name="Enable_Disable" argumentTypeRef="bool8_enable"/>
+                </ArgumentList>
                 <BaseMetaCommand metaCommandRef="EDL_Command">
                     <ArgumentAssignmentList>
                         <ArgumentAssignment argumentName="Command" argumentValue="00"/>
@@ -75,6 +100,162 @@
                 </BaseMetaCommand>
                 <CommandContainer name="TX_CTRL_Container">
                     <BaseContainer containerRef="EDL_Command_Packet" />
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="Enable_Disable"/>
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="FW_FLASH">
+                <ArgumentList>
+                    <Argument name="FilePath" argumentTypeRef="filepath"/>
+                </ArgumentList>
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="01"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="FW_FLASH_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="FilePath"/>
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="FW_BANK">
+                <ArgumentList>
+                    <Argument name="Bank" argumentTypeRef="fw_bank"/>
+                </ArgumentList>
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="02"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="FW_BANK_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="Bank"/>
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="FW_BANK_VERIFY">
+                <ArgumentList>
+                    <Argument name="Bank" argumentTypeRef="fw_bank"/>
+                </ArgumentList>
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="03"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="FW_BANK_VERIFY_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="Bank"/>
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand abstract="true" name="RESET">
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="RESET_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                    <EntryList>
+                        <xtce:FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
+                        <xtce:FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="SOFT_RESET">
+                <BaseMetaCommand metaCommandRef="RESET">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="04"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="SOFT_RESET_Container">
+                    <BaseContainer containerRef="RESET_Container" />
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="HARD_RESET">
+                <BaseMetaCommand metaCommandRef="RESET">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="05"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="HARD_RESET_Container">
+                    <BaseContainer containerRef="RESET_Container" />
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="FACTORY_RESET">
+                <BaseMetaCommand metaCommandRef="RESET">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="06"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="FACTORY_RESET_Container">
+                    <BaseContainer containerRef="RESET_Container" />
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="I2_RESET">
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="07"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="I2_RESET_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="FORMAT_FILESYSTEM">
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="08"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="FORMAT_FS_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="UNMOUNT_FILESYSTEM">
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="09"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="UNMOUNT_FS_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="REMOVE_FILE">
+                <ArgumentList>
+                    <Argument name="FilePath" argumentTypeRef="filepath"/>
+                </ArgumentList>
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="10"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="REMOVE_FS_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="FilePath" />
+                    </EntryList>
+                </CommandContainer>
+            </MetaCommand>
+            <MetaCommand name="FILE_CRC_CHECK">
+                <ArgumentList>
+                    <Argument name="FilePath" argumentTypeRef="filepath"/>
+                </ArgumentList>
+                <BaseMetaCommand metaCommandRef="EDL_Command">
+                    <ArgumentAssignmentList>
+                        <ArgumentAssignment argumentName="Command" argumentValue="11"/>
+                    </ArgumentAssignmentList>
+                </BaseMetaCommand>
+                <CommandContainer name="CRC_FS_Container">
+                    <BaseContainer containerRef="EDL_Command_Packet" />
+                    <EntryList>
+                        <ArgumentRefEntry argumentRef="FilePath" />
+                    </EntryList>
                 </CommandContainer>
             </MetaCommand>
         </MetaCommandSet>

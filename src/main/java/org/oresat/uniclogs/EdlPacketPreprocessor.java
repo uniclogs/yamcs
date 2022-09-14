@@ -26,12 +26,14 @@ public class EdlPacketPreprocessor extends AbstractPacketPreprocessor {
 
     @Override
     public TmPacket process(TmPacket tmPacket) {
-        byte[] packet = tmPacket.getPacket();
+        EDLPacket packet = new EDLPacket(tmPacket);
         /**try {
             computeCrc(Arrays.copyOfRange(packet, 16, packet.length - 4));
         } catch (CorruptedPacketException e) {
             eventProducer.sendWarning(e.getMessage());
+            tmPacket.setInvalid();
         }**/
+        tmPacket.setSequenceCount(packet.getSeqNum());
         tmPacket.setGenerationTime(new Date().getTime());
         tmPacket.setLocalGenTimeFlag();
         return tmPacket;

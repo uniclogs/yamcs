@@ -1,4 +1,5 @@
 services:
+  - class: org.oresat.uniclogs.UniclogsService
   - class: org.yamcs.archive.XtceTmRecorder
   - class: org.yamcs.archive.ParameterRecorder
   - class: org.yamcs.archive.AlarmRecorder
@@ -18,7 +19,7 @@ services:
       realtimeFiller:
         enabled: true
       backFiller:
-        enabled: true
+        enabled: false
         warmupTime: 60
 
 dataLinks:
@@ -54,14 +55,22 @@ mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
   - type: xtce
-    spec: mdb/datatypes.xml
+    spec: mdb/oresat.xml
     subLoaders:
-      - type: xtce
-        spec: mdb/c3.xml
+      - type: emptyNode
+        spec: C3-1
+        subLoaders:
+        - type: xtce
+          spec: mdb/c3.xml
+      - type: emptyNode
+        spec: C3-2
+        subLoaders:
+        - type: xtce
+          spec: mdb/c3.xml
       - type: xtce
         spec: mdb/batterypack.xml
-      - type: xtce
-        spec: mdb/beacon.xml
+      #- type: xtce
+      #  spec: mdb/beacon.xml
 
 # Configuration for streams created at server startup
 streamConfig:

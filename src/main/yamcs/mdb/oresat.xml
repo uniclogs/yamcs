@@ -11,6 +11,10 @@
                 <UnitSet/>
                 <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="1"/>
             </IntegerParameterType>
+            <IntegerParameterType name="uint2" signed="false">
+                <UnitSet/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="2"/>
+            </IntegerParameterType>
             <IntegerParameterType name="uint3" signed="false">
                 <UnitSet/>
                 <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="3"/>
@@ -111,11 +115,12 @@
             <Parameter parameterTypeRef="uint16" name="Frame_Length"/>
             <Parameter parameterTypeRef="bypass" name="Bypass_Flag"/>
             <Parameter parameterTypeRef="protoctrl" name="Protocol_Control_Flag"/>
+            <Parameter parameterTypeRef="uint2" name="Spare"/>
             <Parameter parameterTypeRef="opctrl" name="Operational_Control_Flag"/>
             <Parameter parameterTypeRef="uint3" name="VC_Frame_Count_Length"/>
+            <Parameter parameterTypeRef="uint8" name="Seq_Num"/>
             <Parameter parameterTypeRef="uint3" name="TFDZ_Construction"/>
             <Parameter parameterTypeRef="uint5" name="USLP_Protocol_ID"/>
-            <Parameter parameterTypeRef="uint8" name="EDL_Ack_Seq"/>
         </ParameterSet>
         <ContainerSet>
             <SequenceContainer abstract="true" name="USLP_Packet">
@@ -125,22 +130,76 @@
                             <FixedValue>0</FixedValue>
                         </LocationInContainerInBits>
                     </ParameterRefEntry>
-                    <ParameterRefEntry parameterRef="Spacecraft_ID"/>
-                    <ParameterRefEntry parameterRef="Source_or_Destination"/>
-                    <ParameterRefEntry parameterRef="Virtual_Channel_ID"/>
-                    <ParameterRefEntry parameterRef="Multiplexer_Access_Point_ID"/>
-                    <ParameterRefEntry parameterRef="EOF_Flag"/>
-                    <ParameterRefEntry parameterRef="Frame_Length"/>
-                    <ParameterRefEntry parameterRef="Bypass_Flag"/>
-                    <ParameterRefEntry parameterRef="Protocol_Control_Flag"/>
+                    <ParameterRefEntry parameterRef="Spacecraft_ID">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>4</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Source_or_Destination">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>20</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Virtual_Channel_ID">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>21</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Multiplexer_Access_Point_ID">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>27</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="EOF_Flag">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>31</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Frame_Length">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>32</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Bypass_Flag">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>48</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Protocol_Control_Flag">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>49</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Spare">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>50</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
                     <ParameterRefEntry parameterRef="Operational_Control_Flag">
                         <LocationInContainerInBits referenceLocation="containerStart">
                             <FixedValue>52</FixedValue>
                         </LocationInContainerInBits>
                     </ParameterRefEntry>
-                    <ParameterRefEntry parameterRef="VC_Frame_Count_Length"/>
-                    <ParameterRefEntry parameterRef="TFDZ_Construction"/>
-                    <ParameterRefEntry parameterRef="USLP_Protocol_ID"/>
+                    <ParameterRefEntry parameterRef="VC_Frame_Count_Length">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>53</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="Seq_Num">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>56</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="TFDZ_Construction">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>64</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
+                    <ParameterRefEntry parameterRef="USLP_Protocol_ID">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>67</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
                 </EntryList>
             </SequenceContainer>
             <SequenceContainer name="EDL_Packet">
@@ -150,7 +209,6 @@
                             <FixedValue>0</FixedValue>
                         </LocationInContainerInBits>
                     </ContainerRefEntry>
-                    <ParameterRefEntry parameterRef="EDL_Ack_Seq"/>
                 </EntryList>
             </SequenceContainer>
         </ContainerSet>
@@ -189,18 +247,17 @@
                 <UnitSet/>
                 <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
             </IntegerArgumentType>
-            <xtce:StringArgumentType name="string16" shortDescription="EU: String RAW: US-ASCII">
-                <xtce:LongDescription>A string calibrated value with 8 bit US-ASCII raw value with Container Length of 10 characters</xtce:LongDescription>
-                <xtce:UnitSet/>
-                <xtce:StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
-                    <xtce:SizeInBits>
-                        <xtce:Fixed>
-                            <!-- 10 characters 8 bits each is 80 bits -->
-                            <xtce:FixedValue>16</xtce:FixedValue>
-                        </xtce:Fixed>
-                    </xtce:SizeInBits>
-                </xtce:StringDataEncoding>
-            </xtce:StringArgumentType>
+            <StringArgumentType name="string16" shortDescription="EU: String RAW: US-ASCII">
+                <LongDescription>A string calibrated value with 8 bit US-ASCII raw value with Container Length of 10 characters</LongDescription>
+                <UnitSet/>
+                <StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
+                    <SizeInBits>
+                        <Fixed>
+                            <FixedValue>16</FixedValue>
+                        </Fixed>
+                    </SizeInBits>
+                </StringDataEncoding>
+            </StringArgumentType>
 
         </ArgumentTypeSet>
         <MetaCommandSet>
@@ -217,14 +274,16 @@
                         <FixedValueEntry name="Virtual_Channel_ID" binaryValue="0" sizeInBits="6"/>
                         <FixedValueEntry name="Multiplexer_Access_Point_ID" binaryValue="0" sizeInBits="4"/>
                         <FixedValueEntry name="EOF_Flag" binaryValue="0" sizeInBits="1"/>
-                        <FixedValueEntry name="Frame_Length" binaryValue="000B" sizeInBits="16"/>
+                        <FixedValueEntry name="Frame_Length" binaryValue="0000" sizeInBits="16"/>
                         <FixedValueEntry name="Bypass_Flag" binaryValue="0" sizeInBits="1" />
                         <FixedValueEntry name="Protocol_Control_Flag" binaryValue="0" sizeInBits="1"/>
                         <FixedValueEntry name="Spare" binaryValue="00" sizeInBits="2"/>
                         <FixedValueEntry name="Operational_Control_Flag" binaryValue="0" sizeInBits="1"/>
-                        <FixedValueEntry name="VC_Frame_Count_Length" binaryValue="0000" sizeInBits="4"/>
+                        <FixedValueEntry name="VC_Frame_Count_Length" binaryValue="0" sizeInBits="3"/>
+                        <FixedValueEntry name="Seq_Num" binaryValue="0" sizeInBits="8"/>
                         <FixedValueEntry name="TFDZ_Construction" binaryValue="7" sizeInBits="3"/>
-                        <FixedValueEntry name="USLP_Protocol_ID" binaryValue="5" sizeInBits="5" />
+                        <FixedValueEntry name="USLP_Protocol_ID" binaryValue="5" sizeInBits="5"/>
+                        <ArgumentRefEntry argumentRef="Command"/>
                     </EntryList>
                 </CommandContainer>
                 <VerifierSet>
@@ -233,12 +292,13 @@
                         <Condition>
                             <ParameterInstanceRef parameterRef="/yamcs/cmdHist/edl-seqnum" />
                             <ComparisonOperator>==</ComparisonOperator>
-                            <ParameterInstanceRef parameterRef="EDL_Ack_Seq"/>
+                            <ParameterInstanceRef parameterRef="Seq_Num"/>
                         </Condition>
                         </BooleanExpression>
                         <CheckWindow timeToStopChecking="PT15S" timeWindowIsRelativeTo="commandRelease" />
                     </CompleteVerifier>
                 </VerifierSet>
+                <DefaultSignificance consequenceLevel="vital"/>
                 </MetaCommand>
         </MetaCommandSet>
 

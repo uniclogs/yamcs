@@ -16,7 +16,7 @@ realtime:
       parameterServer: enabled
 
     parameterCache:
-      enabled: true
+      enabled: false
       cacheAll: true
       duration: 600
     tmProcessor:
