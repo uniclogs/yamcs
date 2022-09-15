@@ -44,7 +44,7 @@
             <Parameter name="Fw_Bank" parameterTypeRef="uint1"/>
         </ParameterSet>
         <ContainerSet>
-            <SequenceContainer name="C3">
+            <SequenceContainer name="Status">
                 <EntryList>
                     <ParameterRefEntry parameterRef="M4_State"/>
                     <ParameterRefEntry parameterRef="M4_Uptime"/>

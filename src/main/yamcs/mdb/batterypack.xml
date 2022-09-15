@@ -7,7 +7,7 @@
     </Header>
     <TelemetryMetaData>
         <ParameterTypeSet>
-            <IntegerParameterType name="volts" parameterTypeRef="uint32">
+            <IntegerParameterType name="volts" baseType="uint16">
                 <UnitSet>
                     <Unit description="volts">v</Unit>
                 </UnitSet>
@@ -19,16 +19,81 @@
                     </DefaultCalibrator>
                 </IntegerDataEncoding>
             </IntegerParameterType>
+            <IntegerParameterType name="current" baseType="int16">
+                <UnitSet>
+                    <Unit description="milliamps">mA</Unit>
+                </UnitSet>
+            </IntegerParameterType>
+            <IntegerParameterType name="percent" baseType="uint8">
+                <UnitSet>
+                    <Unit description="percent">%</Unit>
+                </UnitSet>
+            </IntegerParameterType>
+            <IntegerParameterType name="capacity" baseType="uint16">
+                <UnitSet>
+                    <Unit description="milliamp hours">mAh</Unit>
+                </UnitSet>
+            </IntegerParameterType>
+            <BooleanParameterType name="bool4_charge" zeroStringValue="Not Charging" oneStringValue="Charging">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="4" encoding="unsigned"/>
+            </BooleanParameterType>
+            <BooleanParameterType name="bool1_discharge" zeroStringValue="Not Discharging" oneStringValue="Discharging">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="1" encoding="unsigned"/>
+            </BooleanParameterType>
+            <BooleanParameterType name="bool1_enable" zeroStringValue="Disabled" oneStringValue="Enabled">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="1" encoding="unsigned"/>
+            </BooleanParameterType>
+            <BooleanParameterType name="bool1_onoff" zeroStringValue="Off" oneStringValue="On">
+                <UnitSet/>
+                <IntegerDataEncoding sizeInBits="1" encoding="unsigned"/>
+            </BooleanParameterType>
         </ParameterTypeSet>
         <ParameterSet>
-            <Parameter name="Voltage" parameterTypeRef="volts">
-            <ParameterProperties dataSource="telemetered" readOnly="true"/>
-            </Parameter>
+            <Parameter name="BatteryVoltage" parameterTypeRef="volts" />
+            <Parameter name="CellVoltage" parameterTypeRef="volts" />
+            <Parameter name="CellVoltageMax" parameterTypeRef="volts" />
+            <Parameter name="CellVoltageMin" parameterTypeRef="volts" />
+            <Parameter name="Cell1Voltage" parameterTypeRef="volts" />
+            <Parameter name="Cell2Voltage" parameterTypeRef="volts" />
+            <Parameter name="CellVoltageAvg" parameterTypeRef="volts" />
+            <Parameter name="Current" parameterTypeRef="current" />
+            <Parameter name="CurrentAvg" parameterTypeRef="current" />
+            <Parameter name="CurrentMax" parameterTypeRef="current" />
+            <Parameter name="CurrentMin" parameterTypeRef="current" />
+            <Parameter name="ChargeStatus" parameterTypeRef="bool4_charge" />
+            <Parameter name="DischargeStatus" parameterTypeRef="bool1_discharge" />
+            <Parameter name="Charge" parameterTypeRef="bool1_enable" />
+            <Parameter name="Discharge" parameterTypeRef="bool1_enable" />
+            <Parameter name="Heater" parameterTypeRef="bool1_onoff" />
+            <Parameter name="ChargePercentage" parameterTypeRef="percent" />
+            <Parameter name="FullCapacity" parameterTypeRef="capacity" />
+            <Parameter name="ReportedCapacity" parameterTypeRef="capacity" />
         </ParameterSet>
         <ContainerSet>
-            <SequenceContainer name="BatteryPack">
+            <SequenceContainer name="Status">
                 <EntryList>
-                    <ParameterRefEntry parameterRef="Voltage"/>
+                    <ParameterRefEntry parameterRef="BatteryVoltage"/>
+                    <ParameterRefEntry parameterRef="CellVoltage"/>
+                    <ParameterRefEntry parameterRef="CellVoltageMax" />
+                    <ParameterRefEntry parameterRef="CellVoltageMin" />
+                    <ParameterRefEntry parameterRef="Cell1Voltage" />
+                    <ParameterRefEntry parameterRef="Cell2Voltage" />
+                    <ParameterRefEntry parameterRef="CellVoltageAvg" />
+                    <ParameterRefEntry parameterRef="Current" />
+                    <ParameterRefEntry parameterRef="CurrentAvg" />
+                    <ParameterRefEntry parameterRef="CurrentMax" />
+                    <ParameterRefEntry parameterRef="CurrentMin" />
+                    <ParameterRefEntry parameterRef="ChargeStatus" />
+                    <ParameterRefEntry parameterRef="DischargeStatus" />
+                    <ParameterRefEntry parameterRef="Charge" />
+                    <ParameterRefEntry parameterRef="Discharge" />
+                    <ParameterRefEntry parameterRef="Heater" />
+                    <ParameterRefEntry parameterRef="ChargePercentage" />
+                    <ParameterRefEntry parameterRef="FullCapacity" />
+                    <ParameterRefEntry parameterRef="ReportedCapacity" />
                 </EntryList>
             </SequenceContainer>
         </ContainerSet>
