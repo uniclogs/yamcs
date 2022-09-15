@@ -1,14 +1,10 @@
 package org.oresat.uniclogs;
-
-import org.yamcs.AbstractYamcsService;
 import org.yamcs.ConfigurationException;
 import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;
 import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.PreparedCommand;
 import org.yamcs.tctm.CommandPostprocessor;
-
-import com.google.common.util.concurrent.Service;
 
 
 public class EdlCommandPostprocessor implements CommandPostprocessor {

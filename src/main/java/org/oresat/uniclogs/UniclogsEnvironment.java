@@ -73,7 +73,7 @@ public class UniclogsEnvironment extends AbstractYamcsService {
         if (numBytes == null) {
             this.log.info(String.format("Sequence Number not found for %s, Sequence Number set to 1", yamcsInstance));
             this.saveSeqNum(1);
-            return seqNum;
+            return 1;
         }
         return ByteArrayUtils.decodeInt(db.getObject(sequenceNumberId), 0);
     }
@@ -89,8 +89,8 @@ public class UniclogsEnvironment extends AbstractYamcsService {
         return hmac;
     }
 
-    private void saveSeqNum(Integer seqNum) throws IOException {
-        db.putObject(sequenceNumberId, "Integer", null, ByteArrayUtils.encodeInt(seqNum));
+    private void saveSeqNum(Integer seq) throws IOException {
+        db.putObject(sequenceNumberId, "Integer", null, ByteArrayUtils.encodeInt(seq));
     }
 
     private void saveHmacKey(byte[] hmacKey) throws IOException {
