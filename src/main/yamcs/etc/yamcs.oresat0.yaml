@@ -60,24 +60,31 @@ mdb:
     spec: mdb/oresat.xml
     subLoaders:
       - type: emptyNode
-        spec: C3-1
+        spec: BatteryPack1
         subLoaders:
         - type: xtce
-          spec: mdb/c3.xml
+          spec: mdb/batterypack.xml
       - type: emptyNode
-        spec: C3-2
+        spec: BatteryPack2
         subLoaders:
         - type: xtce
-          spec: mdb/c3.xml
+          spec: mdb/batterypack.xml
       - type: xtce
-        spec: mdb/batterypack.xml
-      #- type: xtce
-      #  spec: mdb/beacon.xml
+        spec: mdb/c3.xml
+      - type: xtce
+        spec: mdb/solar.xml
+      - type: xtce
+        spec: mdb/startracker.xml
+      - type: xtce
+        spec: mdb/gps.xml
+      - type: xtce
+        spec: mdb/dxwifi.xml
 
 # Configuration for streams created at server startup
 streamConfig:
   tm:
     - name: "beacon_tm_realtime"
+      rootContainer: "/OreSat/Beacon_Packet"
     - name: "edl_tm_realtime"
       rootContainer: "/OreSat/EDL_Packet"
     - name: "tm_dump"
