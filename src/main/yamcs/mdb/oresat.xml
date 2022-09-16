@@ -145,6 +145,7 @@
             <Parameter parameterTypeRef="satid" name="APRS_Satellite_ID"/>
             <Parameter parameterTypeRef="uint8" name="APRS_Revision"/>
             <Parameter parameterTypeRef="uint32" name="CRC32"/>
+            <Parameter parameterTypeRef="uint8" name="TempCmd" />
         </ParameterSet>
         <ContainerSet>
             <SequenceContainer abstract="true" name="USLP_Packet">
@@ -233,6 +234,7 @@
                             <FixedValue>0</FixedValue>
                         </LocationInContainerInBits>
                     </ContainerRefEntry>
+                    <ParameterRefEntry parameterRef="TempCmd" />
                 </EntryList>
             </SequenceContainer>
             <SequenceContainer name="Beacon_Packet">
