@@ -294,8 +294,7 @@
                 <UnitSet/>
                 <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
             </IntegerArgumentType>
-            <StringArgumentType name="string16" shortDescription="EU: String RAW: US-ASCII">
-                <LongDescription>A string calibrated value with 8 bit US-ASCII raw value with Container Length of 10 characters</LongDescription>
+            <StringArgumentType name="string16" shortDescription="US-ASCII 2 chars">
                 <UnitSet/>
                 <StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
                     <SizeInBits>
@@ -305,7 +304,16 @@
                     </SizeInBits>
                 </StringDataEncoding>
             </StringArgumentType>
-
+            <StringArgumentType name="string24" shortDescription="US-ASCII 3 chars">
+                <UnitSet/>
+                <StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
+                    <SizeInBits>
+                        <Fixed>
+                            <FixedValue>16</FixedValue>
+                        </Fixed>
+                    </SizeInBits>
+                </StringDataEncoding>
+            </StringArgumentType>
         </ArgumentTypeSet>
         <MetaCommandSet>
             <MetaCommand abstract="true" name="EDL_Command">
@@ -316,7 +324,7 @@
                 <CommandContainer name="EDL_Command_Packet">
                     <EntryList>
                         <FixedValueEntry name="Version_Number" binaryValue="C" sizeInBits="4"/>
-                        <FixedValueEntry name="Spacecraft_ID" binaryValue="4F53" sizeInBits="16"/>
+                        <FixedValueEntry name="Spacecraft_ID" binaryValue="4F53" sizeInBits="16"/>Algorithm
                         <FixedValueEntry name="Source_or_Destination" binaryValue="1" sizeInBits="1"/>
                         <FixedValueEntry name="Virtual_Channel_ID" binaryValue="0" sizeInBits="6"/>
                         <FixedValueEntry name="Multiplexer_Access_Point_ID" binaryValue="0" sizeInBits="4"/>

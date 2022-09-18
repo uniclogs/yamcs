@@ -27,7 +27,9 @@ dataLinks:
     class: org.yamcs.tctm.UdpTmDataLink
     stream: beacon_tm_realtime
     port: 10015
-    packetPreprocessorClassName: org.yamcs.tctm.IssPacketPreprocessor
+    packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
+    packetPreprocessorArgs:
+      timestampOffset: 26
 
   - name: beacon-tm-dump
     class: org.yamcs.tctm.UdpTmDataLink
