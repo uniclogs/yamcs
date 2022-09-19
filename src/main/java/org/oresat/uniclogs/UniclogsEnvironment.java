@@ -1,23 +1,36 @@
 package org.oresat.uniclogs;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 import org.yamcs.AbstractYamcsService;
 import org.yamcs.InitException;
 import org.yamcs.YConfiguration;
+import org.yamcs.YamcsServer;
 import org.yamcs.utils.ByteArrayUtils;
 import org.yamcs.yarch.Bucket;
 import org.yamcs.yarch.YarchDatabase;
 import org.yamcs.yarch.YarchDatabaseInstance;
 
 public class UniclogsEnvironment extends AbstractYamcsService {
-    static String sequenceNumberId = "seqNum";
-    static String hmacKeyId = "hmacKey";
+    static final String sequenceNumberId = "seqNum";
+    static final String hmacKeyId = "hmacKey";
+    String hmacFilePath;
 
 
     byte[] hmacKey;
     Integer seqNum;
     Bucket db;
+
+
+    private byte[] loadHmacFromFile(String filepath) throws IOException {
+        try (FileReader fr = new FileReader(filepath);
+            BufferedReader br = new BufferedReader(fr)) {
+                return br.readLine().getBytes();
+            }
+    }
 
     @Override
     protected void doStart() {
@@ -56,6 +69,8 @@ public class UniclogsEnvironment extends AbstractYamcsService {
     @Override
     public void init(String yamcsInstance, String serviceName, YConfiguration config) throws InitException {
         super.init(yamcsInstance, serviceName, config);
+        this.hmacFilePath = YamcsServer.getServer().getDataDirectory() + config.getString("hmacFileName");
+        log.info(this.hmacFilePath);
         YarchDatabaseInstance instanceDb = YarchDatabase.getInstance(yamcsInstance);
         try {
             this.db = instanceDb.getBucket("env");
@@ -79,12 +94,11 @@ public class UniclogsEnvironment extends AbstractYamcsService {
     }
 
     private byte[] loadHmacKey() throws IOException {
-        byte[] testKey = {0x00, 0x01};
         byte[] hmac = this.db.getObject(hmacKeyId);
         if (hmac == null) {
-            this.log.info(String.format("Hmac Key not found for %s, Hmac Key set to %s", yamcsInstance, testKey));
-            this.saveHmacKey(testKey);
-            return testKey;
+            this.log.info(String.format("Hmac Key not in %s. Loading from file: %s", yamcsInstance, this.hmacFilePath));
+            hmac = this.loadHmacFromFile(this.hmacFilePath);
+            this.saveHmacKey(hmac);
         }
         return hmac;
     }
