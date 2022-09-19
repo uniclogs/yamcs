@@ -18,8 +18,6 @@ public class UniclogsEnvironment extends AbstractYamcsService {
     static final String sequenceNumberId = "seqNum";
     static final String hmacKeyId = "hmacKey";
     String hmacFilePath;
-
-
     byte[] hmacKey;
     Integer seqNum;
     Bucket db;
@@ -69,7 +67,7 @@ public class UniclogsEnvironment extends AbstractYamcsService {
     @Override
     public void init(String yamcsInstance, String serviceName, YConfiguration config) throws InitException {
         super.init(yamcsInstance, serviceName, config);
-        this.hmacFilePath = YamcsServer.getServer().getDataDirectory() + config.getString("hmacFileName");
+        this.hmacFilePath = YamcsServer.getServer().getDataDirectory() + "/" + config.getString("hmacFileName");
         log.info(this.hmacFilePath);
         YarchDatabaseInstance instanceDb = YarchDatabase.getInstance(yamcsInstance);
         try {
