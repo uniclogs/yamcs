@@ -1,8 +1,5 @@
 package org.oresat.uniclogs;
 
-import java.util.Arrays;
-import java.util.zip.CRC32;
-
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.yamcs.TmPacket;
@@ -11,7 +8,7 @@ import org.yamcs.utils.ByteArray;
 import org.yamcs.utils.ByteArrayUtils;
 
 public class EDLPacket {
-    CrcCciitCalculator crcCalc;
+    final CrcCciitCalculator crcCalc = new CrcCciitCalculator();
     ByteArray packet;
 
     public EDLPacket(byte[] packet, Integer seqNum, byte[] hmacSecret) {
@@ -32,7 +29,6 @@ public class EDLPacket {
     }
 
     public EDLPacket(TmPacket tmPacket) {
-        this.crcCalc = new CrcCciitCalculator();
         this.packet = ByteArray.wrap(tmPacket.getPacket());
     }
 
