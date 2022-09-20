@@ -1,15 +1,9 @@
 package org.oresat.uniclogs;
-
-import org.apache.commons.codec.digest.HmacAlgorithms;
-import org.apache.commons.codec.digest.HmacUtils;
 import org.yamcs.logging.Log;
 import org.yamcs.tctm.ccsds.error.CrcCciitCalculator;
 import org.yamcs.utils.ByteArray;
 import org.yamcs.utils.ByteArrayUtils;
 import org.yamcs.xtce.util.HexUtils;
-
-import io.netty.buffer.ByteBufUtil.HexUtil;
-
 public abstract class Packet {
     static final Log log = new Log(Packet.class);
     final CrcCciitCalculator crcCalc = new CrcCciitCalculator();
