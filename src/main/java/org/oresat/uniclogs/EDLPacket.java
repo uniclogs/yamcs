@@ -17,11 +17,13 @@ public class EDLPacket {
         ByteArrayUtils.encodeUnsignedShort(seqNum, packet, 6);
 
         this.packet = ByteArray.wrap(packet);
-        this.addHmac(hmacSecret);
+        
 
         // set frame length in packet: C = (Total Number of Octets in the Transfer Frame) − 1
         // CRC adds 8 -> (size + (8 - 1))
         ByteArrayUtils.encodeUnsignedShort(this.packet.size()+7, this.packet.array(), 4);
+        
+        this.addHmac(hmacSecret);
         
         // Add CRC data to packet
         this.packet.addLong(this.createCrc(this.packet.array()));
