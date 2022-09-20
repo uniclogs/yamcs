@@ -71,13 +71,8 @@ public class UniclogsEnvironment extends AbstractYamcsService {
     @Override
     public void init(String yamcsInstance, String serviceName, YConfiguration config) throws InitException {
         super.init(yamcsInstance, serviceName, config);
-<<<<<<< HEAD
         this.hmacEnvVar = config.getString("hmacEnvVar");
         log.info(this.hmacEnvVar);
-=======
-        this.hmacFilePath = YamcsServer.getServer().getDataDirectory().toAbsolutePath() + "/" + config.getString("hmacFileName");
-        log.info(this.hmacFilePath);
->>>>>>> 254ac8732210ada12f58613713e62d77ada269c9
         YarchDatabaseInstance instanceDb = YarchDatabase.getInstance(yamcsInstance);
         try {
             this.db = instanceDb.getBucket("env");
