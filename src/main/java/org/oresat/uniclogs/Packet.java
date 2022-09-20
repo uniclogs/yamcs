@@ -59,4 +59,8 @@ public abstract class Packet {
         return calculatedCrc.equals(collectedCrc);
     }
 
+    protected Integer getSeqNum() {
+        return this.sequenceNumber;
+    }
+
 }

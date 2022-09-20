@@ -18,11 +18,11 @@ public class EdlPacketPreprocessor extends AbstractPacketPreprocessor {
     @Override
     public TmPacket process(TmPacket tmPacket) {
         EDLPacket packet = new EDLPacket(tmPacket);
+        tmPacket.setSequenceCount(packet.getSeqNum());
         if (!packet.validCrc()) {
             tmPacket.setInvalid();
             this.eventProducer.sendWarning("PACKET_CORRUPT", "EDL Response Packet Corrupted");
         }
-        tmPacket.setSequenceCount(packet.getSeqNum());
         tmPacket.setGenerationTime(new Date().getTime());
         tmPacket.setLocalGenTimeFlag();
         return tmPacket;

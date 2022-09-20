@@ -25,10 +25,6 @@ public class EDLPacket extends Packet {
     }
 
     public EDLPacket(TmPacket tmPacket) {
-        super(tmPacket.getPacket(), getSequenceNumber(tmPacket.getPacket(), SEQ_NUM_OFFSET), 7);
-    }
-
-    public Integer getSeqNum() {
-        return this.sequenceNumber;
+        super(tmPacket.getPacket(), getSequenceNumber(tmPacket.getPacket(), SEQ_NUM_OFFSET), SEQ_NUM_OFFSET);
     }
 }

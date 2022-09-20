@@ -144,7 +144,7 @@
             <Parameter parameterTypeRef="string24" name="APRS_DataType_ID"/>
             <Parameter parameterTypeRef="satid" name="APRS_Satellite_ID"/>
             <Parameter parameterTypeRef="uint8" name="APRS_Revision"/>
-            <Parameter parameterTypeRef="uint32" name="CRC32"/>
+            <Parameter parameterTypeRef="uint16" name="CRC16"/>
             <Parameter parameterTypeRef="uint8" name="TempCmd" />
         </ParameterSet>
         <ContainerSet>
@@ -247,7 +247,7 @@
                     <ContainerRefEntry containerRef="./StarTracker/Status" />
                     <ContainerRefEntry containerRef="./GPS/Status" />
                     <ContainerRefEntry containerRef="./DxWifi/Status" />
-                    <ParameterRefEntry parameterRef="CRC32" />
+                    <ParameterRefEntry parameterRef="CRC16" />
                 </EntryList>
             </SequenceContainer>
             <SequenceContainer name="APRS_Packet">
