@@ -31,7 +31,7 @@ public class EDLPacket extends Packet {
 
     private void addHmac(byte[] hmacSecret) {
         byte[] hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, hmacSecret).hmac(this.data.array());
-        log.info("Hmac bytes: %s", Arrays.toString(hmac));
+        log.info(String.format("Hmac bytes: %s", Arrays.toString(hmac)));
         this.data.add(hmac);
         log.info(String.format("HMAC_SHA_256 (%s) added to packet (seqNum: %d).", HexUtils.hex(hmac), this.sequenceNumber));
     } 
