@@ -335,7 +335,7 @@
                         <FixedValueEntry name="Spare" binaryValue="00" sizeInBits="2"/>
                         <FixedValueEntry name="Operational_Control_Flag" binaryValue="0" sizeInBits="1"/>
                         <FixedValueEntry name="VC_Frame_Count_Length" binaryValue="0" sizeInBits="3"/>
-                        <FixedValueEntry name="Seq_Num" binaryValue="0" sizeInBits="8"/>
+                        <FixedValueEntry name="Seq_Num" binaryValue="00000000" sizeInBits="32"/>
                         <FixedValueEntry name="TFDZ_Construction" binaryValue="7" sizeInBits="3"/>
                         <FixedValueEntry name="USLP_Protocol_ID" binaryValue="5" sizeInBits="5"/>
                         <ArgumentRefEntry argumentRef="Command"/>

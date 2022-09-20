@@ -14,19 +14,18 @@ public class EDLPacket {
 
     public EDLPacket(byte[] packet, Integer seqNum, byte[] hmacSecret) {
         // set sequence number in packet
-        ByteArrayUtils.encodeUnsignedShort(seqNum, packet, 6);
+        ByteArrayUtils.encodeInt(seqNum, packet, 7);
 
         this.packet = ByteArray.wrap(packet);
         
 
         // set frame length in packet: C = (Total Number of Octets in the Transfer Frame) − 1
-        // CRC adds 8 -> (size + (8 - 1))
-        ByteArrayUtils.encodeUnsignedShort(this.packet.size()+7, this.packet.array(), 4);
-        
+        // CRC adds 2, HMAC adds 32 -> (size + (34 - 1))
+        ByteArrayUtils.encodeUnsignedShort(this.packet.size()+33, this.packet.array(), 4);
         this.addHmac(hmacSecret);
         
         // Add CRC data to packet
-        this.packet.addLong(this.createCrc(this.packet.array()));
+        this.packet.addInt(this.createCrc(this.packet.array()).intValue());
 
     }
 
