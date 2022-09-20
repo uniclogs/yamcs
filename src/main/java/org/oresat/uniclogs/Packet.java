@@ -6,6 +6,9 @@ import org.yamcs.logging.Log;
 import org.yamcs.tctm.ccsds.error.CrcCciitCalculator;
 import org.yamcs.utils.ByteArray;
 import org.yamcs.utils.ByteArrayUtils;
+import org.yamcs.xtce.util.HexUtils;
+
+import io.netty.buffer.ByteBufUtil.HexUtil;
 
 public abstract class Packet {
     static final Log log = new Log(Packet.class);
@@ -30,6 +33,7 @@ public abstract class Packet {
     }
 
     protected byte[] getBinary() {
+        log.info("Packet Data: " + HexUtils.hex(this.data.array()));
         return this.data.array();
     }
 
@@ -37,14 +41,17 @@ public abstract class Packet {
         Short crc = (short) this.crcCalc.compute(this.data.array(), 0, this.data.array().length);
         log.info(String.format("CRC_16 (%d) added to packet (seqNum: %d).", crc, this.sequenceNumber));
         this.data.addShort(crc);
+        log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
 
     protected void encodeSeqNum() {
         ByteArrayUtils.encodeInt(this.sequenceNumber, this.data.array(), this.sequenceNumberOffset);
+        log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
 
     protected void encodeFrameLength(Integer intToAdd, Integer frameLengthOffset) {
         ByteArrayUtils.encodeUnsignedShort(this.data.size()+intToAdd, this.data.array(), frameLengthOffset);
+        log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
 
     protected boolean validCrc() {
