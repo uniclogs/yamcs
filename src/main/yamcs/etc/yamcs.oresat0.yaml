@@ -1,7 +1,7 @@
 services:
   - class: org.oresat.uniclogs.UniclogsEnvironment
     args:
-      hmacFileName: secret 
+      hmacEnvVar: HMAC_KEY 
   - class: org.yamcs.archive.XtceTmRecorder
   - class: org.yamcs.archive.ParameterRecorder
   - class: org.yamcs.archive.AlarmRecorder

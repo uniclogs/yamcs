@@ -17,7 +17,7 @@ import org.yamcs.yarch.YarchDatabaseInstance;
 public class UniclogsEnvironment extends AbstractYamcsService {
     static final String sequenceNumberId = "seqNum";
     static final String hmacKeyId = "hmacKey";
-    String hmacFilePath;
+    String hmacEnvVar;
     byte[] hmacKey;
     Integer seqNum;
     Bucket db;
@@ -28,6 +28,10 @@ public class UniclogsEnvironment extends AbstractYamcsService {
             BufferedReader br = new BufferedReader(fr)) {
                 return br.readLine().getBytes();
             }
+    }
+
+    private byte[] loadHmacFromEnv(String varName) {
+        return System.getenv(varName).getBytes();
     }
 
     @Override
@@ -67,8 +71,8 @@ public class UniclogsEnvironment extends AbstractYamcsService {
     @Override
     public void init(String yamcsInstance, String serviceName, YConfiguration config) throws InitException {
         super.init(yamcsInstance, serviceName, config);
-        this.hmacFilePath = YamcsServer.getServer().getDataDirectory() + "/" + config.getString("hmacFileName");
-        log.info(this.hmacFilePath);
+        this.hmacEnvVar = config.getString("hmacEnvVar");
+        log.info(this.hmacEnvVar);
         YarchDatabaseInstance instanceDb = YarchDatabase.getInstance(yamcsInstance);
         try {
             this.db = instanceDb.getBucket("env");
@@ -94,8 +98,8 @@ public class UniclogsEnvironment extends AbstractYamcsService {
     private byte[] loadHmacKey() throws IOException {
         byte[] hmac = this.db.getObject(hmacKeyId);
         if (hmac == null) {
-            this.log.info(String.format("Hmac Key not in %s. Loading from file: %s", yamcsInstance, this.hmacFilePath));
-            hmac = this.loadHmacFromFile(this.hmacFilePath);
+            this.log.info(String.format("Hmac Key not in %s. Loading from env var: %s", yamcsInstance, this.hmacEnvVar));
+            hmac = this.loadHmacFromEnv(this.hmacEnvVar);
             this.saveHmacKey(hmac);
         }
         return hmac;
