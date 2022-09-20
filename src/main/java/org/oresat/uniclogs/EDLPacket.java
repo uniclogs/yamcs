@@ -1,8 +1,11 @@
 package org.oresat.uniclogs;
 
+import java.util.Arrays;
+
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.yamcs.TmPacket;
+import org.yamcs.xtce.util.HexUtils;
 
 
 public class EDLPacket extends Packet {
@@ -29,7 +32,7 @@ public class EDLPacket extends Packet {
     private void addHmac(byte[] hmacSecret) {
         byte[] hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, hmacSecret).hmac(this.data.array());
         this.data.add(hmac);
-        log.info(String.format("HMAC_SHA_256 (%s bit) added to packet (seqNum: %d).", hmac.length, this.sequenceNumber));
+        log.info(String.format("HMAC_SHA_256 (%s) added to packet (seqNum: %d).", HexUtils.hex(hmac), this.sequenceNumber));
     } 
 
     public EDLPacket(TmPacket tmPacket) {
