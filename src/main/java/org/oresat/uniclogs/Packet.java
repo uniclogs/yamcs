@@ -13,6 +13,7 @@ public abstract class Packet {
 
     protected Packet(byte[] data, Integer sequenceNumber, Integer sequenceNumberOffset) {
         this.data = ByteArray.wrap(data);
+        log.info("Packet Data: " + HexUtils.hex(this.data.array()));
         this.sequenceNumber = sequenceNumber;
         this.sequenceNumberOffset = sequenceNumberOffset;
     }
@@ -32,6 +33,7 @@ public abstract class Packet {
     }
 
     protected void encodeCrc() {
+        log.info("Enc Crc Packet Data: " + HexUtils.hex(this.data.array()));
         Short crc = (short) this.crcCalc.compute(this.data.array(), 0, this.data.array().length);
         log.info(String.format("CRC_16 (%d) added to packet (seqNum: %d).", crc, this.sequenceNumber));
         this.data.addShort(crc);
@@ -39,11 +41,13 @@ public abstract class Packet {
     }
 
     protected void encodeSeqNum() {
+        log.info("Enc SeqNum Packet Data: " + HexUtils.hex(this.data.array()));
         ByteArrayUtils.encodeInt(this.sequenceNumber, this.data.array(), this.sequenceNumberOffset);
         log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
 
     protected void encodeFrameLength(Integer intToAdd, Integer frameLengthOffset) {
+        log.info("Packet Data: " + HexUtils.hex(this.data.array()));
         ByteArrayUtils.encodeUnsignedShort(this.data.size()+intToAdd, this.data.array(), frameLengthOffset);
         log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
