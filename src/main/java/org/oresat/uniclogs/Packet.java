@@ -21,12 +21,6 @@ public abstract class Packet {
     }
 
 
-    protected void addHmac(byte[] hmacSecret) {
-        byte[] hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, hmacSecret).hmac(this.data.array());
-        this.data.add(hmac);
-        log.info(String.format("HMAC_SHA_256 (%s bit) added to packet (seqNum: %d).", hmac.length, this.sequenceNumber));
-    } 
-
     protected Integer getSequenceNumber() {
         return getSequenceNumber(this.data.array(), this.sequenceNumberOffset);
     }
@@ -56,6 +50,7 @@ public abstract class Packet {
     protected boolean validCrc() {
         Integer calculatedCrc = this.crcCalc.compute(this.data.array(), 0, this.data.size()-2);
         Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.size() -2);
+        log.info(String.format("CRC_16: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
         return calculatedCrc.equals(collectedCrc);
     }
 

@@ -1,5 +1,7 @@
 package org.oresat.uniclogs;
 
+import org.apache.commons.codec.digest.HmacAlgorithms;
+import org.apache.commons.codec.digest.HmacUtils;
 import org.yamcs.TmPacket;
 
 
@@ -23,6 +25,12 @@ public class EDLPacket extends Packet {
         this.encodeCrc();
 
     }
+
+    private void addHmac(byte[] hmacSecret) {
+        byte[] hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, hmacSecret).hmac(this.data.array());
+        this.data.add(hmac);
+        log.info(String.format("HMAC_SHA_256 (%s bit) added to packet (seqNum: %d).", hmac.length, this.sequenceNumber));
+    } 
 
     public EDLPacket(TmPacket tmPacket) {
         super(tmPacket.getPacket(), getSequenceNumber(tmPacket.getPacket(), SEQ_NUM_OFFSET), SEQ_NUM_OFFSET);
