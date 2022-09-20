@@ -6,10 +6,12 @@ import java.util.zip.CRC32;
 import org.apache.commons.codec.digest.HmacAlgorithms;
 import org.apache.commons.codec.digest.HmacUtils;
 import org.yamcs.TmPacket;
+import org.yamcs.tctm.ccsds.error.CrcCciitCalculator;
 import org.yamcs.utils.ByteArray;
 import org.yamcs.utils.ByteArrayUtils;
 
 public class EDLPacket {
+    CrcCciitCalculator crcCalc;
     ByteArray packet;
 
     public EDLPacket(byte[] packet, Integer seqNum, byte[] hmacSecret) {
@@ -25,11 +27,12 @@ public class EDLPacket {
         this.addHmac(hmacSecret);
         
         // Add CRC data to packet
-        this.packet.addInt(this.createCrc(this.packet.array()).intValue());
+        this.packet.addShort((short) this.createCrc(this.packet.array()));
 
     }
 
     public EDLPacket(TmPacket tmPacket) {
+        this.crcCalc = new CrcCciitCalculator();
         this.packet = ByteArray.wrap(tmPacket.getPacket());
     }
 
@@ -42,10 +45,8 @@ public class EDLPacket {
         return num.intValue();
     }
 
-    private Long createCrc(byte[] data) {
-        CRC32 crc = new CRC32();
-        crc.update(data);
-        return crc.getValue();
+    private int createCrc(byte[] data) {
+        return this.crcCalc.compute(data, 0, data.length);
     }
 
     public byte[] getBinary() {
@@ -54,11 +55,10 @@ public class EDLPacket {
 
     public boolean containsValidCrc() {
         // get packet data without the CRC data, calculate CRC value from packet data       
-        byte[] pkt = Arrays.copyOfRange(this.packet.array(), 0, this.packet.size()-8);
-        Long calcCrc = this.createCrc(pkt);
+        int calcCrc = this.crcCalc.compute(this.packet.array(), 0, this.packet.size()-2);
 
         // get CRC data from packet
-        Long packetCrc = ByteArrayUtils.decodeLong(this.packet.array(), this.packet.size()-8);
+        Integer packetCrc = ByteArrayUtils.decodeUnsignedShort(this.packet.array(), this.packet.size()-2);
         
         // return the result of if the calculated CRC matches the returning CRC data
         return packetCrc.equals(calcCrc);
