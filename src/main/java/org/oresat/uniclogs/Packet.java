@@ -34,9 +34,9 @@ public abstract class Packet {
 
     protected void encodeCrc() {
         log.info("Enc Crc Packet Data: " + HexUtils.hex(this.data.array()));
-        Integer crc = this.crcCalc.compute(this.data.array(), 0, this.data.array().length);
+        int crc = this.crcCalc.compute(this.data.array(), 0, this.data.array().length);
         log.info(String.format("CRC_16 (%d) added to packet (seqNum: %d).", crc, this.sequenceNumber));
-        this.data.addShort(crc.shortValue());
+        this.data.addShort((short) crc);
         log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
 
