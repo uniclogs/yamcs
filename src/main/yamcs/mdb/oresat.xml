@@ -138,7 +138,7 @@
             <Parameter parameterTypeRef="uint2" name="Spare"/>
             <Parameter parameterTypeRef="opctrl" name="Operational_Control_Flag"/>
             <Parameter parameterTypeRef="uint3" name="VC_Frame_Count_Length"/>
-            <Parameter parameterTypeRef="uint8" name="Seq_Num"/>
+            <Parameter parameterTypeRef="uint32" name="Seq_Num"/>
             <Parameter parameterTypeRef="uint3" name="TFDZ_Construction"/>
             <Parameter parameterTypeRef="uint5" name="USLP_Protocol_ID"/>
             <Parameter parameterTypeRef="string24" name="APRS_DataType_ID"/>

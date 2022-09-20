@@ -37,8 +37,7 @@ public class EDLPacket {
     }
 
     public Integer getSeqNum() {
-        Short num = ByteArrayUtils.decodeShort(this.packet.array(), 6);
-        return num.intValue();
+        return ByteArrayUtils.decodeInt(this.packet.array(), 7);
     }
 
     private int createCrc(byte[] data) {
