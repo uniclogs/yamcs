@@ -45,4 +45,9 @@ public class EDLPacket extends Packet {
     public EDLPacket(TmPacket tmPacket) {
         super(tmPacket.getPacket(), tmPacket.getPacket().length, getSequenceNumber(tmPacket.getPacket(), SEQ_NUM_OFFSET), SEQ_NUM_OFFSET);
     }
+
+    @Override
+    boolean validCrc() {
+        return crc16();
+    }
 }

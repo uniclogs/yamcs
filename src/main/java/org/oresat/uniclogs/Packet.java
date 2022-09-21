@@ -53,27 +53,22 @@ public abstract class Packet {
         log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
 
-    protected boolean validCrc() {
-        Integer calculatedCrc = this.crcCalc.compute(this.data.array(), 0, this.data.array().length-2, 0);
-        Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -2);
+    abstract boolean validCrc();
+
+    protected boolean crc16() {
+        Crc16Calculator crc = new Crc16Calculator(0x1021);
+        Integer calculatedCrc = crc.compute(this.data.array(), 0, this.data.array().length-2, 0);
+        Integer collectedCrc = ByteArrayUtils.decodeInt(this.data.array(), this.data.array().length -2);
         log.info(String.format("CRC_16: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
-        crciit();
-        crc32();
         return calculatedCrc.equals(collectedCrc);
     }
 
-    protected void crciit() {
-        CrcCciitCalculator calc = new CrcCciitCalculator();
-        Integer calculatedCrc = calc.compute(this.data.array(), 0, this.data.array().length-2);
-        Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -2);
-        log.info(String.format("CRC_CCITT: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
-    }
-
-    protected void crc32() {
+    protected boolean crc32() {
         Crc32Calculator crc = new Crc32Calculator(0x04C11DB7);
         Integer calculatedCrc = crc.compute(this.data.array(), 0, this.data.array().length-4, 0);
         Integer collectedCrc = ByteArrayUtils.decodeInt(this.data.array(), this.data.array().length -4);
-        log.info(String.format("CRC_CCITT: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
+        log.info(String.format("CRC_32: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
+        return calculatedCrc.equals(collectedCrc);
     }
 
     protected Integer getSeqNum() {
