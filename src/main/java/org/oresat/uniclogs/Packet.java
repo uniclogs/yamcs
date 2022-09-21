@@ -1,5 +1,6 @@
 package org.oresat.uniclogs;
 import java.nio.ByteBuffer;
+import java.util.zip.CRC32;
 
 import org.yamcs.logging.Log;
 import org.yamcs.tctm.Iso16CrcCalculator;
@@ -61,8 +62,10 @@ public abstract class Packet {
     }
 
     protected void crc32() {
-        Integer calculatedCrc = this.crcCalc.compute(this.data.array(), 0, this.data.array().length-4);
-        Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -4);
+        CRC32 calcCrc = new CRC32();
+        calcCrc.update(this.data.array(), 0, this.data.array().length-4);
+        Long calculatedCrc = calcCrc.getValue();
+        Long collectedCrc = ByteArrayUtils.decodeLong(this.data.array(), this.data.array().length -4);
         log.info(String.format("CRC_32: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
     }
 
