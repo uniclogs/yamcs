@@ -14,6 +14,7 @@ public class BeaconPacket extends Packet {
         
         log.info(HexUtils.hex(Arrays.copyOfRange(pkt, 0, pkt.length-4)));
         log.info(HexUtils.hex(Arrays.copyOfRange(pkt, pkt.length-4, pkt.length)));
+        log.info(HexUtils.hex(Arrays.copyOfRange(pkt, 0, pkt.length-4)));
     }
 
     @Override
