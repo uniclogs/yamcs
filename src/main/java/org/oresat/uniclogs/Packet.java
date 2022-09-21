@@ -3,12 +3,10 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.zip.CRC32;
 
-import org.apache.commons.codec.binary.Hex;
 import org.yamcs.logging.Log;
-import org.yamcs.tctm.Iso16CrcCalculator;
 import org.yamcs.tctm.ccsds.error.Crc16Calculator;
+import org.yamcs.tctm.ccsds.error.Crc32Calculator;
 import org.yamcs.tctm.ccsds.error.CrcCciitCalculator;
-import org.yamcs.utils.ByteArray;
 import org.yamcs.utils.ByteArrayUtils;
 import org.yamcs.xtce.util.HexUtils;
 public abstract class Packet {
@@ -72,10 +70,9 @@ public abstract class Packet {
     }
 
     protected void crc32() {
-        Crc32Calculator calc = new Crc32Calculator();
-        byte[] payload = Arrays.copyOfRange(this.data.array(), 0, this.data.array().length-4);
-        Integer calculatedCrc = calc.compute(payload, 0);
-        Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -4);
+        Crc32Calculator crc = new Crc32Calculator(0x04C11DB7);
+        Integer calculatedCrc = crc.compute(this.data.array(), 0, this.data.array().length-4, 0);
+        Integer collectedCrc = ByteArrayUtils.decodeInt(this.data.array(), this.data.array().length -4);
         log.info(String.format("CRC_CCITT: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
     }
 
