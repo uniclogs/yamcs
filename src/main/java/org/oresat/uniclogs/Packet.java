@@ -11,7 +11,7 @@ import org.yamcs.utils.ByteArrayUtils;
 import org.yamcs.xtce.util.HexUtils;
 public abstract class Packet {
     static final Log log = new Log(Packet.class);
-    final Iso16CrcCalculator crcCalc = new Iso16CrcCalculator();
+    final Crc16Calculator crcCalc = new Crc16Calculator(0x8005);
     Integer sequenceNumber;
     Integer sequenceNumberOffset;
     ByteBuffer data;
@@ -37,7 +37,7 @@ public abstract class Packet {
     }
 
     protected int calcCrc(byte[] data) {
-        return this.crcCalc.compute(data, 0, data.length);
+        return this.crcCalc.compute(data, 0, data.length, 0);
     }
 
     protected void encodeSeqNum() {
@@ -54,7 +54,7 @@ public abstract class Packet {
     }
 
     protected boolean validCrc() {
-        Integer calculatedCrc = this.crcCalc.compute(this.data.array(), 0, this.data.array().length-2);
+        Integer calculatedCrc = this.crcCalc.compute(this.data.array(), 0, this.data.array().length-2, 0);
         Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -2);
         log.info(String.format("CRC_16: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
         crciit();
