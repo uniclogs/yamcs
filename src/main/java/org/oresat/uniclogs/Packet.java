@@ -57,17 +57,8 @@ public abstract class Packet {
         Integer calculatedCrc = this.crcCalc.compute(this.data.array(), 0, this.data.array().length-2);
         Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -2);
         log.info(String.format("CRC_16: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
-        crc32();
         crciit();
         return calculatedCrc.equals(collectedCrc);
-    }
-
-    protected void crc32() {
-        CRC32 calcCrc = new CRC32();
-        calcCrc.update(this.data.array(), 0, this.data.array().length-4);
-        Long calculatedCrc = calcCrc.getValue();
-        Long collectedCrc = ByteArrayUtils.decodeLong(this.data.array(), this.data.array().length -4);
-        log.info(String.format("CRC_32: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
     }
 
     protected void crciit() {
