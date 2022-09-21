@@ -57,16 +57,16 @@ public abstract class Packet {
 
     protected boolean crc16() {
         Crc16Calculator crc = new Crc16Calculator(0x1021);
-        Integer calculatedCrc = crc.compute(this.data.array(), 0, this.data.array().length-2, 0);
-        Integer collectedCrc = ByteArrayUtils.decodeIntLE(this.data.array(), this.data.array().length -2);
+        Integer calculatedCrc = crc.compute(this.data.array(), 0, this.data.array().length-2, 0xFFFFFFFF);
+        Integer collectedCrc = ByteArrayUtils.decodeInt(this.data.array(), this.data.array().length -2);
         log.info(String.format("CRC_16: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
         return calculatedCrc.equals(collectedCrc);
     }
 
     protected boolean crc32() {
         Crc32Calculator crc = new Crc32Calculator(0x04C11DB7);
-        Integer calculatedCrc = crc.compute(this.data.array(), 0, this.data.array().length-4, 0xFFFFFFFF);
-        Integer collectedCrc = ByteArrayUtils.decodeIntLE(this.data.array(), this.data.array().length -4);
+        Integer calculatedCrc = crc.compute(this.data.array(), 0, this.data.array().length - 4, 0xFFFFFFFF);
+        Integer collectedCrc = ByteArrayUtils.decodeInt(this.data.array(), this.data.array().length - 4);
         log.info(String.format("CRC_32: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
         return calculatedCrc.equals(collectedCrc);
     }

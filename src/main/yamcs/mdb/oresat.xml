@@ -9,55 +9,55 @@
         <ParameterTypeSet>
             <IntegerParameterType name="uint1" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="1"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="1"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint2" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="2"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="2"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint3" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="3"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="3"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint4" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="4"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="4"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint5" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="5"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="5"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint6" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="6"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="6"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint7" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="7"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="7"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint8" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint16" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
             </IntegerParameterType>
             <IntegerParameterType name="uint32" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="32"/>
             </IntegerParameterType>
             <IntegerParameterType name="int8" signed="true">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="8"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="twosComplement" sizeInBits="8"/>
             </IntegerParameterType>
             <IntegerParameterType name="int16" signed="true">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="twosComplement" sizeInBits="16"/>
             </IntegerParameterType>
             <IntegerParameterType name="int32" signed="true">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="twosComplement" sizeInBits="32"/>
             </IntegerParameterType>
             <BooleanParameterType name="bool1">
                 <UnitSet/>
@@ -264,35 +264,35 @@
         <ArgumentTypeSet>
             <IntegerArgumentType name="uint1" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="1"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="1"/>
             </IntegerArgumentType>
             <IntegerArgumentType name="uint2" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="2"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="2"/>
             </IntegerArgumentType>
             <IntegerArgumentType name="uint3" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="3"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="3"/>
             </IntegerArgumentType>
             <IntegerArgumentType name="uint4" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="4"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="4"/>
             </IntegerArgumentType>
             <IntegerArgumentType name="uint5" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="5"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="5"/>
             </IntegerArgumentType>
             <IntegerArgumentType name="uint6" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="6"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="6"/>
             </IntegerArgumentType>
             <IntegerArgumentType name="uint8" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
             </IntegerArgumentType>
             <IntegerArgumentType name="uint16" signed="false">
                 <UnitSet/>
-                <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
+                <IntegerDataEncoding byteOrder="mostSignificantByteFirst" encoding="unsigned" sizeInBits="16"/>
             </IntegerArgumentType>
             <StringArgumentType name="string16" shortDescription="US-ASCII 2 chars">
                 <UnitSet/>
