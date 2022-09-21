@@ -58,6 +58,7 @@ public abstract class Packet {
         Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -2);
         log.info(String.format("CRC_16: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
         crc32();
+        crciit();
         return calculatedCrc.equals(collectedCrc);
     }
 
