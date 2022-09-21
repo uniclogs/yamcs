@@ -21,7 +21,6 @@ public abstract class Packet {
     protected Packet(byte[] data, Integer size, Integer sequenceNumber, Integer sequenceNumberOffset) {
         this.data = ByteBuffer.allocate(size);
         this.data.put(data);
-        log.info(HexUtils.hex(Arrays.copyOfRange(data, 0, data.length-4)));
         this.sequenceNumber = sequenceNumber;
         this.sequenceNumberOffset = sequenceNumberOffset;
     }
