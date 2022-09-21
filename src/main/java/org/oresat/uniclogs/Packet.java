@@ -1,18 +1,23 @@
 package org.oresat.uniclogs;
+import java.nio.ByteBuffer;
+
 import org.yamcs.logging.Log;
+import org.yamcs.tctm.Iso16CrcCalculator;
+import org.yamcs.tctm.ccsds.error.Crc16Calculator;
 import org.yamcs.tctm.ccsds.error.CrcCciitCalculator;
 import org.yamcs.utils.ByteArray;
 import org.yamcs.utils.ByteArrayUtils;
 import org.yamcs.xtce.util.HexUtils;
 public abstract class Packet {
     static final Log log = new Log(Packet.class);
-    final CrcCciitCalculator crcCalc = new CrcCciitCalculator();
+    final Iso16CrcCalculator crcCalc = new Iso16CrcCalculator();
     Integer sequenceNumber;
     Integer sequenceNumberOffset;
-    ByteArray data;
+    ByteBuffer data;
 
-    protected Packet(byte[] data, Integer sequenceNumber, Integer sequenceNumberOffset) {
-        this.data = ByteArray.wrap(data);
+    protected Packet(byte[] data, Integer size, Integer sequenceNumber, Integer sequenceNumberOffset) {
+        this.data = ByteBuffer.allocate(size);
+        this.data.put(data);
         log.info("Packet Data: " + HexUtils.hex(this.data.array()));
         this.sequenceNumber = sequenceNumber;
         this.sequenceNumberOffset = sequenceNumberOffset;
@@ -38,19 +43,20 @@ public abstract class Packet {
 
     protected void encodeSeqNum() {
         log.info("Enc SeqNum Packet Data: " + HexUtils.hex(this.data.array()));
-        ByteArrayUtils.encodeInt(this.sequenceNumber, this.data.array(), this.sequenceNumberOffset);
+        this.data.putInt(this.sequenceNumberOffset, this.sequenceNumber);
         log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
 
     protected void encodeFrameLength(Integer intToAdd, Integer frameLengthOffset) {
+        Integer length = intToAdd + this.data.array().length;
         log.info("Packet Data: " + HexUtils.hex(this.data.array()));
-        ByteArrayUtils.encodeUnsignedShort(this.data.size()+intToAdd, this.data.array(), frameLengthOffset);
+        this.data.putShort(frameLengthOffset,  length.shortValue());
         log.info("Packet Data: " + HexUtils.hex(this.data.array()));
     }
 
     protected boolean validCrc() {
-        Integer calculatedCrc = this.crcCalc.compute(this.data.array(), 0, this.data.size()-2);
-        Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.size() -2);
+        Integer calculatedCrc = this.crcCalc.compute(this.data.array(), 0, this.data.array().length-2);
+        Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -2);
         log.info(String.format("CRC_16: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
         return calculatedCrc.equals(collectedCrc);
     }
