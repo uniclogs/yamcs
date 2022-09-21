@@ -34,7 +34,15 @@ public class EDLPacket extends Packet {
         log.info(String.format("Hmac bytes: %s", Arrays.toString(hmac)));
         this.data.add(hmac);
         log.info(String.format("HMAC_SHA_256 (%s) added to packet (seqNum: %d).", HexUtils.hex(hmac), this.sequenceNumber));
-    } 
+    }
+
+    protected void encodeCrc() {
+        log.info("Enc Crc Packet Data: " + HexUtils.hex(this.data.array()));
+        int crc = this.crcCalc.compute(this.data.array(), 0, this.data.size());
+        log.info(String.format("CRC_16 (%d) added to packet (seqNum: %d).", crc, this.sequenceNumber));
+        this.data.addShort((short) crc);
+        log.info("Packet Data: " + HexUtils.hex(this.data.array()));
+    }
 
     public EDLPacket(TmPacket tmPacket) {
         super(tmPacket.getPacket(), getSequenceNumber(tmPacket.getPacket(), SEQ_NUM_OFFSET), SEQ_NUM_OFFSET);
