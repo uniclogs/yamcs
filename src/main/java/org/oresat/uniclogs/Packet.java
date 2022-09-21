@@ -69,6 +69,13 @@ public abstract class Packet {
         log.info(String.format("CRC_32: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
     }
 
+    protected void crciit() {
+        CrcCciitCalculator calc = new CrcCciitCalculator();
+        Integer calculatedCrc = calc.compute(this.data.array(), 0, this.data.array().length-2);
+        Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length -2);
+        log.info(String.format("CRC_CCITT: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
+    }
+
     protected Integer getSeqNum() {
         return this.sequenceNumber;
     }
