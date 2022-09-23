@@ -70,7 +70,6 @@
                     <ParameterRefEntry parameterRef="UHFRx_Bytes_Receieved"/>
                     <ParameterRefEntry parameterRef="UHFRx_Valid_Packets"/>
                     <ParameterRefEntry parameterRef="UHFRx_RSSI"/>
-                    <ParameterRefEntry parameterRef="Fw_Next_Bank"/>
                     <ParameterRefEntry parameterRef="Fw_Bank"/>
                     <ParameterRefEntry parameterRef="LRx_Sequence_Number"/>
                     <ParameterRefEntry parameterRef="LRx_Rejected_Packets"/>                    
