@@ -13,7 +13,7 @@ public class EDLPacket extends Packet {
 
     public EDLPacket(byte[] packet, Integer seqNum, byte[] hmacSecret) {
         //sequence number offset of 7
-        super(packet, packet.length+34, seqNum, SEQ_NUM_OFFSET);
+        super(packet, packet.length+32, seqNum, SEQ_NUM_OFFSET);
 
         // set sequence number in packet
         this.encodeSeqNum();
@@ -21,11 +21,11 @@ public class EDLPacket extends Packet {
 
         // set frame length in packet: C = (Total Number of Octets in the Transfer Frame) − 1
         // CRC adds 2, HMAC adds 32 -> (size + (34 - 1))
-        this.encodeFrameLength(33, 4);
+        this.encodeFrameLength(31, 4);
         this.addHmac(hmacSecret);
         
         // Add CRC data to packet
-        this.encodeCrc();
+        //this.encodeCrc();
 
     }
 

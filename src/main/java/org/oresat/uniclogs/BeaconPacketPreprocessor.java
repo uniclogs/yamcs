@@ -28,7 +28,7 @@ public class BeaconPacketPreprocessor extends AbstractPacketPreprocessor {
     public TmPacket process(TmPacket tmPacket) {
         BeaconPacket packet = new BeaconPacket(tmPacket);
         if (!packet.validCrc()) {
-            tmPacket.setInvalid();
+            //tmPacket.setInvalid();
             this.eventProducer.sendWarning("PACKET_CORRUPT", "Beacon Packet Corrupted");
         }
         tmPacket.setSequenceCount(packet.getSeqNum());

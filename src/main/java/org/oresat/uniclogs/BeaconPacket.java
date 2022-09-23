@@ -18,6 +18,6 @@ public class BeaconPacket extends Packet {
 
     @Override
     boolean validCrc() {
-        return crc32();
+        return this.crc32(16, this.data.array().length-20);
     }
 }

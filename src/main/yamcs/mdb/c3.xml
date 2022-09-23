@@ -25,11 +25,20 @@
                 </UnitSet>
                 <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8"/>
             </IntegerParameterType>
+            <AbsoluteTimeParameterType name="time" shortDescription="POSIX UNIX Time 'timeval' which is 2 unsigned 32 bit integers">
+				<Encoding>
+					<IntegerDataEncoding sizeInBits="32" byteOrder="leastSignificantByteFirst" />
+				</Encoding>
+				<ReferenceTime>
+					<Epoch>UNIX</Epoch>
+				</ReferenceTime>
+			</AbsoluteTimeParameterType>
+
         </ParameterTypeSet>
         <ParameterSet>
             <Parameter name="M4_State" parameterTypeRef="string8"/>
             <Parameter name="M4_Uptime" parameterTypeRef="seconds"/>
-            <Parameter name="RTC_Time" parameterTypeRef="seconds"/>
+            <Parameter name="RTC_Time" parameterTypeRef="time"/>
             <Parameter name="Power_Cycles" parameterTypeRef="uint16"/>
             <Parameter name="Emmc_Capacity" parameterTypeRef="percentage"/>
             <Parameter name="LRx_Bytes_Received" parameterTypeRef="uint32"/>
@@ -46,7 +55,11 @@
         <ContainerSet>
             <SequenceContainer name="Status">
                 <EntryList>
-                    <ParameterRefEntry parameterRef="M4_State"/>
+                    <ParameterRefEntry parameterRef="M4_State">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>0</FixedValue>
+                        </LocationInContainerInBits>
+                    </ParameterRefEntry>
                     <ParameterRefEntry parameterRef="M4_Uptime"/>
                     <ParameterRefEntry parameterRef="RTC_Time"/>
                     <ParameterRefEntry parameterRef="Power_Cycles"/>
@@ -54,13 +67,13 @@
                     <ParameterRefEntry parameterRef="LRx_Bytes_Received"/>
                     <ParameterRefEntry parameterRef="LRx_Valid_Packets"/>
                     <ParameterRefEntry parameterRef="LRx_RSSI"/>
-                    <ParameterRefEntry parameterRef="LRx_Sequence_Number"/>
-                    <ParameterRefEntry parameterRef="LRx_Rejected_Packets"/>
                     <ParameterRefEntry parameterRef="UHFRx_Bytes_Receieved"/>
                     <ParameterRefEntry parameterRef="UHFRx_Valid_Packets"/>
                     <ParameterRefEntry parameterRef="UHFRx_RSSI"/>
                     <ParameterRefEntry parameterRef="Fw_Next_Bank"/>
                     <ParameterRefEntry parameterRef="Fw_Bank"/>
+                    <ParameterRefEntry parameterRef="LRx_Sequence_Number"/>
+                    <ParameterRefEntry parameterRef="LRx_Rejected_Packets"/>                    
                 </EntryList>
             </SequenceContainer>
         </ContainerSet>
@@ -73,7 +86,7 @@
             </BooleanArgumentType>
             <StringArgumentType name="filepath">
 	         <UnitSet/>
-	            <StringDataEncoding encoding="US-ASCII" bitOrder="mostSignificantBitFirst">
+	            <StringDataEncoding encoding="US-ASCII" bitOrder="leastSignificantBitFirst">
 		            <SizeInBits>
 			            <Fixed>
 				            <FixedValue>400</FixedValue>
@@ -161,8 +174,8 @@
                 <CommandContainer name="RESET_Container">
                     <BaseContainer containerRef="EDL_Command_Packet" />
                     <EntryList>
-                        <xtce:FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
-                        <xtce:FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
+                        <FixedValueEntry binaryValue="01234567" sizeInBits="32"/>
+                        <FixedValueEntry binaryValue="89ABCDEF" sizeInBits="32"/>
                     </EntryList>
                 </CommandContainer>
             </MetaCommand>
