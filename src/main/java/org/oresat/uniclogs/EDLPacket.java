@@ -39,7 +39,7 @@ public class EDLPacket extends Packet {
     protected void encodeCrc() {
         int crc = this.calcCrc(this.data.array());
         log.info(String.format("CRC_32 (%d) added to packet (seqNum: %d).", crc, this.sequenceNumber));
-        this.data.putShort((short) crc);
+        this.data.putInt(crc);
     }
 
     public EDLPacket(TmPacket tmPacket) {
