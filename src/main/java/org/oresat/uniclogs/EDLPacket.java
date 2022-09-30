@@ -13,19 +13,19 @@ public class EDLPacket extends Packet {
 
     public EDLPacket(byte[] packet, Integer seqNum, byte[] hmacSecret) {
         //sequence number offset of 7
-        super(packet, packet.length+32, seqNum, SEQ_NUM_OFFSET);
+        super(packet, packet.length+36, seqNum, SEQ_NUM_OFFSET);
 
         // set sequence number in packet
         this.encodeSeqNum();
         
 
         // set frame length in packet: C = (Total Number of Octets in the Transfer Frame) − 1
-        // CRC adds 2, HMAC adds 32 -> (size + (34 - 1))
-        this.encodeFrameLength(31, 4);
+        // CRC adds 4, HMAC adds 32 -> (size + (36 - 1))
+        this.encodeFrameLength(35, 4);
         this.addHmac(hmacSecret);
         
         // Add CRC data to packet
-        //this.encodeCrc();
+        this.encodeCrc();
 
     }
 
@@ -38,7 +38,7 @@ public class EDLPacket extends Packet {
 
     protected void encodeCrc() {
         int crc = this.calcCrc(this.data.array());
-        log.info(String.format("CRC_16 (%d) added to packet (seqNum: %d).", crc, this.sequenceNumber));
+        log.info(String.format("CRC_32 (%d) added to packet (seqNum: %d).", crc, this.sequenceNumber));
         this.data.putShort((short) crc);
     }
 
@@ -48,6 +48,6 @@ public class EDLPacket extends Packet {
 
     @Override
     boolean validCrc() {
-        return crc16();
+        return crc32(0, this.data.array().length);
     }
 }

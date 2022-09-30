@@ -1,23 +1,22 @@
 package org.oresat.uniclogs;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.zip.CRC32;
+import java.nio.ByteOrder;
 
 import org.yamcs.logging.Log;
 import org.yamcs.tctm.ccsds.error.Crc16Calculator;
 import org.yamcs.tctm.ccsds.error.Crc32Calculator;
-import org.yamcs.tctm.ccsds.error.CrcCciitCalculator;
 import org.yamcs.utils.ByteArrayUtils;
 import org.yamcs.xtce.util.HexUtils;
 public abstract class Packet {
     static final Log log = new Log(Packet.class);
-    final Crc16Calculator crcCalc = new Crc16Calculator(0x8005);
+    final Crc32Calculator crcCalc = new Crc32Calculator(0x91267E8A);
     Integer sequenceNumber;
     Integer sequenceNumberOffset;
     ByteBuffer data;
 
     protected Packet(byte[] data, Integer size, Integer sequenceNumber, Integer sequenceNumberOffset) {
         this.data = ByteBuffer.allocate(size);
+        this.data.order(ByteOrder.LITTLE_ENDIAN);
         this.data.put(data);
         this.sequenceNumber = sequenceNumber;
         this.sequenceNumberOffset = sequenceNumberOffset;
