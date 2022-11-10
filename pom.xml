@@ -55,7 +55,7 @@
       <plugin>
         <groupId>org.yamcs</groupId>
         <artifactId>yamcs-maven-plugin</artifactId>
-        <version>1.2.7</version>
+        <version>1.2.9</version>
         <executions>
           <!-- Tell Maven to bundle Yamcs into a tar.gz file
                when the 'mvn package' command is run -->
