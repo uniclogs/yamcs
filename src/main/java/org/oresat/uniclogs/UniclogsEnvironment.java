@@ -1,14 +1,10 @@
 package org.oresat.uniclogs;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 import org.yamcs.AbstractYamcsService;
 import org.yamcs.InitException;
 import org.yamcs.YConfiguration;
-import org.yamcs.YamcsServer;
 import org.yamcs.utils.ByteArrayUtils;
 import org.yamcs.yarch.Bucket;
 import org.yamcs.yarch.YarchDatabase;
@@ -22,13 +18,6 @@ public class UniclogsEnvironment extends AbstractYamcsService {
     Integer seqNum;
     Bucket db;
 
-
-    private byte[] loadHmacFromFile(String filepath) throws IOException {
-        try (FileReader fr = new FileReader(filepath);
-            BufferedReader br = new BufferedReader(fr)) {
-                return br.readLine().getBytes();
-            }
-    }
 
     private byte[] loadHmacFromEnv(String varName) {
         return System.getenv(varName).getBytes();

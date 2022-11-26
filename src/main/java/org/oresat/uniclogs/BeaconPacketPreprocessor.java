@@ -1,15 +1,10 @@
 package org.oresat.uniclogs;
 
+import java.util.Date;
+
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
 import org.yamcs.tctm.AbstractPacketPreprocessor;
-import org.yamcs.utils.ByteArrayUtils;
-import org.yamcs.utils.TimeEncoding;
-
-import java.nio.ByteOrder;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.zip.CRC32;
 
 public class BeaconPacketPreprocessor extends AbstractPacketPreprocessor {
 
