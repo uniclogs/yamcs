@@ -3,7 +3,7 @@ services:
   uniclogs-yamcs:
     build:
       context: .
-      dockerfile: ./docker/uniclogs-yamcs-prod/Dockerfile
+      no_cache: true
     image: oresat/uniclogs-yamcs
     network_mode: 'host'
     ports:
