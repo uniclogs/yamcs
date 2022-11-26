@@ -19,8 +19,6 @@ public class UniclogsServer extends HttpServer {
         super.init(instanceName, serviceName, config);
         LOG.info("Started " + serviceName + ":" + instanceName + " with config: " + config + " from: " + server.getConfigDirectory());
 
-        // Add listeners
-        server.addReadyListener(new UniclogsEnvironment());
     }
 
     public static Path getDataDirectory() {
