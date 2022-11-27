@@ -1,6 +1,7 @@
-package org.oresat.uniclogs;
+package org.oresat.uniclogs.tctm;
 
 import java.util.Date;
+
 import org.yamcs.TmPacket;
 import org.yamcs.YConfiguration;
 import org.yamcs.tctm.AbstractPacketPreprocessor;

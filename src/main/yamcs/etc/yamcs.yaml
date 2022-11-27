@@ -1,5 +1,5 @@
 services:
-  - class: org.oresat.uniclogs.UniclogsServer
+  - class: org.oresat.uniclogs.services.UniclogsServer
 
 # This is where Yamcs will persist its data. Paths are resolved relative to where Yamcs is running
 # from (by default: target/yamcs). This means that `mvn clean` will remove also persisted data.

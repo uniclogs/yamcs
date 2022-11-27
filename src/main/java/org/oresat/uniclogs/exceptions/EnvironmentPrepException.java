@@ -1,4 +1,4 @@
-package org.oresat.uniclogs;
+package org.oresat.uniclogs.exceptions;
 
 public class EnvironmentPrepException extends RuntimeException {
     public EnvironmentPrepException(String message) {

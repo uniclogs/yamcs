@@ -1,5 +1,5 @@
 services:
-  - class: org.oresat.uniclogs.UniclogsEnvironment
+  - class: org.oresat.uniclogs.services.UniclogsEnvironment
     args:
       hmacEnvVar: HMAC_KEY 
   - class: org.yamcs.archive.XtceTmRecorder
@@ -29,7 +29,7 @@ dataLinks:
     class: org.yamcs.tctm.UdpTmDataLink
     stream: beacon_tm_realtime
     port: 10015
-    packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
+    packetPreprocessorClassName: org.oresat.uniclogs.tctm.BeaconPacketPreprocessor
     packetPreprocessorArgs:
       timestampOffset: 26
 
@@ -37,7 +37,7 @@ dataLinks:
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_dump
     port: 10020
-    packetPreprocessorClassName: org.oresat.uniclogs.BeaconPacketPreprocessor
+    packetPreprocessorClassName: org.oresat.uniclogs.tctm.BeaconPacketPreprocessor
     packetPreprocessorArgs:
       timestampOffset: 26
 
@@ -46,7 +46,7 @@ dataLinks:
     stream: tc_realtime
     host: localhost
     port: 10025
-    commandPostprocessorClassName: org.oresat.uniclogs.EdlCommandPostprocessor
+    commandPostprocessorClassName: org.oresat.uniclogs.tctm.EdlCommandPostprocessor
     commandPostprocessorArgs:
       envService: UniclogsEnvironment
 
@@ -55,7 +55,7 @@ dataLinks:
     stream: edl_tm_realtime
     host: localhost
     port: 10016
-    packetPreprocessorClassName: org.oresat.uniclogs.EdlPacketPreprocessor
+    packetPreprocessorClassName: org.oresat.uniclogs.tctm.EdlPacketPreprocessor
 
 mdb:
   # Configuration of the active loaders

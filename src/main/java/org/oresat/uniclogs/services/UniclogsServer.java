@@ -1,4 +1,4 @@
-package org.oresat.uniclogs;
+package org.oresat.uniclogs.services;
 
 
 import org.yamcs.InitException;

@@ -81,7 +81,7 @@ Decompress artifacts:
 Install the binaries, mission database, and libraries to the install directory
 
 * `mv uniclogs-yamcs-<version>-bundle/bin pid/bin`
-* `mv uniclogs-yamcs-<version>-bundle/lib pid/lib`
+* `mv uniclogs-yamcs-<version>-bundle/lib pid/lib`jre17-openjdk
 * `mv uniclogs-yamcs-<version>-bundle/mdb pid/mdb`
 * `sudo ln -s pid/bin/yamcsd /usr/bin`
 
@@ -112,8 +112,8 @@ Below is a set of diagrams outlining both how Yamcs in its current state works, 
 #### Install Dev-Dependencies:
 
 ##### Non-Project Dependencies
-* Debian/Ubuntu: `sudo apt-get install maven npm`
-* Archlinux: `sudo pacman -S maven npm`
+* Debian/Ubuntu: `sudo apt-get install openjdk-17-jre maven npm`
+* Archlinux: `sudo pacman -S jre17-openjdk maven npm`
 
 ##### Project Dependencies
 * `mvn clean yamcs:debug`

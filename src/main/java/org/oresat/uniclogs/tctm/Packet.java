@@ -1,4 +1,4 @@
-package org.oresat.uniclogs;
+package org.oresat.uniclogs.tctm;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
