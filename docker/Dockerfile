@@ -40,6 +40,7 @@ ADD --chown=${USER}:${USER} ./yamcs/bin ${YAMCS_APP}/bin
 ADD --chown=${USER}:${USER} ./yamcs/lib ${YAMCS_APP}/lib
 ADD --chown=${USER}:${USER} ./yamcs/mdb ${YAMCS_APP}/mdb
 ADD --chown=root:root ./yamcs/etc ${YAMCS_CONFIGS}
+RUN mv /etc/yamcs/prod/* /etc/yamcs && rmdir /etc/yamcs/prod
 RUN ln -s ${YAMCS_APP}/bin/yamcsd /usr/bin && \
     ln -s ${YAMCS_APP}/bin/yamcsadmin /usr/bin
 
