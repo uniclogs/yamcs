@@ -5,7 +5,7 @@
 
 [Yamcs] based mission control software for UniClOGS
 
-![uniclogs-yamcs](docs/uniclogs-yamcs.jpg)
+![uniclogs-yamcs](docs/uniclogs-yamcs-icd.png)
 
 ## Yamcs
 

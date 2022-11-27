@@ -1,3 +1,7 @@
+# DrawIO Stuff
+**/*.bkp
+**/*.dtmp
+
 # Builds
 docker/yamcs
 target/
