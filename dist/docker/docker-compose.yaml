@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  uniclogs-yamcs:
+    build: .
+    image: uniclogs-yamcs
+    container_name: yamcs
+    stdin_open: true
+    tty: true
+    ports:
+      - '8090:8090/tcp'
+      - '10015:10015/udp'
+      - '10016:10016/udp'
+      - '10020:10020/udp'
+      - '10025:10025/udp'
