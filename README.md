@@ -15,7 +15,7 @@
 
 > **Note:**
 >
-> The security module is enabled by default for this image, and the default *username/password* is `admin/admin`.
+> The security module is enabled by default for this docker-image, and the default *username/password* is `admin/admin`. Please remember to change this upon first login for non-development environments.
 
 #### Pull the latest image from the official OreSat image via Dockerhub:
 
@@ -55,47 +55,23 @@ docker run \
   oresat/uniclogs-yamcs:latest
 ```
 
-### Manual Install:
+### Manual Docker Build:
 
-Fetch the latest pre-packaged artifacts from the [UniClOGS-Yamcs Releases](https://github.com/oresat/uniclogs-yamcs/releases) Page.
+Run Make at the root of the project
 
-&nbsp;
+* `make`
 
-Make the relevant directories:
+Change into the docker directory
 
-> **Note:**
->
-> The token *`pid`*  will represent the path to the permanent install directory from here on out.
+* `cd dist/docker`
 
-* `sudo install -d -o $USER -g daemon -m0755 pid`
-* `sudo install -d -m0755 /etc/yamcs`
+Build via Docker-Compose
 
-&nbsp;
+* `docker-compose build`
 
-Decompress artifacts:
+Verify that the `uniclogs-yamcs` image has succesfully built
 
-* `tar xzvf uniclogs-yamcs-<version>-bundle.tar.gz`
-
-&nbsp;
-
-Install the binaries, mission database, and libraries to the install directory
-
-* `mv uniclogs-yamcs-<version>-bundle/bin pid/bin`
-* `mv uniclogs-yamcs-<version>-bundle/lib pid/lib`jre17-openjdk
-* `mv uniclogs-yamcs-<version>-bundle/mdb pid/mdb`
-* `sudo ln -s pid/bin/yamcsd /usr/bin`
-
-&nbsp;
-
-Move configs to `/etc/yamcs`:
-
-* `sudo mv uniclogs-yamcs-<version>-bundle/etc/* /etc/yamcs`
-* `sudo mv /etc/yamcs/prod/* /etc/yamcs`
-
-&nbsp;
-
-Run the Yamcs Daemon:
-`yamcsd --etc-dir /etc/yamcs --data-dir pid`
+* `docker images`
 
 &nbsp;
 
