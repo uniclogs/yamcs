@@ -1,7 +1,7 @@
 # UniClOGS Yamcs
 
-[![License](https://img.shields.io/github/license/oresat/uniclogs-yamcs)](./LICENSE)
-[![issues](https://img.shields.io/github/issues/oresat/uniclogs-yamcs)](https://github.com/oresat/uniclogs-yamcs/issues)
+[![](https://img.shields.io/github/license/oresat/uniclogs-yamcs)](./LICENSE)
+[![](https://img.shields.io/github/issues/uniclogs/yamcs/bug?color=red&label=Open%20Bug%20Reports)](https://github.com/oresat/uniclogs-yamcs/issues)
 
 [Yamcs] based mission control software for UniClOGS
 
