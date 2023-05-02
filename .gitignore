@@ -6,7 +6,7 @@
 **/*.dtmp
 
 # Builds
-docker/yamcs
+dist/docker/yamcs/
 target/
 
 # Compiled class file
