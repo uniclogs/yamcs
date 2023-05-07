@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  yamcs_server:
+    image: uniclogs-yamcs:latest
+    container_name: yamcs_server
+    ports:
+      - "8090:8090"
+      - "10010:10010"
+      - "10015:10015"
+      - "10016:10016"
+      - "10020:10020"
+      - "10025:10025"
+      - "10026:10026"
+    volumes:
+      - "yamcs_data:/srv/yamcs"
+      - "/Users/HJia22/School/oresat-vagrant-ws/repos/yamcs/src/main/yamcs/etc:/etc/yamcs" # Make sure you have your Yamcs configuration in this folder
+
+  mock_satellite:
+    build: . # Build the mock_satellite container using the local Dockerfile
+    container_name: mock_satellite
+    expose:
+      - "10010"
+      - "10026"
+    environment:
+      - YAMCS_SERVER_HOST=yamcs_server
+      - YAMCS_SERVER_PORT=10026
+
+volumes:
+  yamcs_data: {}

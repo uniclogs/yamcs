@@ -17,15 +17,19 @@ ENV YAMCS_LOGS "/var/log/yamcs"
 
 # POSIX Ports
 EXPOSE 8090
+EXPOSE 10010
 EXPOSE 10015
 EXPOSE 10016
 EXPOSE 10020
 EXPOSE 10025
+EXPOSE 10026
 
 # Install dependencies
 RUN apt-get -y update \
     && apt-get -y install \
     opensysusers \
+    vim \
+    sudo \
     && rm -rf /var/lib/apt/lists/*
 
 # Create the system user/group
@@ -53,6 +57,18 @@ RUN chown -R ${USER}:${USER} ${YAMCS_LOGS}
 RUN chmod -R 755 ${YAMCS_APP}/bin
 RUN chmod -R 644 ${YAMCS_CONFIGS} ${YAMCS_LOGS}
 RUN chmod 755 ${YAMCS_CONFIGS} ${YAMCS_LOGS}
+
+# Generate HMAC key and set it as an ARG variable
+USER root
+RUN apt-get update && apt-get install -y openssl
+RUN openssl rand -hex 32 > /tmp/hmac_key.txt
+RUN chown ${USER}:${USER} /tmp/hmac_key.txt
+ARG HMAC_KEY
+RUN HMAC_KEY=$(cat /tmp/hmac_key.txt) && echo "HMAC_KEY=${HMAC_KEY}" > /tmp/hmac_key.env
+RUN rm /tmp/hmac_key.txt
+
+# Set the HMAC_KEY environment variable
+ENV HMAC_KEY=$HMAC_KEY
 
 # Entry Point
 USER ${USER}
