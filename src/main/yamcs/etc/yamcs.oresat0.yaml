@@ -31,6 +31,7 @@ dataLinks:
     port: 10015
     packetPreprocessorClassName: org.oresat.uniclogs.tctm.BeaconPacketPreprocessor
     packetPreprocessorArgs:
+      packetSize: 252
       timestampOffset: 26
 
   - name: beacon-tm-dump
@@ -39,6 +40,7 @@ dataLinks:
     port: 10020
     packetPreprocessorClassName: org.oresat.uniclogs.tctm.BeaconPacketPreprocessor
     packetPreprocessorArgs:
+      packetSize: 252
       timestampOffset: 26
 
   - name: edl-tc-realtime
