@@ -29,7 +29,7 @@ RUN apt-get -y update \
     && apt-get -y install \
     opensysusers \
     vim \
-    sudo \
+    tcpdump \
     && rm -rf /var/lib/apt/lists/*
 
 # Create the system user/group

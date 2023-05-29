@@ -57,8 +57,28 @@ services:
       fileListingParserClassName: org.yamcs.filetransfer.CsvListingParser
       fileListingParserArgs:
         timestampMultiplier: 1
+  - class: org.yamcs.tctm.TcTmService
+    args:
+      commandLinks:
+        - name: MyCommandLink
+          spec:
+            class: org.oresat.uniclogs.links.PyCfdpTCLink
+            args:
+              pythonCmd: "/etc/yamcs/pyCfdp.py"
+
 
 dataLinks:
+  - name: py-cfdp-tc-realtime
+    class: org.oresat.uniclogs.links.PyCfdpTCLink
+    host: localhost
+    stream: py_cfdp_tc_realtime
+    port: 10027
+    commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+    commandPostprocessorArgs:
+      errorDetection:
+        type: 16-SUM
+      enforceEvenNumberOfBytes: true
+
   - name: cfdp-tm-realtime
     class: org.yamcs.tctm.TcpTmDataLink
     stream: cfdp_tm_realtime
@@ -68,6 +88,7 @@ dataLinks:
   - name: cfdp-tc-realtime
     class: org.yamcs.tctm.TcpTcDataLink
     stream: cfdp_tc_realtime
+    packetInputStreamClassName: org.yamcs.tctm.CfdpPacketInputStream
     host: mock_satellite
     port: 10026
     commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
@@ -134,6 +155,8 @@ mdb:
         spec: mdb/gps.xml
       - type: xtce
         spec: mdb/dxwifi.xml
+      - type: xtce
+        spec: mdb/file-transfer.xml
 
 # Configuration for streams created at server startup
 streamConfig:
@@ -152,5 +175,7 @@ streamConfig:
     - name: "tc_realtime"
       processor: "realtime"
     - name: "cfdp_tc_realtime"
+      processor: "realtime"
+    - name: "py_cfdp_tc_realtime"
       processor: "realtime"
   sqlFile: "/etc/yamcs/extra_streams.sql"

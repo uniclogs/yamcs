@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xtce:SpaceSystem name="OreSat0" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
+    <xtce:DataTypeSet>
+        <xtce:StringDataType name="stringArgumentType"/>
+    </xtce:DataTypeSet>
+    <xtce:CommandMetaData>
+        <xtce:MetaCommandSet>
+            <xtce:MetaCommand name="MyCommand">
+                <xtce:ArgumentList>
+                    <StringArgumentType name="pythonCmd">
+                        <UnitSet/>
+                        <StringDataEncoding encoding="US-ASCII" bitOrder="leastSignificantBitFirst">
+                            <SizeInBits>
+                                <Fixed>
+                                    <FixedValue>400</FixedValue>
+                                </Fixed>
+                                <TerminationChar>00</TerminationChar>
+                            </SizeInBits>
+                        </StringDataEncoding>
+                    </StringArgumentType>
+                </xtce:ArgumentList>
+            </xtce:MetaCommand>
+        </xtce:MetaCommandSet>
+    </xtce:CommandMetaData>
+</xtce:SpaceSystem>
+
