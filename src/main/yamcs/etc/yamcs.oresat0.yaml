@@ -27,7 +27,8 @@ services:
     name: cfdp0
     args:
       inactivityTimeout: 30000
-      sequenceNrLength: 4
+      entityIdLength: 1
+      sequenceNrLength: 2
       maxPduSize: 512
       incomingBucket: "cfdpDown"
       allowRemoteProvidedBucket: false
@@ -36,14 +37,8 @@ services:
       maxExistingFileRenames: 1000
       eofAckTimeout: 3000
       eofAckLimit: 5
-      #Note that the simulator does not process commands faster than 1/second.
-      # Decreasign this number will make the packets queue up in the TCP queue
-      # and the CFDP sender will timeout waiting for the EOF ACK
       sleepBetweenPdus: 1000
-      #The simulator only supports one transfer at a time
       maxNumPendingUploads: 1
-      #How many milliseconds to keep the incoming transfer in the pending queue after completion
-      #During this time an incoming PDU with that transaction id will not be recognized as a new transaction
       pendingAfterCompletion: 10000
       localEntities:
         - name: oresat_yamcs
@@ -57,28 +52,9 @@ services:
       fileListingParserClassName: org.yamcs.filetransfer.CsvListingParser
       fileListingParserArgs:
         timestampMultiplier: 1
-  - class: org.yamcs.tctm.TcTmService
-    args:
-      commandLinks:
-        - name: MyCommandLink
-          spec:
-            class: org.oresat.uniclogs.links.PyCfdpTCLink
-            args:
-              pythonCmd: "/etc/yamcs/pyCfdp.py"
 
 
 dataLinks:
-  - name: py-cfdp-tc-realtime
-    class: org.oresat.uniclogs.links.PyCfdpTCLink
-    host: localhost
-    stream: py_cfdp_tc_realtime
-    port: 10027
-    commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
-    commandPostprocessorArgs:
-      errorDetection:
-        type: 16-SUM
-      enforceEvenNumberOfBytes: true
-
   - name: cfdp-tm-realtime
     class: org.yamcs.tctm.TcpTmDataLink
     stream: cfdp_tm_realtime
@@ -155,8 +131,6 @@ mdb:
         spec: mdb/gps.xml
       - type: xtce
         spec: mdb/dxwifi.xml
-      - type: xtce
-        spec: mdb/file-transfer.xml
 
 # Configuration for streams created at server startup
 streamConfig:
@@ -175,7 +149,5 @@ streamConfig:
     - name: "tc_realtime"
       processor: "realtime"
     - name: "cfdp_tc_realtime"
-      processor: "realtime"
-    - name: "py_cfdp_tc_realtime"
       processor: "realtime"
   sqlFile: "/etc/yamcs/extra_streams.sql"

@@ -1,8 +1,46 @@
 import socket
 import threading
 import time
-from spacepackets.cfdp.pdu import FileDataPdu, MetadataPdu, AckPdu
-from spacepackets.ccsds.spacepacket import SpacePacket
+from spacepackets.cfdp.pdu import FileDataPdu, MetadataPdu, AckPdu, header, file_directive
+import struct
+
+class CcsdsPacket:
+    def __init__(self, raw_packet):
+        self.raw_packet = raw_packet
+        self._parse_header()
+
+    def _parse_header(self):
+        ccsds_header = struct.unpack('>HHH', self.raw_packet[:6])
+
+        self.ccsds_version = (ccsds_header[0] & 0xE000) >> 13
+        self.ccsds_type = (ccsds_header[0] & 0x1000) >> 12
+        self.ccsds_secondary_header_flag = (ccsds_header[0] & 0x0800) >> 11
+        self.ccsds_apid = ccsds_header[0] & 0x07FF
+        self.ccsds_sequence_flags = (ccsds_header[1] & 0xC000) >> 14
+        self.ccsds_sequence_number = ccsds_header[1] & 0x3FFF
+        self.ccsds_data_length = ccsds_header[2]
+
+    def print_header_info(self):
+        print(f'CCSDS Version: {self.ccsds_version}')
+        print(f'CCSDS Type: {self.ccsds_type}')
+        print(f'CCSDS Secondary Header Flag: {self.ccsds_secondary_header_flag}')
+        print(f'CCSDS APID: {self.ccsds_apid}')
+        print(f'CCSDS Sequence Flags: {self.ccsds_sequence_flags}')
+        print(f'CCSDS Sequence Number: {self.ccsds_sequence_number}')
+        print(f'CCSDS Data Length: {self.ccsds_data_length}')
+
+    def get_data_payload(self):
+        # The CCSDS header is 6 bytes, so the data starts after that
+        # Note: This does not account for a secondary header, if present
+        data_start = 6
+
+        # The data length field is the number of bytes of user data,
+        # not including the 6-byte primary header or the 1-byte length field itself,
+        # so we add 7 to get the end of the data
+        data_end = data_start + self.ccsds_data_length + 1
+
+        # Extract and return the data
+        return self.raw_packet[data_start:data_end]
 
 
 
@@ -38,23 +76,47 @@ def handle_tc_data_link(host, port):
                     break
                 print(f"TC Received: {data}")
 
-                # # Parse the received PDU
-                # space_packet = SpacePacket(packet_data=data)
-                # if space_packet.get_apid_from_raw_space_packet() == 2045:
-                #     print("Received CFDP PDU")
-                #     cfdp_pdu = space_packet.payload
-                #
-                #     # If the PDU is a Metadata PDU, start a new file transfer
-                #     if isinstance(cfdp_pdu, MetadataPdu):
-                #         handle_metadata_pdu(cfdp_pdu)
-                #
-                #     # If the PDU is a File Data PDU, append data to the file
-                #     elif isinstance(cfdp_pdu, FileDataPdu):
-                #         handle_file_data_pdu(cfdp_pdu)
-                #
-                #     # If the PDU is an ACK PDU, handle the acknowledgement
-                #     elif isinstance(cfdp_pdu, AckPdu):
-                #         handle_ack_pdu(cfdp_pdu)
+                # Parse the received PDU
+                # CCSDS Packet
+                ccsds_packet = CcsdsPacket(data)
+
+                if ccsds_packet.ccsds_apid == 2045:
+                    print("Received CFDP PDU")
+                    ccsds_packet_payload = ccsds_packet.get_data_payload()
+                    cfdp_header = header.PduHeader.unpack(ccsds_packet_payload)
+                    cfdp_pdu = cfdp_header.pdu_type
+
+                    # 0 - File Directive PDU
+                    if cfdp_pdu == 0:
+                        print("Received File Directive PDU")
+                        file_directive_header = file_directive.FileDirectivePduBase.unpack(ccsds_packet_payload)
+                        directive_type = file_directive_header.directive_type
+
+                        # 7 - Metadata PDU
+                        if directive_type == 7:
+                            print("Received Metadata PDU")
+                            pdu = MetadataPdu.unpack(ccsds_packet_payload)
+                            print(pdu)
+                            pass
+                        elif directive_type == 6:
+                            print("Received Ack PDU")
+                            pass
+                        elif directive_type == 5:
+                            print("Received Finished PDU")
+                            pass
+                        elif directive_type == 4:
+                            print("Received EOF PDU")
+                            pass
+
+                    # 1 - File Data PDU
+                    elif cfdp_pdu == 1:
+                        print("Received File Data PDU")
+                        pdu = FileDataPdu.unpack(ccsds_packet_payload)
+                        print(pdu)
+                    else:
+                        print("Received Unknown PDU")
+                        pass
+
 
 def handle_py_tc_data_link(host, port):
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
