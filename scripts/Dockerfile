@@ -2,7 +2,6 @@ FROM python:3.9-slim-buster
 
 EXPOSE 10010
 EXPOSE 10026
-EXPOSE 10027
 
 # Set the working directory
 WORKDIR /app

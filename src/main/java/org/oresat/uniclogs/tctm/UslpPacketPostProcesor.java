@@ -1,61 +1,74 @@
+/**
+ * USLP Packet Post Processor
+ */
+
 package org.oresat.uniclogs.tctm;
+
 import org.oresat.uniclogs.services.UniclogsEnvironment;
 import org.yamcs.ConfigurationException;
 import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;
-import org.yamcs.xtce.Argument;
-import org.yamcs.commanding.ArgumentValue;
 import org.yamcs.cmdhistory.CommandHistoryPublisher;
 import org.yamcs.commanding.PreparedCommand;
-import org.yamcs.tctm.CommandPostprocessor;
-
-// For fake HMAC key
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-
-import java.util.Map;
-
 import org.yamcs.logging.Log;
-public class EdlCommandPostprocessor implements CommandPostprocessor {
+import org.yamcs.tctm.CcsdsPacket;
+import org.yamcs.tctm.CommandPostprocessor;
+import org.yamcs.utils.TimeEncoding;
+
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+
+public class UslpPacketPostProcesor implements CommandPostprocessor {
     protected CommandHistoryPublisher cmdHistory;
     UniclogsEnvironment env;
 
     static final Log log = new Log(EdlCommandPostprocessor.class);
 
-    @Override
+
     public byte[] process(PreparedCommand pc) {
+        log.info("USLP Packet Post Processor");
+        byte[] binary = pc.getBinary();
+        log.info("Binary: " + binary.toString());
+
+        log.info("CCSDS Packet Length: " + CcsdsPacket.getCccsdsPacketLength(binary));
+
+        int newLength = this.getBinaryLength(pc);
+        log.info("New Length: " + newLength);
+
+        if (newLength > binary.length) {
+            binary = Arrays.copyOf(binary, newLength);
+        }
+
+
         Integer seqNum = this.env.getSeqNum();
         //byte[] hmacKey = this.env.getHmacKey();
         byte[] hmacKey = "fakekey".getBytes(StandardCharsets.UTF_8);
 
-        EDLPacket cmd = new EDLPacket(pc.getBinary(), seqNum, hmacKey);
+        CfdpPacket cmd = new CfdpPacket(binary, seqNum, hmacKey);
         byte[] cmdBin = cmd.getBinary();
-        Map<Argument, ArgumentValue> args = pc.getArgAssignment();
-
-        log.info(args.toString());
-        pc.setBinary(cmdBin);
-        this.cmdHistory.publish(pc.getCommandId(), "edl-seqnum", seqNum);
+        this.cmdHistory.publish(pc.getCommandId(), "cfdp-seqnum", seqNum);
         this.cmdHistory.publish(pc.getCommandId(), PreparedCommand.CNAME_BINARY, cmdBin);
+        pc.setBinary(cmdBin);
+
         return cmdBin;
     }
-
     @Override
     public void setCommandHistoryPublisher(CommandHistoryPublisher commandHistoryListener) {
         this.cmdHistory = commandHistoryListener;
     }
 
-    public EdlCommandPostprocessor(String instanceName, YConfiguration config) {
+    public UslpPacketPostProcesor(String instanceName, YConfiguration config) {
         String envName = config.getString("envService");
         this.env = YamcsServer.getServer().getInstance(instanceName).getService(UniclogsEnvironment.class, envName);
 
         if (this.env == null) {
             throw new ConfigurationException("Service " + envName + " does not exist or is not of class UniclogsEnvironment.");
         }
+
     }
 
-    public EdlCommandPostprocessor(String instanceName) {
+    public UslpPacketPostProcesor(String instanceName) {
         this(instanceName, YConfiguration.emptyConfig());
     }
 

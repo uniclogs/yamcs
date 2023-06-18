@@ -1,0 +1,177 @@
+services:
+  - class: org.oresat.uniclogs.services.UniclogsEnvironment
+    args:
+      hmacEnvVar: HMAC_KEY
+  - class: org.yamcs.archive.XtceTmRecorder
+  - class: org.yamcs.archive.ParameterRecorder
+  - class: org.yamcs.archive.AlarmRecorder
+  - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.parameter.SystemParametersService
+    args:
+      provideJvmVariables: true
+      provideFsVariables: true
+  - class: org.yamcs.ProcessorCreatorService
+    args:
+      name: realtime
+      type: realtime
+  - class: org.yamcs.archive.CommandHistoryRecorder
+  - class: org.yamcs.parameterarchive.ParameterArchive
+    args:
+      realtimeFiller:
+        enabled: true
+      backFiller:
+        enabled: false
+        warmupTime: 60
+  - class: org.yamcs.cfdp.CfdpService
+    name: cfdp0
+    args:
+      inactivityTimeout: 30000
+      entityIdLength: 1
+      sequenceNrLength: 2
+      maxPduSize: 512
+      incomingBucket: "cfdpDown"
+      allowRemoteProvidedBucket: false
+      allowRemoteProvidedSubdirectory: false
+      allowDownloadOverwrites: false
+      maxExistingFileRenames: 1000
+      eofAckTimeout: 3000
+      eofAckLimit: 5
+      sleepBetweenPdus: 1000
+      maxNumPendingUploads: 1
+      pendingAfterCompletion: 10000
+      localEntities:
+        - name: oresat_yamcs
+          id: 1
+          bucket: bucket1
+      remoteEntities:
+        - name: mock_satellite
+          id: 2
+      senderFaultHandlers:
+        AckLimitReached: suspend
+
+dataLinks:
+  - name: cfdp-tm-realtime
+    class: org.yamcs.tctm.TcpTmDataLink
+    stream: cfdp_tm_realtime
+    host: mock_satellite
+    port: 10010
+
+#  - name: cfdp-tc-realtime
+#    class: org.yamcs.tctm.TcpTcDataLink
+#    stream: cfdp_tc_realtime
+#    packetInputStreamClassName: org.yamcs.tctm.CfdpPacketInputStream
+#    host: mock_satellite
+#    port: 10026
+#    commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+#    commandPostprocessorArgs:
+#      errorDetection:
+#        type: 16-SUM
+#      enforceEvenNumberOfBytes: true
+  - name: tc-link
+    class: org.yamcs.tctm.ccsds.UdpTcFrameLink
+    host: mock_satellite
+    port: 10026
+    spacecraftId: 0x4F53
+    maxFrameLength: 1024
+    # cltuEncoding: BCH
+    priorityScheme: FIFO
+    # EDL class uses CRC32, but CRC32 not supported for TC frames on yamcs
+    # errorDetection: CRC32
+    virtualChannels:
+      - vcId: 0 # EDL Channel
+        service: "PACKET"
+        priority: 0
+        stream: tc_realtime
+        commandPostprocessorClassName: org.oresat.uniclogs.tctm.EdlCommandPostprocessor
+        commandPostprocessorArgs:
+          envService: UniclogsEnvironment
+
+      - vcId: 1 # CFDP Channel
+        service: "PACKET"
+        priority: 1
+        stream: cfdp_tc_realtime
+        commandPostprocessorClassName: org.oresat.uniclogs.tctm.UslpPacketPostProcesor
+        commandPostprocessorArgs:
+          envService: UniclogsEnvironment
+
+  - name: beacon-tm-realtime
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: beacon_tm_realtime
+    port: 10015
+    packetPreprocessorClassName: org.oresat.uniclogs.tctm.BeaconPacketPreprocessor
+    packetPreprocessorArgs:
+      timestampOffset: 26
+
+  - name: beacon-tm-dump
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tm_dump
+    port: 10020
+    packetPreprocessorClassName: org.oresat.uniclogs.tctm.BeaconPacketPreprocessor
+    packetPreprocessorArgs:
+      timestampOffset: 26
+
+#  - name: edl-tc-realtime
+#    class: org.yamcs.tctm.UdpTcDataLink
+#    stream: tc_realtime
+#    host: localhost
+#    port: 10025
+#    commandPostprocessorClassName: org.oresat.uniclogs.tctm.EdlCommandPostprocessor
+#    commandPostprocessorArgs:
+#      envService: UniclogsEnvironment
+
+  - name: edl-tm-realtime
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: edl_tm_realtime
+    host: localhost
+    port: 10016
+    packetPreprocessorClassName: org.oresat.uniclogs.tctm.EdlPacketPreprocessor
+
+mdb:
+  # Configuration of the active loaders
+  # Valid loaders are: sheet, xtce or fully qualified name of the class
+  - type: xtce
+    spec: mdb/oresat.xml
+    subLoaders:
+      - type: emptyNode
+        spec: BatteryPack1
+        subLoaders:
+          - type: xtce
+            spec: mdb/batterypack.xml
+      - type: emptyNode
+        spec: BatteryPack2
+        subLoaders:
+          - type: xtce
+            spec: mdb/batterypack.xml
+      - type: xtce
+        spec: mdb/c3.xml
+      - type: xtce
+        spec: mdb/solar.xml
+      - type: xtce
+        spec: mdb/startracker.xml
+      - type: xtce
+        spec: mdb/gps.xml
+      - type: xtce
+        spec: mdb/dxwifi.xml
+  - type: sheet
+    spec: mdb/cfdp-pdu.xls
+
+# Configuration for streams created at server startup
+streamConfig:
+  tm:
+    - name: "beacon_tm_realtime"
+      rootContainer: "/OreSat/Beacon_Packet"
+    - name: "edl_tm_realtime"
+      rootContainer: "/OreSat/EDL_Packet"
+    - name: "tm_dump"
+    - name: "cfdp_tm_realtime"
+  cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
+  event: ["events_realtime", "events_dump"]
+  param: ["pp_realtime", "sys_param", "proc_param"]
+  parameterAlarm: ["alarms_realtime"]
+  tc:
+    - name: "tc_realtime"
+      processor: "realtime"
+    - name: "cfdp_tc_realtime"
+      processor: "realtime"
+  sqlFile: "/etc/yamcs/extra_streams.sql"

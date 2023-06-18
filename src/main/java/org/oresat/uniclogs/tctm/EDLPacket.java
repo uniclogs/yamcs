@@ -15,15 +15,20 @@ public class EDLPacket extends Packet {
         //sequence number offset of 7
         super(packet, packet.length+36, seqNum, SEQ_NUM_OFFSET);
 
+        log.info(String.format("Creating EDLPacket with seqNum: %d", seqNum));
+        log.info(String.format("Packet length: %d", packet.length));
+        log.info(String.format("Packet: %s", HexUtils.hex(packet)));
+
+
         // set sequence number in packet
         this.encodeSeqNum();
-        
+
 
         // set frame length in packet: C = (Total Number of Octets in the Transfer Frame) − 1
         // CRC adds 4, HMAC adds 32 -> (size + (36 - 1))
         this.encodeFrameLength(35, 4);
         this.addHmac(hmacSecret);
-        
+
         // Add CRC data to packet
         this.encodeCrc();
 
