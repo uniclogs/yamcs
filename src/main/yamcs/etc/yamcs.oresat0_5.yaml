@@ -27,7 +27,7 @@ services:
     name: cfdp0
     args:
       inactivityTimeout: 30000
-      entityIdLength: 1
+      entityIdLength: 2
       sequenceNrLength: 2
       maxPduSize: 512
       incomingBucket: "cfdpDown"
@@ -49,6 +49,9 @@ services:
           id: 2
       senderFaultHandlers:
         AckLimitReached: suspend
+      fileListingParserClassName: org.yamcs.filetransfer.CsvListingParser
+      fileListingParserArgs:
+        timestampMultiplier: 1
 
 dataLinks:
   - name: cfdp-tm-realtime
@@ -57,22 +60,11 @@ dataLinks:
     host: mock_satellite
     port: 10010
 
-#  - name: cfdp-tc-realtime
-#    class: org.yamcs.tctm.TcpTcDataLink
-#    stream: cfdp_tc_realtime
-#    packetInputStreamClassName: org.yamcs.tctm.CfdpPacketInputStream
-#    host: mock_satellite
-#    port: 10026
-#    commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
-#    commandPostprocessorArgs:
-#      errorDetection:
-#        type: 16-SUM
-#      enforceEvenNumberOfBytes: true
   - name: tc-link
-    class: org.yamcs.tctm.ccsds.UdpTcFrameLink
+    class: org.oresat.uniclogs.links.UslpUdpFrameLink
     host: mock_satellite
     port: 10026
-    spacecraftId: 0x4F53
+    spacecraftId: 5050
     maxFrameLength: 1024
     # cltuEncoding: BCH
     priorityScheme: FIFO
@@ -91,9 +83,6 @@ dataLinks:
         service: "PACKET"
         priority: 1
         stream: cfdp_tc_realtime
-        commandPostprocessorClassName: org.oresat.uniclogs.tctm.UslpPacketPostProcesor
-        commandPostprocessorArgs:
-          envService: UniclogsEnvironment
 
   - name: beacon-tm-realtime
     class: org.yamcs.tctm.UdpTmDataLink

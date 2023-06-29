@@ -76,46 +76,46 @@ def handle_tc_data_link(host, port):
                     break
                 print(f"TC Received: {data}")
 
-                # Parse the received PDU
-                # CCSDS Packet
-                ccsds_packet = CcsdsPacket(data)
-
-                if ccsds_packet.ccsds_apid == 2045:
-                    print("Received CFDP PDU")
-                    ccsds_packet_payload = ccsds_packet.get_data_payload()
-                    cfdp_header = header.PduHeader.unpack(ccsds_packet_payload)
-                    cfdp_pdu = cfdp_header.pdu_type
-
-                    # 0 - File Directive PDU
-                    if cfdp_pdu == 0:
-                        print("Received File Directive PDU")
-                        file_directive_header = file_directive.FileDirectivePduBase.unpack(ccsds_packet_payload)
-                        directive_type = file_directive_header.directive_type
-
-                        # 7 - Metadata PDU
-                        if directive_type == 7:
-                            print("Received Metadata PDU")
-                            pdu = MetadataPdu.unpack(ccsds_packet_payload)
-                            print(pdu)
-                            pass
-                        elif directive_type == 6:
-                            print("Received Ack PDU")
-                            pass
-                        elif directive_type == 5:
-                            print("Received Finished PDU")
-                            pass
-                        elif directive_type == 4:
-                            print("Received EOF PDU")
-                            pass
-
-                    # 1 - File Data PDU
-                    elif cfdp_pdu == 1:
-                        print("Received File Data PDU")
-                        pdu = FileDataPdu.unpack(ccsds_packet_payload)
-                        print(pdu)
-                    else:
-                        print("Received Unknown PDU")
-                        pass
+                # # Parse the received PDU
+                # # CCSDS Packet
+                # ccsds_packet = CcsdsPacket(data)
+                #
+                # if ccsds_packet.ccsds_apid == 2045:
+                #     print("Received CFDP PDU")
+                #     ccsds_packet_payload = ccsds_packet.get_data_payload()
+                #     cfdp_header = header.PduHeader.unpack(ccsds_packet_payload)
+                #     cfdp_pdu = cfdp_header.pdu_type
+                #
+                #     # 0 - File Directive PDU
+                #     if cfdp_pdu == 0:
+                #         print("Received File Directive PDU")
+                #         file_directive_header = file_directive.FileDirectivePduBase.unpack(ccsds_packet_payload)
+                #         directive_type = file_directive_header.directive_type
+                #
+                #         # 7 - Metadata PDU
+                #         if directive_type == 7:
+                #             print("Received Metadata PDU")
+                #             pdu = MetadataPdu.unpack(ccsds_packet_payload)
+                #             print(pdu)
+                #             pass
+                #         elif directive_type == 6:
+                #             print("Received Ack PDU")
+                #             pass
+                #         elif directive_type == 5:
+                #             print("Received Finished PDU")
+                #             pass
+                #         elif directive_type == 4:
+                #             print("Received EOF PDU")
+                #             pass
+                #
+                #     # 1 - File Data PDU
+                #     elif cfdp_pdu == 1:
+                #         print("Received File Data PDU")
+                #         pdu = FileDataPdu.unpack(ccsds_packet_payload)
+                #         print(pdu)
+                #     else:
+                #         print("Received Unknown PDU")
+                #         pass
 
 
 def handle_py_tc_data_link(host, port):

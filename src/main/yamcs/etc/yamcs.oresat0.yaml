@@ -149,5 +149,4 @@ streamConfig:
     - name: "tc_realtime"
       processor: "realtime"
     - name: "cfdp_tc_realtime"
-      processor: "realtime"
   sqlFile: "/etc/yamcs/extra_streams.sql"
