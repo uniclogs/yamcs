@@ -59,6 +59,13 @@ dataLinks:
     port: 10016
     packetPreprocessorClassName: org.oresat.uniclogs.tctm.EdlPacketPreprocessor
 
+  - name: satnogs-tm-realtime
+    class: org.yamcs.tctm.AbstractTmDataLink
+    stream: satnogs_tm_realtime
+    host: localhost
+    port: 10017
+    packetPreprocessorClassName: org.oresat.uniclogs.links.SatnogsTmLink
+
 mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
@@ -93,6 +100,8 @@ streamConfig:
       rootContainer: "/OreSat/Beacon_Packet"
     - name: "edl_tm_realtime"
       rootContainer: "/OreSat/EDL_Packet"
+    - name: "satnogs_tm_realtime"
+      rootContainer: "/OreSat/Satnogs_Link"
     - name: "tm_dump"
   cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
   event: ["events_realtime", "events_dump"]
