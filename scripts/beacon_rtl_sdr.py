@@ -21,8 +21,13 @@ rtl_fm_args = ["rtl_fm", "-Mfm", "-f436.5M", "-p48.1", "-s96000", "-g30", "-"]
 direwolf_args = ["direwolf", "-t0", "-r96000", "-D1", "-B9600", "-"]
 
 parser = ArgumentParser(description="OLM file transfer")
-parser.add_argument("-p", "--print", dest="print", action="store_true",
-                    help="print messages to stdout")
+parser.add_argument(
+    "-p",
+    "--print",
+    dest="print",
+    action="store_true",
+    help="print messages to stdout",
+)
 args = parser.parse_args()
 
 
@@ -39,11 +44,13 @@ def send_packet(message):
     if args.print:
         print(packet)
 
-    tm_socket.sendto(packet, ('127.0.0.1', 10015))
+    tm_socket.sendto(packet, ("127.0.0.1", 10015))
 
 
 rtl_fm_cmd = Popen(rtl_fm_args, stdout=PIPE, stderr=DEVNULL)
-direwolf_cmd = Popen(direwolf_args, stdin=rtl_fm_cmd.stdout, stdout=DEVNULL, stderr=DEVNULL)
+direwolf_cmd = Popen(
+    direwolf_args, stdin=rtl_fm_cmd.stdout, stdout=DEVNULL, stderr=DEVNULL
+)
 tm_socket = socket(AF_INET, SOCK_DGRAM)
 sleep(0.5)  # wait just a sec for the rtl_fm and direwolf to start
 k = kiss.TCPKISS("localhost", 8001)

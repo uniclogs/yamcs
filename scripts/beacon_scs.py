@@ -12,17 +12,22 @@ from argparse import ArgumentParser
 from serial import Serial, SerialException
 import bitstring
 
-TTY = '/dev/serial/by-id/usb-SCS_SCS_Tracker___DSP_TNC_PT2HJ743-if00-port0'
+TTY = "/dev/serial/by-id/usb-SCS_SCS_Tracker___DSP_TNC_PT2HJ743-if00-port0"
 BEACON_LEN = 253
 
 parser = ArgumentParser(description="OLM file transfer")
-parser.add_argument("-p", "--print", dest="print", action="store_true",
-                    help="print messages to stdout")
+parser.add_argument(
+    "-p",
+    "--print",
+    dest="print",
+    action="store_true",
+    help="print messages to stdout",
+)
 args = parser.parse_args()
 
 
 def _readline(ser: Serial):
-    eol = b'\r\n'
+    eol = b"\r\n"
     leneol = len(eol)
     line = bytearray()
     while True:
@@ -47,23 +52,28 @@ def send_tm(ser: Serial):
     src_ssid = 0
     control = 0
     sid = 0
-    packet_header = dest.encode() + dest_ssid.to_bytes(1, 'little') + \
-        src.encode() + src_ssid.to_bytes(1, 'little') + \
-        control.to_bytes(1, 'little') + sid.to_bytes(1, 'little')
+    packet_header = (
+        dest.encode()
+        + dest_ssid.to_bytes(1, "little")
+        + src.encode()
+        + src_ssid.to_bytes(1, "little")
+        + control.to_bytes(1, "little")
+        + sid.to_bytes(1, "little")
+    )
 
     packet_header = (bitstring.BitArray(packet_header) << 1).bytes
 
     while True:
-        message = b''
+        message = b""
         while len(message) < BEACON_LEN:
             try:
                 line = _readline(ser)
             except SerialException as exc:
-                print('Device error: {}\n'.format(exc))
+                print("Device error: {}\n".format(exc))
                 break
 
             # deal with message that have \r\n in the middle of it
-            if line.startswith('{{z'.encode()):
+            if line.startswith("{{z".encode()):
                 # found a new aprs header start new message
                 message = line
             else:
@@ -74,15 +84,15 @@ def send_tm(ser: Serial):
 
         # merge header and payload together
         # remove the \r\n
-        packet = packet_header + message[:len(message)-2]
+        packet = packet_header + message[: len(message) - 2]
 
         if args.print:
             print(packet)
 
-        tm_socket.sendto(packet, ('127.0.0.1', 10015))
+        tm_socket.sendto(packet, ("127.0.0.1", 10015))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     ser = Serial(TTY, 38400, timeout=15.0)
 
     try:

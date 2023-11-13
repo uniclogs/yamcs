@@ -13,13 +13,13 @@ public class SatnogsTmLink extends AbstractTmDataLink {
     @Override
     protected void doStart() {
         // TODO Auto-generated method stub
-        
+
     }
 
     @Override
     protected void doStop() {
         // TODO Auto-generated method stub
-        
+
     }
-    
+
 }

@@ -1,12 +1,39 @@
 services:
-  - class: org.oresat.uniclogs.services.UniclogsEnvironment
-    args:
-      hmacEnvVar: HMAC_KEY 
-  - class: org.yamcs.archive.XtceTmRecorder
-  - class: org.yamcs.archive.ParameterRecorder
   - class: org.yamcs.archive.AlarmRecorder
+  - class: org.yamcs.archive.ParameterRecorder
   - class: org.yamcs.archive.EventRecorder
   - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.archive.XtceTmRecorder
+
+  - class: org.yamcs.cfdp.CfdpService
+    args:
+      # Stream IO definitions
+      incomingBucket: file_downloads
+      inStream: tm_dump
+      outStream: tc_realtime
+
+      # Target definitions
+      localEntities:
+        - name: uniclogs_images
+          id: 100
+          bucket: uniclogs_images
+      remoteEntities:
+        - name: oresat0_images
+          id: 200
+
+      #  Packet properties
+      sequenceNrLength: 4
+      maxPduSize: 512
+      sleepBetweenPdus: 1000
+
+      # Limits
+      eofAckTimeout: 3000
+      eofAckLimit: 3
+      senderFaultHandlers:
+        AckLimitReached: suspend
+      receiverFaultHandlers:
+        AckLimitReached: suspend
+
   - class: org.yamcs.parameter.SystemParametersService
     args:
       provideJvmVariables: true
@@ -33,6 +60,22 @@ dataLinks:
     packetPreprocessorArgs:
       timestampOffset: 26
 
+  - name: edl-tm-realtime
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: edl_tm_realtime
+    port: 10016
+    packetPreprocessorClassName: org.oresat.uniclogs.tctm.EdlPacketPreprocessor
+
+  - name: edl-cfdp-download
+    class: org.yamcs.tctm.TcpTmDataLink
+    stream: cfdp_in
+    port: 10017
+
+  - name: edl-cfdp-upload
+    class: org.yamcs.tctm.TcpTcDataLink
+    stream: cfdp_out
+    port: 10018
+
   - name: beacon-tm-dump
     class: org.yamcs.tctm.UdpTmDataLink
     stream: tm_dump
@@ -49,13 +92,6 @@ dataLinks:
     commandPostprocessorClassName: org.oresat.uniclogs.tctm.EdlCommandPostprocessor
     commandPostprocessorArgs:
       envService: UniclogsEnvironment
-
-  - name: edl-tm-realtime
-    class: org.yamcs.tctm.UdpTmDataLink
-    stream: edl_tm_realtime
-    host: localhost
-    port: 10016
-    packetPreprocessorClassName: org.oresat.uniclogs.tctm.EdlPacketPreprocessor
 
 mdb:
   # Configuration of the active loaders
@@ -87,15 +123,22 @@ mdb:
 # Configuration for streams created at server startup
 streamConfig:
   tm:
-    - name: "beacon_tm_realtime"
-      rootContainer: "/OreSat/Beacon_Packet"
-    - name: "edl_tm_realtime"
+    - name: beacon_tm_realtime
+      rootContainer: /OreSat/Beacon_Packet
+    
+    - name: edl_tm_realtime
       rootContainer: "/OreSat/EDL_Packet"
-    - name: "tm_dump"
-  cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
-  event: ["events_realtime", "events_dump"]
-  param: ["pp_realtime", "sys_param", "proc_param"]
-  parameterAlarm: ["alarms_realtime"]
+    
+    - name: tm_dump
+      processor: realtime
+
+    - name : cfdp_in
+      processor: realtime
+
+  cmdHist: [cmdhist_realtime, cmdhist_dump]
+  event: [events_realtime, events_dump]
+  param: [pp_realtime, sys_param, proc_param]
+  parameterAlarm: [alarms_realtime]
   tc:
-    - name: "tc_realtime"
-      processor: "realtime"
+    - name: tc_realtime
+      processor: realtime

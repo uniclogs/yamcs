@@ -283,7 +283,6 @@
                     </ParameterRefEntry>
                     <ParameterRefEntry parameterRef="APRS_Satellite_ID"/>
                     <ParameterRefEntry parameterRef="APRS_Revision"/>
-
                 </EntryList>
             </SequenceContainer>
         </ContainerSet>

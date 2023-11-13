@@ -16,7 +16,7 @@
     Update this to the latest Yamcs release.
     Check https://mvnrepository.com/artifact/org.yamcs/yamcs-core
     -->
-    <yamcsVersion>5.6.0</yamcsVersion>
+    <yamcsVersion>5.8.6</yamcsVersion>
   </properties>
 
   <dependencies>
@@ -32,11 +32,17 @@
       <artifactId>yamcs-web</artifactId>
       <version>${yamcsVersion}</version>
     </dependency>
+  
     <!-- HMAC Generation Utils    -->
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
       <version>1.15</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.googlejavaformat</groupId>
+      <artifactId>google-java-format</artifactId>
+      <version>1.17.0</version>
     </dependency>
   </dependencies>
 
@@ -46,11 +52,7 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.10.1</version>
-        <configuration>
-            <release>17</release>
-          <source>17</source>
-          <target>17</target>
-        </configuration>
+
       </plugin>
       <plugin>
         <groupId>org.yamcs</groupId>
