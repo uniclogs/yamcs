@@ -6,29 +6,26 @@ services:
   - class: org.yamcs.archive.XtceTmRecorder
 
   - class: org.yamcs.cfdp.CfdpService
+    name: cfdp
+    
     args:
-      # Stream IO definitions
-      incomingBucket: file_downloads
-      inStream: tm_dump
-      outStream: tc_realtime
-
-      # Target definitions
-      localEntities:
-        - name: uniclogs_images
-          id: 100
-          bucket: uniclogs_images
-      remoteEntities:
-        - name: oresat0_images
-          id: 200
-
-      #  Packet properties
+      inStream: cfdp_in
+      outStream: cfdp_out
       sequenceNrLength: 4
-      maxPduSize: 512
-      sleepBetweenPdus: 1000
-
-      # Limits
+      maxPduSize: 4096
+      incomingBucket: "groundstation"
+      allowRemoteProvidedBucket: true
+      allowRemoteProvidedSubdirectory: true
       eofAckTimeout: 3000
       eofAckLimit: 3
+      sleepBetweenPdus: 1000
+      localEntities:
+        - name: groundstation
+          id: 10
+          bucket: groundstation
+      remoteEntities:
+        - name: satellite
+          id: 20
       senderFaultHandlers:
         AckLimitReached: suspend
       receiverFaultHandlers:
@@ -66,14 +63,15 @@ dataLinks:
     port: 10016
     packetPreprocessorClassName: org.oresat.uniclogs.tctm.EdlPacketPreprocessor
 
-  - name: edl-cfdp-download
-    class: org.yamcs.tctm.TcpTmDataLink
+  - name: cfdp-download
+    class: org.yamcs.tctm.UdpTmDataLink
     stream: cfdp_in
     port: 10017
 
-  - name: edl-cfdp-upload
-    class: org.yamcs.tctm.TcpTcDataLink
+  - name: cfdp-upload
+    class: org.yamcs.tctm.UdpTcDataLink
     stream: cfdp_out
+    host: 127.0.0.1
     port: 10018
 
   - name: beacon-tm-dump
@@ -134,7 +132,6 @@ streamConfig:
 
     - name : cfdp_in
       processor: realtime
-
   cmdHist: [cmdhist_realtime, cmdhist_dump]
   event: [events_realtime, events_dump]
   param: [pp_realtime, sys_param, proc_param]
@@ -142,3 +139,7 @@ streamConfig:
   tc:
     - name: tc_realtime
       processor: realtime
+
+    - name : cfdp_out
+      processor: realtime
+
