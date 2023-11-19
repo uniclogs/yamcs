@@ -1,13 +1,11 @@
 services:
-  - class: org.yamcs.archive.XtceTmRecorder
-  
-  - class: org.yamcs.archive.ParameterRecorder
-  
-  - class: org.yamcs.archive.AlarmRecorder
-  
-  - class: org.yamcs.archive.EventRecorder
-  
   - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.archive.AlarmRecorder
+  - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.archive.XtceTmRecorder
+  - class: org.yamcs.timeline.TimelineService
+  - class: org.yamcs.archive.ParameterRecorder
+  - class: org.yamcs.archive.CommandHistoryRecorder
   
   - class: org.yamcs.parameter.SystemParametersService
     args:
@@ -19,7 +17,6 @@ services:
       name: realtime
       type: realtime
   
-  - class: org.yamcs.archive.CommandHistoryRecorder
   
   - class: org.yamcs.parameterarchive.ParameterArchive
     args:
@@ -29,7 +26,6 @@ services:
         enabled: false
         warmupTime: 60
   
-  - class: org.yamcs.timeline.TimelineService
   
   - class: org.yamcs.simulator.SimulatorCommander
     args:
@@ -50,6 +46,7 @@ services:
      allowRemoteProvidedBucket: false
      allowRemoteProvidedSubdirectory: false
      allowDownloadOverwrites: false
+     automaticDirectoryListingReloads: true
      maxExistingFileRenames: 1000
      eofAckTimeout: 3000
      eofAckLimit: 5
@@ -61,7 +58,6 @@ services:
      maxNumPendingUploads: 1
      #How many milliseconds to keep the incoming transfer in the pending queue after completion
      #During this time an incoming PDU with that transaction id will not be recognized as a new transaction
-     pendingAfterCompletion: 10000
      localEntities:
        - name: groundstation
          id: 10
@@ -77,26 +73,37 @@ services:
 
 dataLinks:
   - name: tm_realtime
-    class: org.yamcs.tctm.TcpTmDataLink
-    stream: tm_realtime
-    host: localhost
+    class: org.yamcs.tctm.ccsds.UdpTmFrameLink
     port: 10015
+    frameType: USLP
+    spacecraftId: 52017 # ORESAT0 NORAD ID
+    errorDetection: CRC16
+    # badFrameStream: invalid_tm_stream
+    # maxFrameLength: 4096
+    virtualChannels:
+      # EDL
+      - vcId: 0
+        ocfPresent: false
+        service: PACKET
+        maxPacketLength: 1024
+        stream: tm_realtime
+        stripEncapsulationHeader: true
+        packetPreprocessorClassName: org.yamcs.tctm.IssPacketPreprocessor
 
-    # Give the embedded simulator some time to boot up
-    initialDelay: 2000      
+      # CFDP
+      - vcId: 1
+        ocfPresent: false
+        service: PACKET
+        maxPacketLength: 4096
+        stream: cfdp_in
+        stripEncapsulationHeader: true
+        packetPreprocessorClassName: org.yamcs.tctm.IssPacketPreprocessor
+
   - name: tc_realtime
-    class: org.yamcs.tctm.TcpTcDataLink
+    class: org.yamcs.tctm.UdpTcDataLink
     stream: tc_realtime
     host: localhost
     port: 10025
-
-    # Give the embedded simulator smoe time to boot up
-    initialDelay: 2000
-    commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
-    commandPostprocessorArgs:
-        errorDetection:
-          type: 16-SUM
-        enforceEvenNumberOfBytes: true
 
 mdb:
   # Configuration of the active loaders
@@ -127,24 +134,24 @@ mdb:
 
 streamConfig:
   tm:
-    - name: "tm_realtime"
-      processor: "realtime"
+    - name: tm_realtime
+      processor: realtime
     
-    - name: "tm2_realtime"
-      # rootContainer: "/YSS/SIMULATOR/tm2_container"
-      processor: "realtime"
+    - name: tm2_realtime
+      # rootContainer: /YSS/SIMULATOR/tm2_container
+      processor: realtime
     
-    - name: "tm_dump"
+    - name: tm_dump
   
   tc:
-    - name: "tc_realtime"
-      processor: "realtime"
+    - name: tc_realtime
+      processor: realtime
 
-  invalidTm: "invalid_tm_stream"
-  cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
-  event: ["events_realtime", "events_dump"]
-  param: ["pp_realtime", "sys_param", "proc_param"]
-  parameterAlarm: ["alarms_realtime"]
-  eventAlarm: ["event_alarms_realtime"]
-  sqlFile: "etc/extra_streams.sql"
+  invalidTm: invalid_tm_stream
+  cmdHist: [cmdhist_realtime, cmdhist_dump]
+  event: [events_realtime, events_dump]
+  param: [pp_realtime, sys_param, proc_param]
+  parameterAlarm: [alarms_realtime]
+  eventAlarm: [event_alarms_realtime]
+  sqlFile: etc/extra_streams.sql
   
