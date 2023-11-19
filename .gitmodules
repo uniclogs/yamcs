@@ -1,3 +1,0 @@
-[submodule "yamcs"]
-	path = yamcs
-	url = git@github.com:yamcs/yamcs.git

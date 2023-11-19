@@ -2,13 +2,13 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.oresat</groupId>
-  <artifactId>uniclogs-yamcs</artifactId>
-  <version>0.2.0-SNAPSHOT</version>
+  <groupId>com.example</groupId>
+  <artifactId>myproject</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>UniClOGS Yamcs</name>
-  <url>https://uniclogs.org</url>
+  <name>My Project</name>
+  <url>https://example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -32,18 +32,6 @@
       <artifactId>yamcs-web</artifactId>
       <version>${yamcsVersion}</version>
     </dependency>
-  
-    <!-- HMAC Generation Utils    -->
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
-      <version>1.15</version>
-    </dependency>
-    <dependency>
-      <groupId>com.google.googlejavaformat</groupId>
-      <artifactId>google-java-format</artifactId>
-      <version>1.17.0</version>
-    </dependency>
   </dependencies>
 
   <build>
@@ -51,13 +39,20 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.10.1</version>
-
+        <version>3.11.0</version>
+        <configuration>
+          <release>11</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.12.1</version>
       </plugin>
       <plugin>
         <groupId>org.yamcs</groupId>
         <artifactId>yamcs-maven-plugin</artifactId>
-        <version>1.2.7</version>
+        <version>1.2.9</version>
         <executions>
           <!-- Tell Maven to bundle Yamcs into a tar.gz file
                when the 'mvn package' command is run -->
@@ -77,4 +72,14 @@
       </plugin>
     </plugins>
   </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.4.3</version>
+      </plugin>
+    </plugins>
+  </reporting>
 </project>

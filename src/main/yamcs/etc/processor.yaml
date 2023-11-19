@@ -2,19 +2,17 @@ realtime:
   services:
     - class: org.yamcs.StreamTmPacketProvider
       args:
-        streams: ["edl_tm_realtime", "beacon_tm_realtime", "tm_dump"]
+        streams: ["tm_realtime"]
     - class: org.yamcs.StreamTcCommandReleaser
     - class: org.yamcs.tctm.StreamParameterProvider
     - class: org.yamcs.algorithms.AlgorithmManager
     - class: org.yamcs.parameter.LocalParameterManager
   config:
     subscribeAll: true
-    generateEvents: true
     # Check alarms and also enable the alarm server (that keeps track of unacknowledged alarms)
     alarm:
       parameterCheck: true
       parameterServer: enabled
-
     parameterCache:
       enabled: false
     tmProcessor:

@@ -1,127 +1,61 @@
-# UniClOGS Yamcs
+# Yamcs QuickStart
 
-[![](https://img.shields.io/github/license/oresat/uniclogs-yamcs)](./LICENSE)
-[![](https://img.shields.io/github/issues/uniclogs/yamcs/bug?color=red&label=Open%20Bug%20Reports)](https://github.com/oresat/uniclogs-yamcs/issues)
+This repository holds the source code to start a basic Yamcs application that monitors a simulated spacecraft in low earth orbit.
 
-[Yamcs] based mission control software for UniClOGS
+You may find it useful as a starting point for your own project.
 
-&nbsp;
 
-***
+## Prerequisites
 
-## Installation and Usage
+* Java 11+
+* Linux x64/aarch64, macOS x64, or Windows x64
 
-### Docker Install:
+A copy of Maven 3.1+ is also required, however this gets automatically downloaded an installed by using the `./mvnw` shell script as detailed below.
 
-> **Note:**
->
-> The security module is enabled by default for this docker-image, and the default *username/password* is `admin/admin`. Please remember to change this upon first login for non-development environments.
+Note that Yamcs does not currently support running on Apple M1 or M2. We hope to address this soon.
 
-#### Pull the latest image from the official OreSat image via Dockerhub:
 
-`docker pull oresat/uniclogs-yamcs:latest`
+## Running Yamcs
 
-#### Run immediately in detatched mode:
+Here are some commands to get things started:
 
-```
-docker run \
-  --detach \
-  -p8090:8090 \
-  -p10015:10015 \
-  -p10016:10016 \
-  -p10020:10020 \
-  -p10025:10025 \
-  --volume yamcs_data:/srv/yamcs \
-  --volume yamcs_configs:/etc/yamcs \
-  --name yamcs \
-  oresat/uniclogs-yamcs:latest
-```
+Compile this project:
 
-#### Run immediately with interactive TTY enabled:
+    ./mvnw compile
 
-```
-docker run \
-  --detach \
-  --interactive \
-  --tty \
-  -p8090:8090 \
-  -p10015:10015 \
-  -p10016:10016 \
-  -p10020:10020 \
-  -p10025:10025 \
-  --volume yamcs_data:/srv/yamcs \
-  --volume yamcs_configs:/etc/yamcs \
-  --name yamcs \
-  oresat/uniclogs-yamcs:latest
-```
+Start Yamcs on localhost:
 
-### Manual Docker Build:
+    ./mvnw yamcs:run
 
-Run Make at the root of the project
+Same as yamcs:run, but allows a debugger to attach at port 7896:
 
-* `make`
+    ./mvnw yamcs:debug
+    
+Delete all generated outputs and start over:
 
-Change into the docker directory
+    ./mvnw clean
 
-* `cd dist/docker`
+This will also delete Yamcs data. Change the `dataDir` property in `yamcs.yaml` to another location on your file system if you don't want that.
 
-Build via Docker-Compose
 
-* `docker-compose build`
+## Telemetry
 
-Verify that the `uniclogs-yamcs` image has succesfully built
+To start pushing CCSDS packets into Yamcs, run the included Python script:
 
-* `docker images`
+    python simulator.py
 
-&nbsp;
+This script will send packets at 1 Hz over UDP to Yamcs. There is enough test data to run for a full calendar day.
 
-***
+The packets are a bit artificial and include a mixture of HK and accessory data.
 
-## Development Quick Start
 
-### Interface Connection Diagram(s):
+## Telecommanding
 
-Below is a set of diagrams outlining both how Yamcs in its current state works, as well as what the target ICD layout is for the first official release of `uniclogs-yamcs`.
+This project defines a few example CCSDS telecommands. They are sent to UDP port 10025. The simulator.py script listens to this port. Commands  have no side effects. The script will only count them.
 
-![uniclogs-yamcs](docs/uniclogs-yamcs-fbd.png)
 
-#### Install Dev-Dependencies:
+## Bundling
 
-##### Non-Project Dependencies
-* Debian/Ubuntu: `sudo apt-get install openjdk-17-jre maven npm`
-* Archlinux: `sudo pacman -S jre17-openjdk maven npm`
+Running through Maven is useful during development, but it is not recommended for production environments. Instead bundle up your Yamcs application in a tar.gz file:
 
-##### Project Dependencies
-* `mvn clean yamcs:debug`
-* Open [Local Yamcs] in a browser
-
-> **Note:**
->
-> The Security module is disabled by default, though, on ocassion, the Yamcs Auth module may send you to `/auth/authorize` erroneously. Simply re-travese to [Local Yamcs] again to bypass this error.
-
-&nbsp;
-
-***
-
-## Command Shell Usage
-
-The user interface for uniclogs yamcs.
-
-How to:
-
-- Install dependencies: `$ pip install -r cmd_shell/requirements.txt`
-- Start Yamcs
-- Run `$ python3 -m cmd_shell`
-
-&nbsp;
-
-***
-
-## Appendix and Resources
-
-- [XTCE Element Description (CCSDS Green Book)](https://public.ccsds.org/Pubs/660x1g1.pdf)
-- [XTCE (CCSDS Green Book)](https://public.ccsds.org/Pubs/660x2g2.pdf)
-
-[Yamcs]:https://yamcs.org/
-
-[Local Yamcs]:http://localhost:8090/
+    ./mvnw package
