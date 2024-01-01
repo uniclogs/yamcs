@@ -1,10 +1,10 @@
 
 services:
   yamcs:
-    build: .
+    image: yamcs
     hostname: yamcs
     container_name: yamcs
-    command: "mvn yamcs:run"
+    command: "mvn yamcs:debug"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8090"]
       interval: 10s

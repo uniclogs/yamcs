@@ -1,11 +1,11 @@
 services:
-  - class: org.yamcs.archive.ReplayServer
   - class: org.yamcs.archive.AlarmRecorder
-  - class: org.yamcs.archive.EventRecorder
-  - class: org.yamcs.archive.XtceTmRecorder
-  - class: org.yamcs.timeline.TimelineService
-  - class: org.yamcs.archive.ParameterRecorder
   - class: org.yamcs.archive.CommandHistoryRecorder
+  - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.archive.ParameterRecorder
+  - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.timeline.TimelineService
+  - class: org.yamcs.archive.XtceTmRecorder
   
   - class: org.yamcs.parameter.SystemParametersService
     args:
@@ -26,22 +26,12 @@ services:
         enabled: false
         warmupTime: 60
   
-  
-  - class: org.yamcs.simulator.SimulatorCommander
-    args:
-      telnet:
-        port: 10023
-      tctm:
-        tmPort: 10015
-        tcPort: 10025
-        losPort: 10115
-
   - class: org.yamcs.cfdp.CfdpService
     name: cfdp
     args:
      inactivityTimeout: 30000
      sequenceNrLength: 4
-     maxPduSize: 512
+     maxPduSize: 2048
      incomingBucket: groundstation
      allowRemoteProvidedBucket: false
      allowRemoteProvidedSubdirectory: false
@@ -50,14 +40,8 @@ services:
      maxExistingFileRenames: 1000
      eofAckTimeout: 3000
      eofAckLimit: 5
-     #Note that the simulator does not process commands faster than 1/second.
-     # Decreasign this number will make the packets queue up in the TCP queue
-     # and the CFDP sender will timeout waiting for the EOF ACK
      sleepBetweenPdus: 1000
-     #The simulator only supports one transfer at a time
      maxNumPendingUploads: 1
-     #How many milliseconds to keep the incoming transfer in the pending queue after completion
-     #During this time an incoming PDU with that transaction id will not be recognized as a new transaction
      localEntities:
        - name: groundstation
          id: 10
@@ -72,42 +56,87 @@ services:
        timestampMultiplier: 1
 
 dataLinks:
-  - name: tm_realtime
+  # AX.25 Beacon telemetry channel
+  - name: tm_beacon
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tmr_beacon
+    port: 10015 # GS-Modem beacon telemetry port
+    invalidPackets: DIVERT
+    invalidPacketsStream: invalid_tm_stream
+    packetPreprocessorClassName: org.yamcs.tctm.GenericPacketPreprocessor
+    packetPreprocessorArgs:
+      packetSize: 269
+      seqCountOffset: -1
+      timestampOffset: -1
+
+
+  - name: tm_edl
     class: org.yamcs.tctm.ccsds.UdpTmFrameLink
-    port: 10015
-    frameType: USLP
-    spacecraftId: 52017 # ORESAT0 NORAD ID
-    errorDetection: CRC16
-    # badFrameStream: invalid_tm_stream
-    # maxFrameLength: 4096
+    errorDetection: NONE
+    port: 10016 # GS-Modem USLP telemetry port
+    frameType: USLP # Process all TM with USLP header
+    spacecraftId: 0x4F53 # "OS" in ASCII
+    badFrameStream: invalid_tm_stream # Process unrecognized TM here
+    maxFrameLength: 4096 # Global max packet-size 4 kb
     virtualChannels:
-      # EDL
+      # EDL Virtual Channel
       - vcId: 0
         ocfPresent: false
         service: PACKET
         maxPacketLength: 1024
-        stream: tm_realtime
+        stream: tmr_edl
+        errorDetection: none
         stripEncapsulationHeader: true
         packetPreprocessorClassName: org.yamcs.tctm.IssPacketPreprocessor
+        packetPreprocessorArgs:
+          packetSize: 1024
 
-      # CFDP
+      # CFDP Virtual Channel
       - vcId: 1
         ocfPresent: false
         service: PACKET
-        maxPacketLength: 4096
+        maxPacketLength: 2048
         stream: cfdp_in
         stripEncapsulationHeader: true
         packetPreprocessorClassName: org.yamcs.tctm.IssPacketPreprocessor
+        packetPreprocessorArgs:
+          packetSize: 1024
 
-  - name: tc_realtime
-    class: org.yamcs.tctm.UdpTcDataLink
-    stream: tc_realtime
-    host: localhost
-    port: 10025
+  - name: tc_edl
+    class: org.yamcs.tctm.ccsds.UdpTcFrameLink
+    errorDetection: NONE
+    priorityScheme: ABSOLUTE
+    stream: tcr_edl
+    host: localhost # GS-Modem Address
+    port: 10025 # GS-Modem USLP telecommand port
+    spacecraftId: 0x4F53 # "OS" in ASCII
+    maxFrameLength: 4096 # Global max packet-size 4 kb
+
+    virtualChannels:
+    # EDL Virtual Channel
+    - vcId: 0
+      service: PACKET
+      priority: 0
+      maxPacketLength: 1024
+      commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+      commandPostprocessorArgs:
+        errorDetection:
+          type: 16-SUM
+        enforceEvenNumberOfBytes: true
+
+    # CFDP Virtual Channel
+    - vcId: 1
+      service: PACKET
+      priority: 0
+      maxPacketLength: 2048
+      stream: cfdp_out
+      commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+      commandPostprocessorArgs:
+        errorDetection:
+          type: 16-SUM
+        enforceEvenNumberOfBytes: true
 
 mdb:
-  # Configuration of the active loaders
-  # Valid loaders are: sheet, xtce or fully qualified name of the class
   - type: xtce
     spec: mdb/oresat.xml
     subLoaders:
@@ -134,24 +163,38 @@ mdb:
 
 streamConfig:
   tm:
-    - name: tm_realtime
-      processor: realtime
+    - name: tmr_beacon
+      rootContainer: /OreSat/Beacon_Packet
     
-    - name: tm2_realtime
-      # rootContainer: /YSS/SIMULATOR/tm2_container
-      processor: realtime
+    - name: tmr_edl
+      rootContainer: /OreSat/EDL_Packet
     
-    - name: tm_dump
+    - name: tmd_debug
+
+    - name: cfdp_in
+      processor: realtime
   
   tc:
-    - name: tc_realtime
+    - name: tcr_edl
       processor: realtime
 
+    - name: cfdp_out
+      processor: realtime
+
+  cmdHist: 
+    - cmdhist_realtime
+    - cmdhist_dump
+
+  event: 
+    - events_realtime
+    - events_dump
+
+  param:
+    - pp_realtime
+    - sys_param
+    - proc_param
+
   invalidTm: invalid_tm_stream
-  cmdHist: [cmdhist_realtime, cmdhist_dump]
-  event: [events_realtime, events_dump]
-  param: [pp_realtime, sys_param, proc_param]
-  parameterAlarm: [alarms_realtime]
-  eventAlarm: [event_alarms_realtime]
-  sqlFile: etc/extra_streams.sql
-  
+  parameterAlarm: [ alarms_realtime ]
+  eventAlarm: [ event_alarms_realtime ]
+  #sqlFile: etc/extra_streams.sql

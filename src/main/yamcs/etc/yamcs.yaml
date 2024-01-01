@@ -1,4 +1,5 @@
 services:
+  # - class: org.yamcs.tse.TseCommander
   - class: org.yamcs.http.HttpServer
     args:
       port: 8090
