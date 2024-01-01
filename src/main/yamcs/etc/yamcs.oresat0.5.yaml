@@ -143,10 +143,10 @@ mdb:
 streamConfig:
   tm:
     - name: tmr_beacon
-      rootContainer: /OreSat/Beacon_Packet
+      rootContainer: /OreSat0.5/Beacon
     
     - name: tmr_edl
-      rootContainer: /OreSat/EDL_Packet
+      processor: realtime
     
     - name: tmd_debug
 

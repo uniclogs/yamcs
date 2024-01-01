@@ -12,19 +12,21 @@
           <IntegerDataEncoding byteOrder="leastSignificantByteFirst" sizeInBits="32" />
         </Encodings>
         <ReferenceTime>
-          <Epoch>1970-01-01T00:00.00.000</Epoch>
+          <Epoch>1970-01-01T00:00:00.000</Epoch>
         </ReferenceTime>
       </AbsoluteTimeParameterType>
-      <StringParameterType name="string24_type" baseType="string">
-        <StringParameterType encoding="UTF-8">
+      <StringParameterType name="string24_type">
+        <StringDataEncoding encoding="UTF-8">
           <SizeInBits>
             <Fixed>
               <FixedValue>24</FixedValue>
             </Fixed>
           </SizeInBits>
-        </StringParameterType>
+        </StringDataEncoding>
       </StringParameterType>
       <EnumeratedParameterType name="uint8_c3_satellite_id_type">
+        <UnitSet/>
+        <IntegerDataEncoding sizeInBits="8"/>
         <EnumerationList>
           <Enumeration value="1" label="oresat0" />
           <Enumeration value="2" label="oresat0_5" />
@@ -36,6 +38,8 @@
         <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="8" />
       </IntegerParameterType>
       <EnumeratedParameterType name="uint8_c3_status_type">
+        <UnitSet/>
+        <IntegerDataEncoding sizeInBits="8"/>
         <EnumerationList>
           <Enumeration value="66" label="pre_deply" />
           <Enumeration value="67" label="deploy" />
@@ -80,7 +84,7 @@
         <UnitSet>
           <Unit description="dB">dB</Unit>
         </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twoComplement" sizeInBits="8" />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="8" />
       </IntegerParameterType>
       <IntegerParameterType name="uint16_mV_type" signed="false">
         <UnitSet>
@@ -92,13 +96,13 @@
         <UnitSet>
           <Unit description="C">C</Unit>
         </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twoComplement" sizeInBits="8" />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="8" />
       </IntegerParameterType>
       <IntegerParameterType name="int16_mA_type" signed="true">
         <UnitSet>
           <Unit description="mA">mA</Unit>
         </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twoComplement" sizeInBits="16" />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16" />
       </IntegerParameterType>
       <IntegerParameterType name="uint16_mAh_type" signed="false">
         <UnitSet>
@@ -119,6 +123,8 @@
         <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="16" />
       </IntegerParameterType>
       <EnumeratedParameterType name="uint8_star_tracker_1_status_type">
+        <UnitSet/>
+        <IntegerDataEncoding sizeInBits="8"/>
         <EnumerationList>
           <Enumeration value="0" label="False" />
           <Enumeration value="1" label="boot" />
@@ -133,7 +139,7 @@
         <UnitSet>
           <Unit description="deg">deg</Unit>
         </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twoComplement" sizeInBits="16" />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16" />
       </IntegerParameterType>
       <IntegerParameterType name="uint32_ms_type" signed="false">
         <UnitSet>
@@ -142,6 +148,8 @@
         <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32" />
       </IntegerParameterType>
       <EnumeratedParameterType name="uint8_gps_status_type">
+        <UnitSet/>
+        <IntegerDataEncoding sizeInBits="8"/>
         <EnumerationList>
           <Enumeration value="0" label="False" />
           <Enumeration value="1" label="searching" />
@@ -153,21 +161,23 @@
         <UnitSet>
           <Unit description="cm">cm</Unit>
         </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twoComplement" sizeInBits="32" />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32" />
       </IntegerParameterType>
       <IntegerParameterType name="int32_cmps_type" signed="true">
         <UnitSet>
           <Unit description="cm/s">cm/s</Unit>
         </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twoComplement" sizeInBits="32" />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32" />
       </IntegerParameterType>
       <IntegerParameterType name="int16_degps_type" signed="true">
         <UnitSet>
           <Unit description="deg/s">deg/s</Unit>
         </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twoComplement" sizeInBits="16" />
+        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16" />
       </IntegerParameterType>
       <EnumeratedParameterType name="uint8_dxwifi_status_type">
+        <UnitSet/>
+        <IntegerDataEncoding sizeInBits="8"/>
         <EnumerationList>
           <Enumeration value="0" label="False" />
           <Enumeration value="1" label="boot" />
@@ -178,6 +188,8 @@
         </EnumerationList>
       </EnumeratedParameterType>
       <EnumeratedParameterType name="uint8_cfc_processor_camera_status_type">
+        <UnitSet/>
+        <IntegerDataEncoding sizeInBits="8"/>
         <EnumerationList>
           <Enumeration value="1" label="False" />
           <Enumeration value="2" label="standby" />
@@ -185,7 +197,10 @@
           <Enumeration value="4" label="error" />
         </EnumerationList>
       </EnumeratedParameterType>
-      <BooleanParameterType name="bool_type" zeroStringValue="0" oneStringValue="1" />
+      <BooleanParameterType name="bool_type" zeroStringValue="0" oneStringValue="1">
+        <UnitSet/>
+        <IntegerDataEncoding sizeInBits="8"/>
+      </BooleanParameterType>
     </ParameterTypeSet>
     <ParameterSet>
       <Parameter name="c3_beacon_start_chars" parameterTypeRef="string24_type" shortDescription="the aprs start characters" />
