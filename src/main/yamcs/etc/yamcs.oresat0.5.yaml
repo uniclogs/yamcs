@@ -1,0 +1,179 @@
+services:
+  - class: org.yamcs.archive.AlarmRecorder
+  - class: org.yamcs.archive.CommandHistoryRecorder
+  - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.archive.ParameterRecorder
+  - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.timeline.TimelineService
+  - class: org.yamcs.archive.XtceTmRecorder
+  
+  - class: org.yamcs.parameter.SystemParametersService
+    args:
+      provideJvmVariables: true
+      provideFsVariables: true
+
+  - class: org.yamcs.ProcessorCreatorService
+    args:
+      name: realtime
+      type: realtime
+  
+  
+  - class: org.yamcs.parameterarchive.ParameterArchive
+    args:
+      realtimeFiller:
+        enabled: true
+      backFiller:
+        enabled: false
+        warmupTime: 60
+  
+  - class: org.yamcs.cfdp.CfdpService
+    name: cfdp
+    args:
+     inactivityTimeout: 30000
+     sequenceNrLength: 4
+     maxPduSize: 2048
+     incomingBucket: groundstation
+     allowRemoteProvidedBucket: false
+     allowRemoteProvidedSubdirectory: false
+     allowDownloadOverwrites: false
+     automaticDirectoryListingReloads: true
+     maxExistingFileRenames: 1000
+     eofAckTimeout: 3000
+     eofAckLimit: 5
+     sleepBetweenPdus: 1000
+     maxNumPendingUploads: 1
+     localEntities:
+       - name: groundstation
+         id: 10
+         bucket: groundstation
+     remoteEntities:
+       - name: satellite
+         id: 20
+     senderFaultHandlers:
+       AckLimitReached: suspend
+     fileListingParserClassName: org.yamcs.filetransfer.CsvListingParser
+     fileListingParserArgs:
+       timestampMultiplier: 1
+
+dataLinks:
+  # AX.25 Beacon telemetry channel
+  - name: tm_beacon
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tmr_beacon
+    port: 10015 # GS-Modem beacon telemetry port
+    invalidPackets: DIVERT
+    invalidPacketsStream: invalid_tm_stream
+    packetPreprocessorClassName: org.yamcs.tctm.GenericPacketPreprocessor
+    packetPreprocessorArgs:
+      packetSize: 269
+      seqCountOffset: -1
+      timestampOffset: -1
+
+
+  - name: tm_edl
+    class: org.yamcs.tctm.ccsds.UdpTmFrameLink
+    errorDetection: NONE
+    port: 10016 # GS-Modem USLP telemetry port
+    frameType: USLP # Process all TM with USLP header
+    spacecraftId: 0x4F53 # "OS" in ASCII
+    badFrameStream: invalid_tm_stream # Process unrecognized TM here
+    maxFrameLength: 4096 # Global max packet-size 4 kb
+    virtualChannels:
+      # EDL Virtual Channel
+      - vcId: 0
+        ocfPresent: false
+        service: PACKET
+        maxPacketLength: 1024
+        stream: tmr_edl
+        errorDetection: none
+        stripEncapsulationHeader: true
+        packetPreprocessorClassName: org.yamcs.tctm.IssPacketPreprocessor
+        packetPreprocessorArgs:
+          packetSize: 1024
+
+      # CFDP Virtual Channel
+      - vcId: 1
+        ocfPresent: false
+        service: PACKET
+        maxPacketLength: 2048
+        stream: cfdp_in
+        stripEncapsulationHeader: true
+        packetPreprocessorClassName: org.yamcs.tctm.IssPacketPreprocessor
+        packetPreprocessorArgs:
+          packetSize: 1024
+
+  - name: tc_edl
+    class: org.yamcs.tctm.ccsds.UdpTcFrameLink
+    errorDetection: NONE
+    priorityScheme: ABSOLUTE
+    stream: tcr_edl
+    host: localhost # GS-Modem Address
+    port: 10025 # GS-Modem USLP telecommand port
+    spacecraftId: 0x4F53 # "OS" in ASCII
+    maxFrameLength: 4096 # Global max packet-size 4 kb
+
+    virtualChannels:
+    # EDL Virtual Channel
+    - vcId: 0
+      service: PACKET
+      priority: 0
+      maxPacketLength: 1024
+      commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+      commandPostprocessorArgs:
+        errorDetection:
+          type: 16-SUM
+        enforceEvenNumberOfBytes: true
+
+    # CFDP Virtual Channel
+    - vcId: 1
+      service: PACKET
+      priority: 0
+      maxPacketLength: 2048
+      stream: cfdp_out
+      commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+      commandPostprocessorArgs:
+        errorDetection:
+          type: 16-SUM
+        enforceEvenNumberOfBytes: true
+
+mdb:
+  - type: xtce
+    spec: mdb/oresat0.5.xtce
+
+streamConfig:
+  tm:
+    - name: tmr_beacon
+      rootContainer: /OreSat/Beacon_Packet
+    
+    - name: tmr_edl
+      rootContainer: /OreSat/EDL_Packet
+    
+    - name: tmd_debug
+
+    - name: cfdp_in
+      processor: realtime
+  
+  tc:
+    - name: tcr_edl
+      processor: realtime
+
+    - name: cfdp_out
+      processor: realtime
+
+  cmdHist: 
+    - cmdhist_realtime
+    - cmdhist_dump
+
+  event: 
+    - events_realtime
+    - events_dump
+
+  param:
+    - pp_realtime
+    - sys_param
+    - proc_param
+
+  invalidTm: invalid_tm_stream
+  parameterAlarm: [ alarms_realtime ]
+  eventAlarm: [ event_alarms_realtime ]
+  #sqlFile: etc/extra_streams.sql

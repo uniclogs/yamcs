@@ -12,5 +12,6 @@ dataDir: yamcs-data
 
 instances:
   - oresat0
+  - oresat0.5
 
 secretKey: changeme
