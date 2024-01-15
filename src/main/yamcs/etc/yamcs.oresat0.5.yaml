@@ -138,7 +138,7 @@ dataLinks:
 
 mdb:
   - type: xtce
-    spec: mdb/oresat0.5.xtce
+    spec: mdb/oresat0_5.xtce
 
 streamConfig:
   tm:

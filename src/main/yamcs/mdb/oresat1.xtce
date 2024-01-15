@@ -1,12 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <SpaceSystem name="OreSat1" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
-  <Header validationStatus="Working" classification="NotClassified" version="0.0" date="2024-01-01">
+  <Header validationStatus="Working" classification="NotClassified" version="0.0" date="2024-01-14">
     <AuthorSet>
       <Author>PSAS (Portland State Aerospace Society)</Author>
     </AuthorSet>
   </Header>
   <TelemetryMetaData>
     <ParameterTypeSet>
+      <BinaryParameterType name="b128_type" shortDescription="128 bitfield">
+        <UnitSet />
+        <BinaryDataEncoding bitOrder="leastSignificantBitFirst">
+          <SizeInBits>
+            <FixedValue>128</FixedValue>
+          </SizeInBits>
+        </BinaryDataEncoding>
+      </BinaryParameterType>
       <AbsoluteTimeParameterType name="unix_time" shortDescription="Unix coarse timestamp">
         <Encodings>
           <IntegerDataEncoding byteOrder="leastSignificantByteFirst" sizeInBits="32" />
@@ -39,6 +47,7 @@
       </IntegerParameterType>
     </ParameterTypeSet>
     <ParameterSet>
+      <Parameter name="ax25_header" parameterTypeRef="b128_type" shortDescription="AX.25 Header" />
       <Parameter name="c3_beacon_start_chars" parameterTypeRef="string24_type" shortDescription="the aprs start characters" />
       <Parameter name="c3_satellite_id" parameterTypeRef="uint8_c3_satellite_id_type" shortDescription="the unique oresat satellite id" />
       <Parameter name="c3_beacon_revision" parameterTypeRef="uint8_type" shortDescription="the beacon revision number" />
@@ -46,6 +55,7 @@
     <ContainerSet>
       <SequenceContainer name="Beacon">
         <EntryList>
+          <ParameterRefEntry parameterRef="ax25_header" />
           <ParameterRefEntry parameterRef="c3_beacon_start_chars" />
           <ParameterRefEntry parameterRef="c3_satellite_id" />
           <ParameterRefEntry parameterRef="c3_beacon_revision" />

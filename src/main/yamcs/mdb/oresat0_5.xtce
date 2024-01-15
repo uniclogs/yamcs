@@ -1,12 +1,20 @@
 <?xml version='1.0' encoding='utf-8'?>
 <SpaceSystem name="OreSat0.5" xmlns:xtce="http://www.omg.org/space/xtce" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.omg.org/spec/XTCE/20180204 https://www.omg.org/spec/XTCE/20180204/SpaceSystem.xsd">
-  <Header validationStatus="Working" classification="NotClassified" version="0.0" date="2024-01-01">
+  <Header validationStatus="Working" classification="NotClassified" version="0.0" date="2024-01-14">
     <AuthorSet>
       <Author>PSAS (Portland State Aerospace Society)</Author>
     </AuthorSet>
   </Header>
   <TelemetryMetaData>
     <ParameterTypeSet>
+      <BinaryParameterType name="b128_type" shortDescription="128 bitfield">
+        <UnitSet />
+        <BinaryDataEncoding bitOrder="leastSignificantBitFirst">
+          <SizeInBits>
+            <FixedValue>128</FixedValue>
+          </SizeInBits>
+        </BinaryDataEncoding>
+      </BinaryParameterType>
       <AbsoluteTimeParameterType name="unix_time" shortDescription="Unix coarse timestamp">
         <Encodings>
           <IntegerDataEncoding byteOrder="leastSignificantByteFirst" sizeInBits="32" />
@@ -135,18 +143,6 @@
           <Enumeration value="255" label="error" />
         </EnumerationList>
       </EnumeratedParameterType>
-      <IntegerParameterType name="int16_deg_type" signed="true">
-        <UnitSet>
-          <Unit description="deg">deg</Unit>
-        </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="16" />
-      </IntegerParameterType>
-      <IntegerParameterType name="uint32_ms_type" signed="false">
-        <UnitSet>
-          <Unit description="ms">ms</Unit>
-        </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="unsigned" sizeInBits="32" />
-      </IntegerParameterType>
       <EnumeratedParameterType name="uint8_gps_status_type">
         <UnitSet />
         <IntegerDataEncoding sizeInBits="8" />
@@ -157,18 +153,16 @@
           <Enumeration value="3" label="error" />
         </EnumerationList>
       </EnumeratedParameterType>
-      <IntegerParameterType name="int32_cm_type" signed="true">
-        <UnitSet>
-          <Unit description="cm">cm</Unit>
-        </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32" />
-      </IntegerParameterType>
-      <IntegerParameterType name="int32_cmps_type" signed="true">
-        <UnitSet>
-          <Unit description="cm/s">cm/s</Unit>
-        </UnitSet>
-        <IntegerDataEncoding byteOrder="leastSignificantByteFirst" encoding="twosComplement" sizeInBits="32" />
-      </IntegerParameterType>
+      <EnumeratedParameterType name="uint8_gps_skytraq_fix_mode_type">
+        <UnitSet />
+        <IntegerDataEncoding sizeInBits="8" />
+        <EnumerationList>
+          <Enumeration value="0" label="no_fix" />
+          <Enumeration value="1" label="2d" />
+          <Enumeration value="2" label="3d" />
+          <Enumeration value="3" label="3d_dgps" />
+        </EnumerationList>
+      </EnumeratedParameterType>
       <IntegerParameterType name="int16_degps_type" signed="true">
         <UnitSet>
           <Unit description="deg/s">deg/s</Unit>
@@ -203,6 +197,7 @@
       </BooleanParameterType>
     </ParameterTypeSet>
     <ParameterSet>
+      <Parameter name="ax25_header" parameterTypeRef="b128_type" shortDescription="AX.25 Header" />
       <Parameter name="c3_beacon_start_chars" parameterTypeRef="string24_type" shortDescription="the aprs start characters" />
       <Parameter name="c3_satellite_id" parameterTypeRef="uint8_c3_satellite_id_type" shortDescription="the unique oresat satellite id" />
       <Parameter name="c3_beacon_revision" parameterTypeRef="uint8_type" shortDescription="the beacon revision number" />
@@ -215,11 +210,16 @@
       <Parameter name="c3_lband_rx_bytes" parameterTypeRef="uint32_B_type" shortDescription="lband received byte count" />
       <Parameter name="c3_lband_rx_packets" parameterTypeRef="uint32_type" shortDescription="lband received packet count" />
       <Parameter name="c3_lband_rssi" parameterTypeRef="int8_dB_type" shortDescription="lband rssi of last packet received after lna, filters, and digital channel filter" />
+      <Parameter name="c3_lband_synth_relock_count" parameterTypeRef="uint8_type" shortDescription="lband si41xx synthesizer relock count since boot" />
       <Parameter name="c3_uhf_rx_bytes" parameterTypeRef="uint32_B_type" shortDescription="uhf received byte count" />
       <Parameter name="c3_uhf_rx_packets" parameterTypeRef="uint32_type" shortDescription="uhf received packet count" />
       <Parameter name="c3_uhf_rssi" parameterTypeRef="int8_dB_type" shortDescription="uhf rssi of last packet received after lna, filters, and digital channel filter" />
       <Parameter name="c3_edl_sequence_count" parameterTypeRef="uint32_type" shortDescription="edl sequence count" />
       <Parameter name="c3_edl_rejected_count" parameterTypeRef="uint32_type" shortDescription="edl sequence count" />
+      <Parameter name="c3_fread_cache_length" parameterTypeRef="uint8_type" shortDescription="number of files in fread cache" />
+      <Parameter name="c3_fwrite_cache_length" parameterTypeRef="uint8_type" shortDescription="number of files in fwrite cache" />
+      <Parameter name="c3_updater_cache_length" parameterTypeRef="uint8_type" shortDescription="number of updates cached" />
+      <Parameter name="c3_adcs_manager_mode" parameterTypeRef="uint8_type" shortDescription="current adcs mode" />
       <Parameter name="battery_1_pack_1_vbatt" parameterTypeRef="uint16_mV_type" shortDescription="pack voltage" />
       <Parameter name="battery_1_pack_1_vcell" parameterTypeRef="uint16_mV_type" shortDescription="lowest cell voltage" />
       <Parameter name="battery_1_pack_1_vcell_max" parameterTypeRef="uint16_mV_type" shortDescription="max voltage for a cell" />
@@ -302,24 +302,13 @@
       <Parameter name="solar_6_output_energy" parameterTypeRef="uint16_mJ_type" shortDescription="storing energy" />
       <Parameter name="star_tracker_1_system_storage_percent" parameterTypeRef="uint8_percent_type" shortDescription="the current storage percent used" />
       <Parameter name="star_tracker_1_status" parameterTypeRef="uint8_star_tracker_1_status_type" shortDescription="" />
-      <Parameter name="star_tracker_1_orientation_right_ascension" parameterTypeRef="int16_deg_type" shortDescription="the right ascension of the satellite" />
-      <Parameter name="star_tracker_1_orientation_declination" parameterTypeRef="int16_deg_type" shortDescription="the delination of the satellite" />
-      <Parameter name="star_tracker_1_orientation_roll" parameterTypeRef="int16_deg_type" shortDescription="the roll of the satellite" />
-      <Parameter name="star_tracker_1_orientation_time_since_midnight" parameterTypeRef="uint32_ms_type" shortDescription="time since midnight when the image was captured" />
       <Parameter name="gps_system_storage_percent" parameterTypeRef="uint8_percent_type" shortDescription="the current storage percent used" />
       <Parameter name="gps_status" parameterTypeRef="uint8_gps_status_type" shortDescription="" />
       <Parameter name="gps_skytraq_number_of_sv" parameterTypeRef="uint8_type" shortDescription="number of gps satellites locked onto" />
-      <Parameter name="gps_skytraq_ecef_x" parameterTypeRef="int32_cm_type" shortDescription="ecef x coordinate" />
-      <Parameter name="gps_skytraq_ecef_y" parameterTypeRef="int32_cm_type" shortDescription="ecef y coordinate" />
-      <Parameter name="gps_skytraq_ecef_z" parameterTypeRef="int32_cm_type" shortDescription="ecef z coordinate" />
-      <Parameter name="gps_skytraq_ecef_vx" parameterTypeRef="int32_cmps_type" shortDescription="ecef x velocity" />
-      <Parameter name="gps_skytraq_ecef_vy" parameterTypeRef="int32_cmps_type" shortDescription="ecef y velocity" />
-      <Parameter name="gps_skytraq_ecef_vz" parameterTypeRef="int32_cmps_type" shortDescription="ecef z velocity" />
-      <Parameter name="gps_skytraq_time_since_midnight" parameterTypeRef="uint32_ms_type" shortDescription="time since midnight when the gps data was received" />
+      <Parameter name="gps_skytraq_fix_mode" parameterTypeRef="uint8_gps_skytraq_fix_mode_type" shortDescription="" />
       <Parameter name="adcs_gyroscope_roll_rate" parameterTypeRef="int16_degps_type" shortDescription="z-axis rate" />
       <Parameter name="adcs_gyroscope_pitch_rate" parameterTypeRef="int16_degps_type" shortDescription="x-axis rate" />
       <Parameter name="adcs_gyroscope_yaw_rate" parameterTypeRef="int16_degps_type" shortDescription="y-axis rate" />
-      <Parameter name="adcs_temperature" parameterTypeRef="int8_C_type" shortDescription="imu sensor temperature" />
       <Parameter name="dxwifi_system_storage_percent" parameterTypeRef="uint8_percent_type" shortDescription="the current storage percent used" />
       <Parameter name="dxwifi_status" parameterTypeRef="uint8_dxwifi_status_type" shortDescription="the dxwifi status" />
       <Parameter name="dxwifi_radio_temperature" parameterTypeRef="int8_C_type" shortDescription="the temperature of the radio" />
@@ -331,6 +320,7 @@
     <ContainerSet>
       <SequenceContainer name="Beacon">
         <EntryList>
+          <ParameterRefEntry parameterRef="ax25_header" />
           <ParameterRefEntry parameterRef="c3_beacon_start_chars" />
           <ParameterRefEntry parameterRef="c3_satellite_id" />
           <ParameterRefEntry parameterRef="c3_beacon_revision" />
@@ -343,11 +333,16 @@
           <ParameterRefEntry parameterRef="c3_lband_rx_bytes" />
           <ParameterRefEntry parameterRef="c3_lband_rx_packets" />
           <ParameterRefEntry parameterRef="c3_lband_rssi" />
+          <ParameterRefEntry parameterRef="c3_lband_synth_relock_count" />
           <ParameterRefEntry parameterRef="c3_uhf_rx_bytes" />
           <ParameterRefEntry parameterRef="c3_uhf_rx_packets" />
           <ParameterRefEntry parameterRef="c3_uhf_rssi" />
           <ParameterRefEntry parameterRef="c3_edl_sequence_count" />
           <ParameterRefEntry parameterRef="c3_edl_rejected_count" />
+          <ParameterRefEntry parameterRef="c3_fread_cache_length" />
+          <ParameterRefEntry parameterRef="c3_fwrite_cache_length" />
+          <ParameterRefEntry parameterRef="c3_updater_cache_length" />
+          <ParameterRefEntry parameterRef="c3_adcs_manager_mode" />
           <ParameterRefEntry parameterRef="battery_1_pack_1_vbatt" />
           <ParameterRefEntry parameterRef="battery_1_pack_1_vcell" />
           <ParameterRefEntry parameterRef="battery_1_pack_1_vcell_max" />
@@ -430,24 +425,13 @@
           <ParameterRefEntry parameterRef="solar_6_output_energy" />
           <ParameterRefEntry parameterRef="star_tracker_1_system_storage_percent" />
           <ParameterRefEntry parameterRef="star_tracker_1_status" />
-          <ParameterRefEntry parameterRef="star_tracker_1_orientation_right_ascension" />
-          <ParameterRefEntry parameterRef="star_tracker_1_orientation_declination" />
-          <ParameterRefEntry parameterRef="star_tracker_1_orientation_roll" />
-          <ParameterRefEntry parameterRef="star_tracker_1_orientation_time_since_midnight" />
           <ParameterRefEntry parameterRef="gps_system_storage_percent" />
           <ParameterRefEntry parameterRef="gps_status" />
           <ParameterRefEntry parameterRef="gps_skytraq_number_of_sv" />
-          <ParameterRefEntry parameterRef="gps_skytraq_ecef_x" />
-          <ParameterRefEntry parameterRef="gps_skytraq_ecef_y" />
-          <ParameterRefEntry parameterRef="gps_skytraq_ecef_z" />
-          <ParameterRefEntry parameterRef="gps_skytraq_ecef_vx" />
-          <ParameterRefEntry parameterRef="gps_skytraq_ecef_vy" />
-          <ParameterRefEntry parameterRef="gps_skytraq_ecef_vz" />
-          <ParameterRefEntry parameterRef="gps_skytraq_time_since_midnight" />
+          <ParameterRefEntry parameterRef="gps_skytraq_fix_mode" />
           <ParameterRefEntry parameterRef="adcs_gyroscope_roll_rate" />
           <ParameterRefEntry parameterRef="adcs_gyroscope_pitch_rate" />
           <ParameterRefEntry parameterRef="adcs_gyroscope_yaw_rate" />
-          <ParameterRefEntry parameterRef="adcs_temperature" />
           <ParameterRefEntry parameterRef="dxwifi_system_storage_percent" />
           <ParameterRefEntry parameterRef="dxwifi_status" />
           <ParameterRefEntry parameterRef="dxwifi_radio_temperature" />
