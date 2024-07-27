@@ -286,6 +286,16 @@
 
                 </EntryList>
             </SequenceContainer>
+            <SequenceContainer name="Satnogs_Packet">
+                <EntryList>
+                    <ContainerRefEntry containerRef="USLP_Packet">
+                        <LocationInContainerInBits referenceLocation="containerStart">
+                            <FixedValue>0</FixedValue>
+                        </LocationInContainerInBits>
+                    </ContainerRefEntry>
+                    <ParameterRefEntry parameterRef="TempCmd" />
+                </EntryList>
+            </SequenceContainer>
         </ContainerSet>
     </TelemetryMetaData>
     <CommandMetaData>

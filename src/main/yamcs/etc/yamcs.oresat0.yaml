@@ -1,7 +1,10 @@
 services:
   - class: org.oresat.uniclogs.services.UniclogsEnvironment
     args:
-      hmacEnvVar: HMAC_KEY 
+      hmacEnvVar: HMAC_KEY
+  - class: org.oresat.uniclogs.services.SatnogsTransferService
+    args:
+      hmacEnvVar: HMAC_KEY
   - class: org.yamcs.archive.XtceTmRecorder
   - class: org.yamcs.archive.ParameterRecorder
   - class: org.yamcs.archive.AlarmRecorder
@@ -59,6 +62,22 @@ dataLinks:
     port: 10016
     packetPreprocessorClassName: org.oresat.uniclogs.tctm.EdlPacketPreprocessor
 
+  - name: satnogs-tc-realtime
+    class: org.yamcs.tctm.UdpTcDataLink
+    stream: satnogs_tc_realtime
+    host: localhost
+    port: 10017
+    commandPostprocessorClassName: org.oresat.uniclogs.tctm.SatnogsCommandPostprocessor
+    commandPostprocessorArgs:
+      envService: SatnogsTransferService
+
+  - name: satnogs-tm-realtime
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: satnogs_tm_realtime
+    host: localhost
+    port: 10018
+    packetPreprocessorClassName: org.oresat.uniclogs.tctm.SatnogsPacketPreprocessor
+
 mdb:
   # Configuration of the active loaders
   # Valid loaders are: sheet, xtce or fully qualified name of the class
@@ -93,6 +112,8 @@ streamConfig:
       rootContainer: "/OreSat/Beacon_Packet"
     - name: "edl_tm_realtime"
       rootContainer: "/OreSat/EDL_Packet"
+    - name: "satnogs_tm_realtime"
+      rootContainer: "/OreSat/Satnogs_Packet"
     - name: "tm_dump"
   cmdHist: ["cmdhist_realtime", "cmdhist_dump"]
   event: ["events_realtime", "events_dump"]
@@ -100,4 +121,6 @@ streamConfig:
   parameterAlarm: ["alarms_realtime"]
   tc:
     - name: "tc_realtime"
+      processor: "realtime"
+    - name: "satnogs_tc_realtime"
       processor: "realtime"
