@@ -29,7 +29,7 @@ public class SatnogsTmLink extends AbstractTmDataLink {
 
         try {
 
-            URL urlArtifacts = new URL("https://db.satnogs.org/api/telemetry/?app_source=&end=&format=json&is_decoded=&observer=&sat_id=&satellite=52017&start=&transmitter=");
+            URL urlArtifacts = new URL("https://db.satnogs.org/api/telemetry/?app_source=&end=&format=json&is_decoded=&observer=&sat_id=&satellite=98867&start=&transmitter=");
             HttpURLConnection conArtifacts = (HttpURLConnection) urlArtifacts.openConnection();
             conArtifacts.setRequestProperty("Authorization", "Bearer " + System.getenv("SATNOGSDB_AUTH_TOKEN"));
             conArtifacts.setRequestMethod("GET");
