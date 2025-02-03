@@ -55,7 +55,6 @@ dataLinks:
   - name: edl-tm-realtime
     class: org.yamcs.tctm.UdpTmDataLink
     stream: edl_tm_realtime
-    host: localhost
     port: 10016
     packetPreprocessorClassName: org.oresat.uniclogs.tctm.EdlPacketPreprocessor
 
