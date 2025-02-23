@@ -1,5 +1,5 @@
-package org.oresat.uniclogs.tctm;
-import org.oresat.uniclogs.services.UniclogsEnvironment;
+package org.uniclogs.yamcs.tctm;
+import org.uniclogs.services.UniclogsEnvironment;
 import org.yamcs.ConfigurationException;
 import org.yamcs.YConfiguration;
 import org.yamcs.YamcsServer;

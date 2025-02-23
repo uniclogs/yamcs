@@ -1,6 +1,6 @@
-package org.oresat.uniclogs.exceptions;
+package org.uniclogs.yamcs.exceptions;
 
-import org.oresat.uniclogs.services.UniclogsServer;
+import org.uniclogs.services.UniclogsServer;
 import org.yamcs.CrashHandler;
 import org.yamcs.logging.Log;
 

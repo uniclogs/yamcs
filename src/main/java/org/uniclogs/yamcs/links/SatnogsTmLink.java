@@ -1,4 +1,4 @@
-package org.oresat.uniclogs.links;
+package org.uniclogs.yamcs.links;
 
 import org.yamcs.tctm.AbstractTmDataLink;
 

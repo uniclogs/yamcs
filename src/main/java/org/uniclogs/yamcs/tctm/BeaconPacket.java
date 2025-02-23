@@ -1,4 +1,4 @@
-package org.oresat.uniclogs.tctm;
+package org.uniclogs.yamcs.tctm;
 
 import java.util.Arrays;
 

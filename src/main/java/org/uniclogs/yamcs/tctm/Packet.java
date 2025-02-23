@@ -1,4 +1,5 @@
-package org.oresat.uniclogs.tctm;
+package org.uniclogs.yamcs.tctm;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 

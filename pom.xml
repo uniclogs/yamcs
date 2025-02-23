@@ -2,7 +2,7 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.oresat</groupId>
+  <groupId>org.uniclogs</groupId>
   <artifactId>uniclogs-yamcs</artifactId>
   <version>0.1.1</version>
   <packaging>jar</packaging>
@@ -16,7 +16,7 @@
     Update this to the latest Yamcs release.
     Check https://mvnrepository.com/artifact/org.yamcs/yamcs-core
     -->
-    <yamcsVersion>5.10.9</yamcsVersion>
+    <yamcsVersion>5.11.2</yamcsVersion>
   </properties>
 
   <dependencies>

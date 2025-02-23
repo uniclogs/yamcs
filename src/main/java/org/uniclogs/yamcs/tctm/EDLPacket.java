@@ -1,5 +1,4 @@
-package org.oresat.uniclogs.tctm;
-
+package org.uniclogs.yamcs.tctm;
 import java.util.Arrays;
 
 import org.apache.commons.codec.digest.HmacAlgorithms;
