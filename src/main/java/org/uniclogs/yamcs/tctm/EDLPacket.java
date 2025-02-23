@@ -15,20 +15,20 @@ public class EDLPacket extends Packet {
         super(packet, packet.length + 36, seqNum, SEQ_NUM_OFFSET);
 
         // set sequence number in packet
-        this.encodeSeqNum();
+        // this.encodeSeqNum();
 
         // set frame length in packet: C = (Total Number of Octets in the Transfer
         // Frame) − 1
         // CRC adds 4, HMAC adds 32 -> (size + (36 - 1))
-        this.encodeFrameLength(35, 4);
-        this.addHmac(hmacSecret);
+        // this.encodeFrameLength(35, 4);
+        // this.addHmac(hmacSecret);
 
         // Add CRC data to packet
-        this.encodeCrc();
+        // this.encodeCrc();
 
     }
 
-    private void addHmac(byte[] hmacSecret) {
+    public void addHmac(byte[] hmacSecret) {
         byte[] hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, hmacSecret).hmac(this.data.array());
         log.info(String.format("Hmac bytes: %s", Arrays.toString(hmac)));
         this.data.put(hmac);

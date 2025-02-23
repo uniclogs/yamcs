@@ -24,5 +24,4 @@ public class EdlCommandPostprocessor implements CommandPostprocessor {
     public EdlCommandPostprocessor(String instanceName) {
         this(instanceName, YConfiguration.emptyConfig());
     }
-
 }
