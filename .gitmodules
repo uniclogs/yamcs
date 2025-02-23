@@ -1,0 +1,3 @@
+[submodule "src/main/yamcs"]
+	path = src/main/yamcs
+	url = git@github.com:uniclogs/uniclogs-configs.git
