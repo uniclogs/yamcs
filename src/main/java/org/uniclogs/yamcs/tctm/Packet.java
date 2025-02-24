@@ -67,6 +67,7 @@ public abstract class Packet {
         Crc32Calculator crc = new Crc32Calculator(0x04C11DB7);
         Integer calculatedCrc = crc.compute(this.data.array(), offset, length, 0);
         Integer collectedCrc = ByteArrayUtils.decodeIntLE(this.data.array(), this.data.array().length - 4);
+        
         log.info(String.format("CRC_32: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
         return calculatedCrc.equals(collectedCrc);
     }
