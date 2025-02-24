@@ -79,6 +79,10 @@ Verify that the `uniclogs-yamcs` image has succesfully built
 
 ## Development Quick Start
 
+### Initialize yamcs configs submodule
+
+`$` `git submodule update --init --recursive`
+
 ### Interface Connection Diagram(s):
 
 Below is a set of diagrams outlining both how Yamcs in its current state works, as well as what the target ICD layout is for the first official release of `uniclogs-yamcs`.
