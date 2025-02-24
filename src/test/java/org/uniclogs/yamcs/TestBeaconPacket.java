@@ -35,7 +35,7 @@ public class TestBeaconPacket {
     @Disabled
     @Test
     void beacon_packet_validates_correct_crc() {
-
+        
         TmPacket ingress_packet = new TmPacket(0, HexUtils.unhex(this.raw_packet));
         this.packet = new BeaconPacket(ingress_packet);
         Assertions.assertTrue(this.packet.validCrc());
