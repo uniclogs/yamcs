@@ -23,31 +23,11 @@ A custom deployment of [Yamcs] for the UniClOGS network.
 
 `docker pull oresat/uniclogs-yamcs:dev`
 
-&nbsp;
+### Initialize yamcs configs submodule
 
-## Manual Docker Build:
+`$` `git submodule update --init --recursive`
 
-Run Make at the root of the project
-
-  `$` `make`
-
-Change into the docker directory
-
-  `$` `cd dist/docker`
-
-Build via Docker-Compose
-
-  `$` `docker compose build`
-
-Verify `uniclogs-yamcs` image has been built
-
-  `$` `docker images`
-
-&nbsp;
-
-# Development Quick Start
-
-## Interface Connection Diagram(s):
+### Interface Connection Diagram(s):
 
 Below is a set of diagrams outlining both how Yamcs in its current state works, as well as what the target ICD layout is for the first official release of `uniclogs-yamcs`.
 
