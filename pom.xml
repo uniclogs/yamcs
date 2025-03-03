@@ -12,9 +12,9 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <!--
-		Update this to the latest Yamcs release.
-		Check https://mvnrepository.com/artifact/org.yamcs/yamcs-core
-		-->
+    Update this to the latest Yamcs release.
+    Check https://mvnrepository.com/artifact/org.yamcs/yamcs-core
+    -->
     <yamcsVersion>5.11.2</yamcsVersion>
   </properties>
   <dependencies>
@@ -30,7 +30,7 @@
       <artifactId>yamcs-web</artifactId>
       <version>${yamcsVersion}</version>
     </dependency>
-    <!-- HMAC Generation Utils		-->
+    <!-- HMAC Generation Utils -->
     <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
