@@ -1,4 +1,4 @@
-package org.oresat.uniclogs.tctm;
+package org.uniclogs.yamcs.tctm;
 
 import java.util.Date;
 
@@ -26,8 +26,9 @@ public class BeaconPacketPreprocessor extends AbstractPacketPreprocessor {
     @Override
     public TmPacket process(TmPacket tmPacket) {
         // Reject the packet if it's not exactly the expected size
-        if(tmPacket.getPacket().length != expectedPacketSize) {
-            String msg = String.format("Rejecting packet with only %d bytes! (Expected %d bytes)", tmPacket.getPacket().length, expectedPacketSize);
+        if (tmPacket.getPacket().length != expectedPacketSize) {
+            String msg = String.format("Rejecting packet with only %d bytes! (Expected %d bytes)",
+                    tmPacket.getPacket().length, expectedPacketSize);
             log.error(msg);
             this.eventProducer.sendWarning("PACKET_INVALID_SIZE", msg);
             tmPacket.setDoNotArchive();
@@ -37,7 +38,7 @@ public class BeaconPacketPreprocessor extends AbstractPacketPreprocessor {
 
         BeaconPacket packet = new BeaconPacket(tmPacket);
         if (!packet.validCrc()) {
-            //tmPacket.setInvalid();
+            // tmPacket.setInvalid();
             this.eventProducer.sendWarning("PACKET_CORRUPT", "Beacon Packet Corrupted");
         }
         tmPacket.setSequenceCount(packet.getSeqNum());

@@ -1,4 +1,4 @@
-package org.oresat.uniclogs.tctm;
+package org.uniclogs.yamcs.tctm;
 
 import java.util.Arrays;
 
@@ -7,23 +7,22 @@ import org.apache.commons.codec.digest.HmacUtils;
 import org.yamcs.TmPacket;
 import org.yamcs.xtce.util.HexUtils;
 
-
 public class EDLPacket extends Packet {
     private static final Integer SEQ_NUM_OFFSET = 7;
 
     public EDLPacket(byte[] packet, Integer seqNum, byte[] hmacSecret) {
-        //sequence number offset of 7
-        super(packet, packet.length+36, seqNum, SEQ_NUM_OFFSET);
+        // sequence number offset of 7
+        super(packet, packet.length + 36, seqNum, SEQ_NUM_OFFSET);
 
         // set sequence number in packet
         this.encodeSeqNum();
-        
 
-        // set frame length in packet: C = (Total Number of Octets in the Transfer Frame) − 1
+        // set frame length in packet: C = (Total Number of Octets in the Transfer
+        // Frame) − 1
         // CRC adds 4, HMAC adds 32 -> (size + (36 - 1))
         this.encodeFrameLength(35, 4);
         this.addHmac(hmacSecret);
-        
+
         // Add CRC data to packet
         this.encodeCrc();
 
@@ -33,7 +32,8 @@ public class EDLPacket extends Packet {
         byte[] hmac = new HmacUtils(HmacAlgorithms.HMAC_SHA_256, hmacSecret).hmac(this.data.array());
         log.info(String.format("Hmac bytes: %s", Arrays.toString(hmac)));
         this.data.put(hmac);
-        log.info(String.format("HMAC_SHA_256 (%s) added to packet (seqNum: %d).", HexUtils.hex(hmac), this.sequenceNumber));
+        log.info(String.format("HMAC_SHA_256 (%s) added to packet (seqNum: %d).", HexUtils.hex(hmac),
+                this.sequenceNumber));
     }
 
     protected void encodeCrc() {
@@ -43,7 +43,8 @@ public class EDLPacket extends Packet {
     }
 
     public EDLPacket(TmPacket tmPacket) {
-        super(tmPacket.getPacket(), tmPacket.getPacket().length, getSequenceNumber(tmPacket.getPacket(), SEQ_NUM_OFFSET), SEQ_NUM_OFFSET);
+        super(tmPacket.getPacket(), tmPacket.getPacket().length,
+                getSequenceNumber(tmPacket.getPacket(), SEQ_NUM_OFFSET), SEQ_NUM_OFFSET);
     }
 
     @Override
