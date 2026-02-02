@@ -21,7 +21,7 @@ A custom deployment of [Yamcs] for the UniClOGS network.
 
 ## Pull the development image from Dockerhub:
 
-`docker pull oresat/uniclogs-yamcs:dev`
+`docker pull oresat/yamcs:dev`
 
 &nbsp;
 
