@@ -38,8 +38,7 @@ Yamcs web UI: http://localhost:8090
 **Filename must follow the C3 convention**: `card-name_key_unix-time.extension`
 *example: `c3_test_$(date +%s).txt`*
 
-1. http://localhost:8090 → pick instance **oresat0_5** (top-right).
-2. **Storage (Top right folder icon) > groundstation > Upload**
+1. **Storage (Top right folder icon) > groundstation > Upload**
   
 3. **File Transfer (Left pannel) -> New Transfer** Pick the bucket + object
   destination entity `satellite`, **Set Reliable**, submit.
