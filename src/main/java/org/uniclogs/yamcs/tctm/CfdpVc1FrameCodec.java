@@ -8,10 +8,17 @@ public final class CfdpVc1FrameCodec {
     public static final int HMAC_LEN = 32;
     public static final int FECF_LEN = 2;
     public static final int PRIMARY_HEADER_LEN = 7;
-    public static final int INSERT_ZONE_LEN = 4;
+    // Insert zone carries the SDLS security header: SPI (2 B, big-endian 0x0001) followed by
+    // the 4-byte little-endian seq num. C3 0.6.1 (spacepackets >=0.30, sdls.py SdlsOresat)
+    // unpacks with insert_zone_len=6; a 4-byte (seq-only) insert zone shifts the TFDF header
+    // by 2 and C3 rejects the frame with UslpInvalidConstructionRulesError.
+    public static final int SPI_LEN = 2;
+    public static final int SEQ_NUM_LEN = 4;
+    public static final int INSERT_ZONE_LEN = SPI_LEN + SEQ_NUM_LEN;
+    public static final int SDLS_SPI = 0x0001;
     public static final int TFDF_HEADER_LEN = 1;
     public static final int TC_MIN_LEN =
-            PRIMARY_HEADER_LEN + INSERT_ZONE_LEN + TFDF_HEADER_LEN + HMAC_LEN + FECF_LEN; // 46
+            PRIMARY_HEADER_LEN + INSERT_ZONE_LEN + TFDF_HEADER_LEN + HMAC_LEN + FECF_LEN; // 48
     private static final String MAC_ALG = "HmacSHA3-256";
     public static final int DEFAULT_SCID = 0x4F53;
     public static final int DEFAULT_VCID = 1;
@@ -57,8 +64,9 @@ public final class CfdpVc1FrameCodec {
     }
 
     /**
-     * Pack a full USLP VC=1 TC frame: primary header + insert-zone seq-num + TFDF header +
-     * pdu + HMAC-SHA3-256 + CRC16 FECF. Matches oresat_c3/protocols/edl_packet.py format.
+     * Pack a full USLP VC=1 TC frame: primary header + insert-zone SDLS header (SPI + seq-num)
+     * + TFDF header + pdu + HMAC-SHA3-256 + CRC16 FECF. Matches oresat_c3 0.6.1
+     * protocols/uslp.py + protocols/sdls.py (spacepackets >=0.30).
      */
     public static byte[] packUslpFrame(byte[] pdu, byte[] hmacKey, int seqNum, int scid, int vcid) {
         int totalLen = TC_MIN_LEN + pdu.length;
@@ -80,24 +88,31 @@ public final class CfdpVc1FrameCodec {
         frame[5] = (byte) (frameLenField & 0xFF);
         frame[6] = 0x00;
 
-        // Insert zone: 4-byte seq num little-endian
-        frame[7] = (byte) (seqNum & 0xFF);
-        frame[8] = (byte) ((seqNum >> 8) & 0xFF);
-        frame[9] = (byte) ((seqNum >> 16) & 0xFF);
-        frame[10] = (byte) ((seqNum >> 24) & 0xFF);
+        // Insert zone (6 B): SPI big-endian, then 4-byte seq num little-endian
+        frame[7] = (byte) ((SDLS_SPI >> 8) & 0xFF);
+        frame[8] = (byte) (SDLS_SPI & 0xFF);
+        frame[9] = (byte) (seqNum & 0xFF);
+        frame[10] = (byte) ((seqNum >> 8) & 0xFF);
+        frame[11] = (byte) ((seqNum >> 16) & 0xFF);
+        frame[12] = (byte) ((seqNum >> 24) & 0xFF);
 
         // TFDF header
-        frame[11] = TFDF_HEADER_BYTE;
+        frame[13] = TFDF_HEADER_BYTE;
 
         // TFDZ: pdu || HMAC
-        System.arraycopy(pdu, 0, frame, 12, pdu.length);
+        int tfdzStart = PRIMARY_HEADER_LEN + INSERT_ZONE_LEN + TFDF_HEADER_LEN;
+        System.arraycopy(pdu, 0, frame, tfdzStart, pdu.length);
         byte[] mac = hmac(hmacKey, pdu);
-        System.arraycopy(mac, 0, frame, 12 + pdu.length, HMAC_LEN);
+        System.arraycopy(mac, 0, frame, tfdzStart + pdu.length, HMAC_LEN);
 
-        // FECF: CRC16-CCITT (poly 0x1021, init 0) over frame[0 .. totalLen-3], little-endian
-        int crc = crc16Ccitt(frame, 0, totalLen - FECF_LEN, 0);
-        frame[totalLen - 2] = (byte) (crc & 0xFF);
-        frame[totalLen - 1] = (byte) ((crc >> 8) & 0xFF);
+        // FECF: CRC-16/CCITT-FALSE (poly 0x1021, init 0xFFFF) over frame[0 .. totalLen-3],
+        // big-endian. Matches spacepackets fastcrc.crc16.ibm_3740, used by the post-refactor
+        // oresat_c3 protocols/uslp.py (channel_router) path. The pre-refactor edl_packet.py
+        // used crc_hqx (XMODEM, init 0, little-endian); this was switched when C3 moved its
+        // FECF onto spacepackets.
+        int crc = crc16Ccitt(frame, 0, totalLen - FECF_LEN, 0xFFFF);
+        frame[totalLen - 2] = (byte) ((crc >> 8) & 0xFF);
+        frame[totalLen - 1] = (byte) (crc & 0xFF);
         return frame;
     }
 
