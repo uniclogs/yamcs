@@ -1,0 +1,206 @@
+services:
+  - class: org.yamcs.archive.AlarmRecorder
+  - class: org.yamcs.archive.CommandHistoryRecorder
+  - class: org.yamcs.archive.EventRecorder
+  - class: org.yamcs.archive.ParameterRecorder
+  - class: org.yamcs.archive.ReplayServer
+  - class: org.yamcs.timeline.TimelineService
+  - class: org.yamcs.archive.XtceTmRecorder
+
+  - class: org.yamcs.parameter.SystemParametersService
+    args:
+      provideJvmVariables: true
+      provideFsVariables: true
+
+  - class: org.yamcs.ProcessorCreatorService
+    args:
+      name: realtime
+      type: realtime
+
+
+  - class: org.yamcs.parameterarchive.ParameterArchive
+    args:
+      realtimeFiller:
+        enabled: true
+      backFiller:
+        enabled: false
+        warmupTime: 60
+
+  - class: org.yamcs.cfdp.CfdpService
+    name: cfdp
+    args:
+     inactivityTimeout: 30000
+     sequenceNrLength: 4
+     maxPduSize: 976
+     incomingBucket: groundstation
+     allowRemoteProvidedBucket: false
+     allowRemoteProvidedSubdirectory: false
+     allowDownloadOverwrites: false
+     # Disabled: Yamcs queues a DIRECTORY LISTING REQUEST transfer at startup
+     # with remotePath=null, which poisons the upload dedup check in
+     # CfdpService.startUpload (NPE on getRemotePath().equals(...)).
+     automaticDirectoryListingReloads: false
+     maxExistingFileRenames: 1000
+     eofAckTimeout: 15000
+     eofAckLimit: 5
+     sleepBetweenPdus: 1000
+     maxNumPendingUploads: 1
+     entityIdLength: 1
+     # Entity IDs per oresat_c3/services/edl.py: SOURCE_ID=0 (ground), DEST_ID=1 (c3)
+     localEntities:
+       - name: groundstation
+         id: 0
+         bucket: groundstation
+     remoteEntities:
+       - name: satellite
+         id: 1
+     senderFaultHandlers:
+       AckLimitReached: suspend
+     fileListingParserClassName: org.yamcs.filetransfer.CsvListingParser
+     fileListingParserArgs:
+       timestampMultiplier: 1
+
+dataLinks:
+  # AX.25 Beacon telemetry channel
+  - name: tm_beacon
+    class: org.yamcs.tctm.UdpTmDataLink
+    stream: tmr_beacon
+    port: 10015 # GS-Modem beacon telemetry port
+    invalidPackets: DIVERT
+    invalidPacketsStream: invalid_tm_stream
+    packetPreprocessorClassName: org.yamcs.tctm.GenericPacketPreprocessor
+    packetPreprocessorArgs:
+      packetSize: 269
+      seqCountOffset: -1
+      timestampOffset: -1
+
+
+  - name: tm_edl
+    class: org.yamcs.tctm.ccsds.UdpTmFrameLink
+    # Yamcs enum only accepts NONE/CRC16/CRC32, and CRC16 hard-codes init=0xFFFF.
+    # C3's FECF uses init=0 (binascii.crc_hqx). Disable Yamcs's check; the VC handler
+    # accounts for the trailing 2 FECF bytes via the stripFecf arg.
+    errorDetection: NONE
+    port: 10016 # GS-Modem USLP telemetry port
+    frameType: USLP # Process all TM with USLP header
+    spacecraftId: 0x4F53 # "OS" in ASCII
+    badFrameStream: invalid_tm_stream # Process unrecognized TM here
+    minFrameLength: 16 # 7 + 6 + 1 + 2. Needed so that insert zone doesn't throw an error.
+    maxFrameLength: 65535 # Global max packet-size 2^16 B
+    # C3 0.6.1 SDLS layout: insert zone = SPI (2 B) + seq num (4 B) = 6 B
+    insertZoneLength: 6
+    virtualChannels:
+      # EDL Virtual Channel
+      - vcId: 0
+        service: VCA # tells yamcs to use a custom handler instead of the default space/encaps packets handler.
+        stream: tmr_edl
+        vcaHandlerClassName: org.uniclogs.yamcs.tctm.VcEdlDownlinkHandler
+        packetPreprocessorClassName: org.yamcs.tctm.GenericPacketPreprocessor
+        packetPreprocessorArgs: # while it appears that this does nothing, this is required by yamcs.
+          timestampOffset: -1 # If the edl is changed to have sequence numbers outside the insert zone, these
+          seqCountOffset: -1 # should be handled by the preprocessor with these configuration flags.
+          errorDetection:
+            type: "NONE"  # the crc is already checked as part of the USLP frame. Because the edl uses uslp
+                          # frames as packets, edl processing does not need to check this.
+
+      # CFDP Virtual Channel
+      # TFDZ = raw_cfdp_pdu || HmacSHA3-256(hmacKey, pdu) (32 B).
+      # Handler emits raw PDU as (gentime, entityId, seqNum, pdu) tuple on cfdp_in
+      # (raw stream defined in extra_streams.sql).
+      - vcId: 1
+        service: VCA
+        stream: cfdp_in
+        vcaHandlerClassName: org.uniclogs.yamcs.tctm.CfdpVc1DownlinkHandler
+        vcaHandlerArgs:
+          hmacKeyHex: "0000000000000000000000000000000000000000000000000000000000000000"
+          verifyHmac: false
+          cfdpStream: cfdp_in
+        packetPreprocessorClassName: org.yamcs.tctm.GenericPacketPreprocessor
+        packetPreprocessorArgs:
+          timestampOffset: -1
+          seqCountOffset: -1
+          errorDetection:
+            type: "NONE"
+
+  - name: tc_edl
+    class: org.yamcs.tctm.ccsds.UdpTcFrameLink
+    errorDetection: CRC16
+    priorityScheme: ABSOLUTE
+    host: rp0-at86rf215-d2.local # GS-Modem Address
+    frameType: USLP # Process all TM with USLP header
+    port: 10025 # GS-Modem USLP telecommand port
+    spacecraftId: 0x4F53 # "OS" in ASCII
+    maxFrameLength: 65535 # Global max packet-size 4 kb
+    # C3 0.6.1 SDLS layout: insert zone = SPI (2 B) + seq num (4 B) = 6 B
+    insertZoneLength: 6
+
+    virtualChannels:
+    # EDL Virtual Channel
+    - vcId: 0
+      service: PACKET
+      priority: 0
+      maxPacketLength: 65000 # TODO: set this to the max EDL in USLP packet size
+      stream: tcr_edl
+      # commandPostprocessorClassName: org.yamcs.tctm.IssCommandPostprocessor
+      # commandPostprocessorArgs:
+      #   errorDetection:
+      #     type: "CRC-16-CCIIT"
+      #   enforceEvenNumberOfBytes: true
+
+  # CFDP TC uplink: subscribes to the raw cfdp_out stream, wraps each PDU in a
+  # USLP VC=1 frame (HMAC-SHA3-256 + CRC16 FECF) and sends via UDP to C3.
+  - name: tc_cfdp
+    class: org.uniclogs.yamcs.tctm.CfdpVc1UdpTcLink
+    stream: cfdp_out
+    host: rp0-at86rf215-d2.local
+    port: 10025
+    scid: 0x4F53
+    vcid: 1
+    hmacKeyHex: "0000000000000000000000000000000000000000000000000000000000000000"
+
+mdb:
+  - type: xtce
+    spec: mdb/oresat0_5_edl.xtce
+  - type: xtce # the uplink handler needs a CFDP metacommand for things to work. This adds a single empty metacommand.
+    spec: mdb/cfdp.xtce
+  - type: xtce
+    spec: mdb/oresat0_5_beacon.xtce
+  - type: xtce
+    spec: mdb/sentinel_1/leop_beacon.xtce
+  - type: xtce
+    spec: mdb/sentinel_1/post_leop.xtce
+
+streamConfig:
+  tm:
+    - name: tmr_beacon
+      rootContainer: /oresat0_5_beacon/Beacon
+
+    - name: tmr_edl
+      processor: realtime
+      rootContainer: /oresat0_5_edl/edl_responses
+
+    - name: tmd_debug
+
+  tc:
+    - name: tcr_edl
+      rootContainer: /oresat0_5_edl/edl_responses
+      processor: realtime
+
+  cmdHist:
+    - cmdhist_realtime
+    - cmdhist_dump
+
+  event:
+    - events_realtime
+    - events_dump
+
+  param:
+    - pp_realtime
+    - sys_param
+    - proc_param
+
+  invalidTm: invalid_tm_stream
+  parameterAlarm: [ alarms_realtime ]
+  eventAlarm: [ event_alarms_realtime ]
+  # cfdp_in and cfdp_out are declared as raw streams (CFDP tuple schema) here:
+  sqlFile: etc/extra_streams.sql
