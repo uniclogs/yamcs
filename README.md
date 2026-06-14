@@ -67,9 +67,24 @@ Below is a set of diagrams outlining both how Yamcs in its current state works, 
 
 ## Install Project Dependencies
 
+```bash
+$ git clone https://github.com/yamcs/yamcs.git
+$ cd yamcs
+
+
+$ cd yamcs-web/src/main/webapp
+$ npm install
+$ npm run build
+$ cd -
+
+$ mvn clean install -DskipTests
+```
+
 Install the required project dependencies from the official maven repos and start yamcs in debug mode.
 
-  `$` `mvn clean yamcs:debug`
+  `$` `mvn clean yamcs:debug -o`
+
+
 
 
 Open [Local Yamcs] in a browser
@@ -95,6 +110,8 @@ How to:
 &nbsp;
 
 ***
+
+
 
 ## Appendix and Resources
 

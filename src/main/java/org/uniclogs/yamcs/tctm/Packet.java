@@ -11,7 +11,7 @@ import org.yamcs.xtce.util.HexUtils;
 
 public abstract class Packet {
     static final Log log = new Log(Packet.class);
-    final Crc32Calculator crcCalc = new Crc32Calculator(0x91267E8A);
+    final Crc16Calculator crcCalc = new Crc16Calculator(0xffff);
     Integer sequenceNumber;
     Integer sequenceNumberOffset;
     ByteBuffer data;
@@ -58,7 +58,7 @@ public abstract class Packet {
     protected boolean crc16() {
         Crc16Calculator crc = new Crc16Calculator(0x1021);
         Integer calculatedCrc = crc.compute(this.data.array(), 0, this.data.array().length - 2, 0xFFFFFFFF);
-        Integer collectedCrc = ByteArrayUtils.decodeInt(this.data.array(), this.data.array().length - 2);
+        Integer collectedCrc = ByteArrayUtils.decodeUnsignedShort(this.data.array(), this.data.array().length - 2);
         log.info(String.format("CRC_16: Calculated Value: %d, Expected Value: %d", calculatedCrc, collectedCrc));
         return calculatedCrc.equals(collectedCrc);
     }

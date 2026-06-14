@@ -49,6 +49,7 @@ public class EDLPacket extends Packet {
 
     @Override
     boolean validCrc() {
-        return crc32(0, this.data.array().length);
+        // return crc32(0, this.data.array().length);
+		return crc16();
     }
 }
